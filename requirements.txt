@@ -1,0 +1,6 @@
+invoke
+black
+isort
+pandas
+dvc
+pip>=20.2.4
