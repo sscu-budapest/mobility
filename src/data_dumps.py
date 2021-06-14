@@ -5,6 +5,7 @@ from .data_locs import parts_root, raw_path
 
 
 def dump_parquet_parts(size=2_500_000):
+    parts_root.mkdir(exist_ok=True)
 
     pbar = tqdm()
     rs = []
@@ -31,6 +32,7 @@ def dump_parquet_parts(size=2_500_000):
 
 def dump_months():
     pass
+
 
 def dump_users():
     pass
