@@ -34,7 +34,7 @@ def dump_months(size=2_500_000):
     with open(raw_path, "r") as fp:
         for i, line in enumerate(fp):
             rs.append(line.strip().split("\t"))
-            if ((i + 1) % (size * 2)) == 0:
+            if ((i + 1) % size) == 0:
                 pd.DataFrame(
                     rs, columns=["country", "user", "lat", "lon", "ts", "date", "time"]
                 ).assign(**ParsedCols()).loc[:, allcols(ParsedCols)].pipe(
