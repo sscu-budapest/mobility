@@ -3,7 +3,7 @@ from colassigner import ColAssigner, allcols
 from parquetranger import TableRepo
 from tqdm import tqdm
 
-from .data_locs import raw_path
+from .data_locs import raw_root
 
 
 class ParsedCols(ColAssigner):
@@ -24,7 +24,7 @@ class ParsedCols(ColAssigner):
 
 
 month_tables = TableRepo(
-    raw_path / "months", group_cols=ParsedCols.month, max_records=2_500_000
+    raw_root / "months", group_cols=ParsedCols.month, max_records=2_500_000
 )
 
 
