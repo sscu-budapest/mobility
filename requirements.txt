@@ -2,5 +2,7 @@ invoke
 black
 isort
 pandas
-dvc
+parquetranger
+colassigner
+dvc>=2.1.0
 pip>=20.2.4
