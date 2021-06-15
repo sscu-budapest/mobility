@@ -1,38 +1,44 @@
 import pandas as pd
+from colassigner import ColAssigner, allcols
+from parquetranger import TableRepo
 from tqdm import tqdm
 
-from .data_locs import parts_root, raw_path
+from .data_locs import raw_path
 
 
-def dump_parquet_parts(size=2_500_000):
-    parts_root.mkdir(exist_ok=True)
+class ParsedCols(ColAssigner):
+    def dtime(self, df):
+        return pd.to_datetime(df["date"] + " " + df["time"])
 
+    def lon(self, df):
+        return df["lon"].astype(float)
+
+    def lat(self, df):
+        return df["lat"].astype(float)
+
+    def user(self, df):
+        return df["user"]
+
+    def month(self, df):
+        return df[ParsedCols.dtime].dt.date.astype(str).str[:7]
+
+
+month_tables = TableRepo(
+    raw_path / "months", group_cols=ParsedCols.month, max_records=2_500_000
+)
+
+
+def dump_months(size=2_500_000):
     pbar = tqdm()
     rs = []
     with open(raw_path, "r") as fp:
         for i, line in enumerate(fp):
             rs.append(line.strip().split("\t"))
-            if ((i + 1) % size) == 0:
+            if ((i + 1) % (size * 2)) == 0:
                 pd.DataFrame(
                     rs, columns=["country", "user", "lat", "lon", "ts", "date", "time"]
-                ).assign(
-                    dtime=lambda df: (df["date"] + " " + df["time"]).pipe(
-                        pd.to_datetime
-                    ),
-                    lon=lambda df: df["lon"].astype(float),
-                    lat=lambda df: df["lat"].astype(float),
-                ).drop(
-                    ["country", "ts", "date", "time"], axis=1
-                ).to_parquet(
-                    parts_root / f"{ i // size}.parquet"
+                ).assign(**ParsedCols()).loc[:, allcols(ParsedCols)].pipe(
+                    month_tables.extend
                 )
                 rs = []
                 pbar.update()
-
-
-def dump_months():
-    pass
-
-
-def dump_users():
-    pass
