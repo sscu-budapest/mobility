@@ -12,4 +12,4 @@ def lint(c):
 def dvc_external_init(c):
     dvc_cache_root.mkdir(exist_ok=True)
     c.run(f"dvc cache dir {dvc_cache_root}")
-    c.run(f"dvc add --external {parts_root}")
+    c.run(f"dvc add --external {parts_root} --no-commit")
