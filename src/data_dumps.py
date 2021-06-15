@@ -3,7 +3,7 @@ from colassigner import ColAssigner, allcols
 from parquetranger import TableRepo
 from tqdm import tqdm
 
-from .data_locs import raw_root
+from .data_locs import raw_root, raw_path
 
 
 class ParsedCols(ColAssigner):
