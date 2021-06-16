@@ -5,6 +5,7 @@ from parquetranger import TableRepo
 
 from .data_dumps import ParsedCols, month_tables
 from .util import get_dask_client
+from .pipeline_registry import pipereg
 
 DAYOFWEEK_COL = "dayofweek"
 
@@ -17,6 +18,7 @@ covid_sample, non_covid_sample = [
 ]
 
 
+@pipereg.register(outputs=[sample_dir])
 def dump_samples():
     get_dask_client()
     for month, week_trepo in [("2019-11", non_covid_sample), ("2020-11", covid_sample)]:
