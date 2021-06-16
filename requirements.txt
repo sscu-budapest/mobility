@@ -4,5 +4,7 @@ isort
 pandas
 parquetranger
 colassigner
+dask[distributed]>=2021.5.0
+dask[dataframe]>=2021.5.0
 dvc>=2.1.0
 pip>=20.2.4

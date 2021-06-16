@@ -1,6 +1,11 @@
 from invoke import task
 
 from src.data_locs import parts_root, dvc_cache_root
+from src import pipereg
+
+
+for pe in pipereg.steps:
+    globals()[pe.name] = pe.get_invoke_task()
 
 
 @task
