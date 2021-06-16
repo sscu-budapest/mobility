@@ -1,6 +1,5 @@
 from invoke import task
 
-from src.data_locs import  dvc_cache_root
 from src import pipereg
 
 
