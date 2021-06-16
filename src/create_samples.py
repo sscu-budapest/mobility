@@ -4,8 +4,8 @@ import dask.dataframe as dd
 from parquetranger import TableRepo
 
 from .data_dumps import ParsedCols, month_tables
-from .util import get_dask_client
 from .pipeline_registry import pipereg
+from .util import get_dask_client
 
 DAYOFWEEK_COL = "dayofweek"
 

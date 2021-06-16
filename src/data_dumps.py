@@ -24,7 +24,10 @@ class ParsedCols(ColAssigner):
 
 
 month_tables = TableRepo(
-    raw_root / "months", group_cols=ParsedCols.month, max_records=2_500_000, mkdirs=False
+    raw_root / "months",
+    group_cols=ParsedCols.month,
+    max_records=2_500_000,
+    mkdirs=False,
 )
 
 
