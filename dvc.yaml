@@ -1,0 +1,7 @@
+stages:
+  dump_samples:
+    cmd: python -m src dump_samples
+    deps:
+    - src/create_samples.py
+    outs:
+    - data/sample
