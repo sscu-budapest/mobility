@@ -8,13 +8,16 @@ from .pipeline_registry import pipereg
 from .util import get_dask_client
 
 DAYOFWEEK_COL = "dayofweek"
-
+COV_DIRNAME = "cov-week"
+NON_COV_DIRNAME = "non-cov-week"
 
 sample_dir = Path("data", "sample")
+sample_recsize = 300_000
+
 
 covid_sample, non_covid_sample = [
-    TableRepo(sample_dir / name, group_cols=DAYOFWEEK_COL, max_records=300_000)
-    for name in ["cov-week", "non-cov-week"]
+    TableRepo(sample_dir / name, group_cols=DAYOFWEEK_COL, max_records=sample_recsize)
+    for name in [COV_DIRNAME, NON_COV_DIRNAME]
 ]
 
 
