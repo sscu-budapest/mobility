@@ -130,6 +130,16 @@ ddf_aggs.loc[:, "dtime"].plot(figsize=(14, 7), ax=ax1.twinx(), color="green").le
 ```
 ![fig1](report-eg.png)
 
+### load a full week of data
+
+
+```python
+from src.create_samples import covid_sample, non_covid_sample
+
+# this is about 3GB of memory, use get_full_ddf for lazy dask dataframe
+cov_df = covid_sample.get_full_df()
+```
+
 ## TODO
 
 - "reliable user" counts
