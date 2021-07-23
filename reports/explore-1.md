@@ -9,13 +9,13 @@
 
 a 'reliable' user day is a day where a user has at least 5 pings between 5am and 10am, *and* at least 5 pings between 4pm and 8pm
 
-### Users with at least # reliable days
+### Users with # reliable days
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th>Count Range</th>
-      <th>User Count</th>
+      <th>Reliable date range</th>
+      <th>User count</th>
     </tr>
   </thead>
   <tbody>
