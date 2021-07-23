@@ -40,7 +40,7 @@ a 'reliable' user day is a day where a user has at least 5 pings between 5am and
 
 ### Unique users in a month by reliable days
 
-![img-upm](../figures/upd.png)
+![img-upm](../figures/upm.png)
 
 ### User activity heatmap
 
