@@ -1,12 +1,4 @@
-from invoke import task
-
+from sscutils import project_ns as ns
 from src import pipereg
 
-
-for pe in pipereg.steps:
-    globals()[pe.name] = pe.get_invoke_task()
-
-
-@task
-def lint(c):
-    c.run("black src tasks.py; flake8 src --ignore=W503,E501; isort src -m 3 --tc")
+ns.add_collection(pipereg.get_collection())

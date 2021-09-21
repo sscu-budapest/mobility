@@ -1,0 +1,13 @@
+- prefix: um
+  repo: git@github.com:/sscu-budapest/gps-ping-data
+  subsets:
+  - name: complete
+    tag: main
+  - name: covid_tuesday
+    tag: main
+  - name: non_covid_monday
+    tag: main
+  - name: covid_full_week
+    tag: main
+  - name: non_covid_full_week
+    tag: main
