@@ -1,6 +1,6 @@
 [core]
-    remote = anetcloud-local
-['remote "anetcloud-local"']
-    url = /mnt/data/ubermedia-raw/dvc-remote
-['remote "anetcloud-ssh"']
-    url = ssh://anetcloud/mnt/data/ubermedia-raw/dvc-remote
+    remote = internal-ssh
+['remote "public-s3"']
+    url = s3://sscu-budapest-public
+['remote "internal-ssh"']
+    url = ssh://euryserver/homeEury/Bigdata/dvc-remote
