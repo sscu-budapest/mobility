@@ -9,3 +9,6 @@ dask[dataframe]>=2021.5.0
 dvc>=2.3.0
 dvc[ssh]
 pip>=20.2.4
+geopandas
+rtree
+pygeos
