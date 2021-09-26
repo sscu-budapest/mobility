@@ -35,17 +35,18 @@ def get_hungdf():
 
     return (
         geopandas.read_file(gpath)
-        .loc[
-            lambda df: df["fclass"].isin(["county", "city"]) & (df["name"] != "Bratislava"),
-            :,
-        ]
+        .loc[lambda df: df["fclass"].isin(["county", "city"]) & (df["name"] != "Bratislava"), :]
         .loc[:, ["name", "geometry"]]
         .set_index("name")
     )
 
 
 def to_geo(df):
-    return geopandas.GeoDataFrame(df, geometry=geopandas.points_from_xy(df["lon"], df["lat"]), crs="EPSG:4326")
+    return geopandas.GeoDataFrame(
+        df,
+        geometry=geopandas.points_from_xy(df[um_rc.PingCols.Location.lon], df[um_rc.PingCols.Location.lat]),
+        crs="EPSG:4326",
+    )
 
 
 def gpjoin(df, gdf):
@@ -87,7 +88,6 @@ def get_report_table(df):
 
 @pipereg.register(dependencies=[um_t2.pings_table], outputs=[local_users_table])
 def get_local_users(min_rate):
-
     ddf = um_t2.pings_table.get_full_ddf()
 
     user_locale_count_df = (

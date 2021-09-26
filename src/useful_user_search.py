@@ -21,8 +21,8 @@ good_local_user_good_day_pings_table = create_trepo_with_subsets(
     "good_local_user_good_day_pings", group_cols=[um_rc.PingCols.month], prefix=prefix, no_subsets=True
 )
 
-class HourCol(ColAssigner):
 
+class HourCol(ColAssigner):
     def hour(self, df):
         return df[um_rc.PingCols.datetime].dt.hour
 
@@ -67,6 +67,7 @@ class ReliableCols(ColAssigner):
 def useful_user_extraction(
     am_start, am_end, pm_start, pm_end, min_am, min_pm, min_sum, min_reliable_days, specific_to_locale
 ):
+
     local_users = (
         local_users_table.get_full_df()
         .loc[(slice(None), specific_to_locale), :]
@@ -79,7 +80,8 @@ def useful_user_extraction(
     gb_cols = [um_rc.PingCols.device_id, um_rc.PingCols.month, um_rc.PingCols.dayofmonth]
 
     user_days = (
-        ddf.assign(**HourCol()).assign(**TimeOfDayCols(am_start, am_end, pm_start, pm_end))
+        ddf.assign(**HourCol())
+        .assign(**TimeOfDayCols(am_start, am_end, pm_start, pm_end))
         .groupby(gb_cols)[[TimeOfDayCols.am, TimeOfDayCols.pm, TimeOfDayCols.other]]
         .sum()
         .assign(**ReliableCols(min_am, min_pm, min_sum))
