@@ -1,0 +1,12 @@
+useful_user_extraction:
+  am_start: 5
+  am_end: 10
+  pm_start: 16
+  pm_end: 20
+  min_am: 5
+  min_pm: 5
+  min_sum: 50
+  min_reliable_days: 50
+  specific_to_locale: "Budapest"
+get_local_users:
+  min_rate: 0.8
