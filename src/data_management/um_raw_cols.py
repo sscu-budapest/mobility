@@ -7,7 +7,7 @@ class Loc(ColAccessor):
 
 
 class PingCols(ColAccessor):
-    devide_id = "device_id"
+    device_id = "device_id"
     datetime = "datetime"
     month = "month"
     dayofmonth = "dayofmonth"
