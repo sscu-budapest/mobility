@@ -5,3 +5,32 @@ stages:
     - src/create_samples.py
     outs:
     - data/sample
+  get_local_users:
+    cmd: python -m src get_local_users
+    deps:
+    - data/um/complete/pings
+    - src/locale_specific_users.py
+    params:
+    - get_local_users.min_rate
+    outs:
+    - data/locals/local_users.parquet
+  useful_user_extraction:
+    cmd: python -m src useful_user_extraction
+    deps:
+    - data/locals/local_users.parquet
+    - data/um/complete/pings
+    - src/useful_user_search.py
+    params:
+    - useful_user_extraction.am_end
+    - useful_user_extraction.am_start
+    - useful_user_extraction.min_am
+    - useful_user_extraction.min_pm
+    - useful_user_extraction.min_reliable_days
+    - useful_user_extraction.min_sum
+    - useful_user_extraction.pm_end
+    - useful_user_extraction.pm_start
+    - useful_user_extraction.specific_to_locale
+    outs:
+    - data/user_filtered/good_local_user_good_day_pings
+    - data/user_filtered/good_local_user_pings
+    - data/user_filtered/local_pings

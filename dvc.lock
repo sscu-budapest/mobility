@@ -11,3 +11,57 @@ stages:
       md5: 0c9a4a12d05d6572a3330190e7ffa7ce.dir
       size: 1359202248
       nfiles: 222
+  get_local_users:
+    cmd: python -m src get_local_users
+    deps:
+    - path: data/um/complete/pings
+      md5: 891e31f0e3080330e540b9fc1935846b.dir
+      size: 63994185648
+      nfiles: 1980
+    - path: src/locale_specific_users.py
+      md5: 79629a8533efad9f54f37ff44a839e4e
+      size: 4187
+    params:
+      params.yaml:
+        get_local_users.min_rate: 0.8
+    outs:
+    - path: data/locals/local_users.parquet
+      md5: 0bb3484cfef714a6b3328fad20bf94ec
+      size: 189929018
+  useful_user_extraction:
+    cmd: python -m src useful_user_extraction
+    deps:
+    - path: data/locals/local_users.parquet
+      md5: 0bb3484cfef714a6b3328fad20bf94ec
+      size: 189929018
+    - path: data/um/complete/pings
+      md5: 891e31f0e3080330e540b9fc1935846b.dir
+      size: 63994185648
+      nfiles: 1980
+    - path: src/useful_user_search.py
+      md5: b8dfb58caed61449d1a1cd9509c60a49
+      size: 3734
+    params:
+      params.yaml:
+        useful_user_extraction.am_end: 10
+        useful_user_extraction.am_start: 5
+        useful_user_extraction.min_am: 5
+        useful_user_extraction.min_pm: 5
+        useful_user_extraction.min_reliable_days: 50
+        useful_user_extraction.min_sum: 50
+        useful_user_extraction.pm_end: 20
+        useful_user_extraction.pm_start: 16
+        useful_user_extraction.specific_to_locale: Budapest
+    outs:
+    - path: data/user_filtered/good_local_user_good_day_pings
+      md5: 7c3a0d75102c5a4f9df276e3b6626867.dir
+      size: 8134274701
+      nfiles: 25
+    - path: data/user_filtered/good_local_user_pings
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+    - path: data/user_filtered/local_pings
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
