@@ -1,14 +1,4 @@
-invoke
-black
-isort
-pandas
-parquetranger>=0.0.10
-colassigner>=0.0.3
-dask[distributed]>=2021.5.0
-dask[dataframe]>=2021.5.0
-dvc>=2.3.0
-dvc[ssh]
-pip>=20.2.4
+sscutils
 geopandas
 rtree
 pygeos
