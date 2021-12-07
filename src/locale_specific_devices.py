@@ -4,14 +4,17 @@ from pathlib import Path
 import geopandas
 import pandas as pd
 import requests
-from sscutils import TableFeaturesBase, ScruTable, IndexBase
+from sscutils import IndexBase, ScruTable, TableFeaturesBase
 
 from .imported_namespaces import um
 from .pipereg import pipereg
 
+
 class LocalDeviceIndex(IndexBase):
     device_id = str
     county = str
+
+
 class LocalDeviceFeatures(TableFeaturesBase):
     count = int
     rate = float
@@ -52,7 +55,9 @@ def to_geo(df):
 
 
 def gpjoin(df, gdf):
-    return geopandas.sjoin(to_geo(df), gdf, op="within", how="left").rename(columns={"index_right": LocalDeviceIndex.county})
+    return geopandas.sjoin(to_geo(df), gdf, op="within", how="left").rename(
+        columns={"index_right": LocalDeviceIndex.county}
+    )
 
 
 def ping_gb(df, gdf):
