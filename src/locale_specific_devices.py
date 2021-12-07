@@ -4,23 +4,21 @@ from pathlib import Path
 import geopandas
 import pandas as pd
 import requests
-from colassigner import ColAccessor
-from sscutils import create_trepo_with_subsets
+from sscutils import TableFeaturesBase, ScruTable
 
-from .data_management import um_raw_cols as um_rc
-from .data_management import um_trepos as um_t2
+from .imported_namespaces import um
 from .pipereg import pipereg
 
 
-class LocaleCols(ColAccessor):
-    county = "county"
-    count = "count"
-    rate = "rate"
+class LocalDeviceFeatures(TableFeaturesBase):
+    county = str
+    count = int
+    rate = float
 
 
 report_md_path = Path("reports", "local_user_distribution.md")
 
-local_users_table = create_trepo_with_subsets("local_users", prefix="locals", no_subsets=True)
+local_user_table = ScruTable(LocalDeviceFeatures)
 
 
 def get_hungdf():
@@ -45,26 +43,30 @@ def get_hungdf():
 
 
 def to_geo(df):
-    return geopandas.GeoDataFrame(df, geometry=geopandas.points_from_xy(df["lon"], df["lat"]), crs="EPSG:4326")
+    return geopandas.GeoDataFrame(
+        df,
+        geometry=geopandas.points_from_xy(df[um.PingFeatures.loc.lon], df[um.PingFeatures.loc.lat]),
+        crs="EPSG:4326",
+    )
 
 
 def gpjoin(df, gdf):
-    return geopandas.sjoin(to_geo(df), gdf, op="within", how="left").rename(columns={"index_right": LocaleCols.county})
+    return geopandas.sjoin(to_geo(df), gdf, op="within", how="left").rename(columns={"index_right": LocalDeviceFeatures.county})
 
 
 def ping_gb(df, gdf):
     return (
         df.pipe(gpjoin, gdf)
-        .groupby([um_rc.PingCols.device_id, LocaleCols.county])[um_rc.PingCols.datetime]
+        .groupby([um.PingFeatures.device_id, LocalDeviceFeatures.county])[um.PingFeatures.datetime]
         .count()
         .reset_index()
-        .rename(columns={um_rc.PingCols.datetime: LocaleCols.count})
+        .rename(columns={um.PingFeatures.datetime: LocalDeviceFeatures.count})
     )
 
 
 def get_report_table(df):
     return (
-        df.groupby(LocaleCols.county)[LocaleCols.count]
+        df.groupby(LocalDeviceFeatures.county)[LocalDeviceFeatures.count]
         .agg(["sum", "count"])
         .rename(columns={"sum": "Ping Count", "count": "Device Count"})
         .pipe(
@@ -85,39 +87,39 @@ def get_report_table(df):
     )
 
 
-@pipereg.register(dependencies=[um_t2.pings_table], outputs=[local_users_table])
+@pipereg.register(dependencies=[um.ping_table], outputs=[local_user_table])
 def get_local_users(min_rate):
 
-    ddf = um_t2.pings_table.get_full_ddf()
+    ddf = um.pings_table.get_full_ddf()
 
-    user_locale_count_df = (
+    device_locale_count_df = (
         ddf.map_partitions(
             ping_gb,
             gdf=get_hungdf(),
             meta=pd.DataFrame(
                 {
-                    um_rc.PingCols.device_id: pd.Series([], dtype="str"),
-                    LocaleCols.county: pd.Series([], dtype="str"),
-                    LocaleCols.count: pd.Series([], dtype="int"),
+                    um.PingFeatures.device_id: pd.Series([], dtype="str"),
+                    LocalDeviceFeatures.county: pd.Series([], dtype="str"),
+                    LocalDeviceFeatures.count: pd.Series([], dtype="int"),
                 }
             ),
         )
-        .groupby([um_rc.PingCols.device_id, LocaleCols.county])[LocaleCols.count]
+        .groupby([um.PingFeatures.device_id, LocalDeviceFeatures.county])[LocalDeviceFeatures.count]
         .sum()
         .compute()
         .to_frame()
     )
 
-    local_users = user_locale_count_df.assign(
+    local_devices = device_locale_count_df.assign(
         **{
-            LocaleCols.rate: lambda df: df[LocaleCols.count]
-            / df.groupby(um_rc.PingCols.device_id)[LocaleCols.count].transform("sum")
+            LocalDeviceFeatures.rate: lambda df: df[LocalDeviceFeatures.count]
+            / df.groupby(um.PingFeatures.device_id)[LocalDeviceFeatures.count].transform("sum")
         }
-    ).loc[lambda df: df[LocaleCols.rate] >= min_rate, :]
+    ).loc[lambda df: df[LocalDeviceFeatures.rate] >= min_rate, :]
 
-    local_users.pipe(local_users_table.replace_all)
+    local_devices.pipe(local_user_table.replace_all)
 
-    report_table = get_report_table(local_users)
+    report_table = get_report_table(local_devices)
     report_md_path.write_text(
         "\n\n".join(
             [

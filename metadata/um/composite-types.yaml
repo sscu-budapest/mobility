@@ -1,0 +1,6 @@
+Coordinates:
+  features:
+  - name: lon
+    dtype: float
+  - name: lat
+    dtype: float

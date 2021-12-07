@@ -167,3 +167,4 @@ Manifest.toml
 ### Custom
 dask-worker-space
 .vscode
+*draft*.ipynb
