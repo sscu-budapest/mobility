@@ -8,5 +8,5 @@ useful_user_extraction:
   min_sum: 50
   min_reliable_days: 50
   specific_to_locale: "Budapest"
-get_local_users:
+locale_specific_devices:
   min_rate: 0.8

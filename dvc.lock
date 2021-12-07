@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  locale_specific_devices:
+    cmd: python -m src locale_specific_devices
+    deps:
+    - path: data/um/ping
+      md5: 27dbaced5ca2a34a30074bf11fd52551.dir
+      size: 92024227
+      nfiles: 3
+    - path: src/locale_specific_devices.py
+      md5: ca7f4623e9756ee1fa29654573316063
+      size: 3902
+    outs:
+    - path: data/locale_specific_devices/local_device.parquet
+      md5: 821e2d28adfcb706f916631012d4a3da
+      size: 2181032

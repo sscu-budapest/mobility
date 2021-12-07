@@ -1,0 +1,8 @@
+stages:
+  locale_specific_devices:
+    cmd: python -m src locale_specific_devices
+    deps:
+    - data/um/ping
+    - src/locale_specific_devices.py
+    outs:
+    - data/locale_specific_devices/local_device.parquet
