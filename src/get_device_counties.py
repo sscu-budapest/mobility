@@ -4,25 +4,26 @@ from pathlib import Path
 import geopandas
 import pandas as pd
 import requests
+from colassigner import get_all_cols
 from sscutils import IndexBase, ScruTable, TableFeaturesBase
 
 from .imported_namespaces import um
 from .pipereg import pipereg
 
 
-class LocalDeviceIndex(IndexBase):
-    device_id = str
+class DeviceCountyIndex(IndexBase):
+    device_id = str  # TODO: wet - this is taken from ping table.
     county = str
 
 
-class LocalDeviceFeatures(TableFeaturesBase):
+class DeviceCountyFeatures(TableFeaturesBase):
     count = int
     rate = float
 
 
 report_md_path = Path("reports", "local_device_distribution.md")
 
-local_device_table = ScruTable(LocalDeviceFeatures, index=LocalDeviceIndex)
+device_county_table = ScruTable(DeviceCountyFeatures, index=DeviceCountyIndex)
 
 
 def get_hungdf():
@@ -56,23 +57,23 @@ def to_geo(df):
 
 def gpjoin(df, gdf):
     return geopandas.sjoin(to_geo(df), gdf, op="within", how="left").rename(
-        columns={"index_right": LocalDeviceIndex.county}
+        columns={"index_right": DeviceCountyIndex.county}
     )
 
 
 def ping_gb(df, gdf):
     return (
         df.pipe(gpjoin, gdf)
-        .groupby([um.PingFeatures.device_id, LocalDeviceIndex.county])[um.PingFeatures.datetime]
+        .groupby([um.PingFeatures.device_id, DeviceCountyIndex.county])[um.PingFeatures.datetime]
         .count()
         .reset_index()
-        .rename(columns={um.PingFeatures.datetime: LocalDeviceFeatures.count})
+        .rename(columns={um.PingFeatures.datetime: DeviceCountyFeatures.count})
     )
 
 
 def get_report_table(df):
     return (
-        df.groupby(LocalDeviceIndex.county)[LocalDeviceFeatures.count]
+        df.groupby(DeviceCountyIndex.county)[DeviceCountyFeatures.count]
         .agg(["sum", "count"])
         .rename(columns={"sum": "Ping Count", "count": "Device Count"})
         .pipe(
@@ -93,8 +94,8 @@ def get_report_table(df):
     )
 
 
-@pipereg.register(dependencies=[um.ping_table], outputs=[local_device_table])
-def get_local_devices(min_rate):
+@pipereg.register(dependencies=[um.ping_table], outputs=[device_county_table])
+def step(min_locale_rate):
 
     ddf = um.ping_table.get_full_ddf()
 
@@ -104,33 +105,33 @@ def get_local_devices(min_rate):
             gdf=get_hungdf(),
             meta=pd.DataFrame(
                 {
-                    um.PingFeatures.device_id: pd.Series([], dtype="str"),
-                    LocalDeviceIndex.county: pd.Series([], dtype="str"),
-                    LocalDeviceFeatures.count: pd.Series([], dtype="int"),
+                    DeviceCountyIndex.device_id: pd.Series([], dtype="str"),
+                    DeviceCountyIndex.county: pd.Series([], dtype="str"),
+                    DeviceCountyFeatures.count: pd.Series([], dtype="int"),
                 }
             ),
         )
-        .groupby([LocalDeviceIndex.device_id, LocalDeviceIndex.county])[LocalDeviceFeatures.count]
+        .groupby(get_all_cols(DeviceCountyIndex))[DeviceCountyFeatures.count]
         .sum()
         .compute()
         .to_frame()
+        .assign(
+            **{
+                DeviceCountyFeatures.rate: lambda df: df[DeviceCountyFeatures.count]
+                / df.groupby(um.PingFeatures.device_id)[DeviceCountyFeatures.count].transform("sum")
+            }
+        )
     )
 
-    local_devices = device_locale_count_df.assign(
-        **{
-            LocalDeviceFeatures.rate: lambda df: df[LocalDeviceFeatures.count]
-            / df.groupby(um.PingFeatures.device_id)[LocalDeviceFeatures.count].transform("sum")
-        }
-    ).loc[lambda df: df[LocalDeviceFeatures.rate] >= min_rate, :]
+    device_locale_count_df.pipe(device_county_table.replace_all)
 
-    local_devices.pipe(local_device_table.replace_all)
-
+    local_devices = device_locale_count_df.loc[lambda df: df[DeviceCountyFeatures.rate] >= min_locale_rate, :]
     report_table = get_report_table(local_devices)
     report_md_path.write_text(
         "\n\n".join(
             [
                 "# Distribution of Local Devices",
-                f"Devices with at least {min_rate} of their pings belonging to the same county",
+                f"Devices with at least {min_locale_rate} of their pings belonging to the same county",
                 report_table.to_markdown(),
             ]
         )

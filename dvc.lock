@@ -1,16 +1,72 @@
 schema: '2.0'
 stages:
-  locale_specific_devices:
-    cmd: python -m src locale_specific_devices
+  get_device_counties:
+    cmd: python -m src get_device_counties
     deps:
     - path: data/um/ping
       md5: 27dbaced5ca2a34a30074bf11fd52551.dir
       size: 92024227
       nfiles: 3
-    - path: src/locale_specific_devices.py
-      md5: ca7f4623e9756ee1fa29654573316063
-      size: 3902
+    - path: src/get_device_counties.py
+      md5: 16ce6e50ba22e2c146a9799682be6620
+      size: 4046
+    params:
+      params.yaml:
+        min_locale_rate: 0.8
     outs:
-    - path: data/locale_specific_devices/local_device.parquet
-      md5: 821e2d28adfcb706f916631012d4a3da
-      size: 2181032
+    - path: data/get_device_counties/device_county.parquet
+      md5: 6fb5cc79cecfc5db71e719b15b4384a0
+      size: 2741343
+  get_device_days:
+    cmd: python -m src get_device_days
+    deps:
+    - path: data/um/ping
+      md5: 27dbaced5ca2a34a30074bf11fd52551.dir
+      size: 92024227
+      nfiles: 3
+    - path: src/get_device_days.py
+      md5: 3224c1bf3990ca657b1180551966b756
+      size: 1636
+    params:
+      params.yaml:
+        get_device_days.am_end: 10
+        get_device_days.am_start: 5
+        get_device_days.pm_end: 20
+        get_device_days.pm_start: 16
+    outs:
+    - path: data/get_device_days/device_day
+      md5: 7b41d13d2d0f87894b9829a01c149c2d.dir
+      size: 2440684
+      nfiles: 1
+  create_filtered_dataset:
+    cmd: python -m src create_filtered_dataset
+    deps:
+    - path: data/get_device_counties/device_county.parquet
+      md5: 6fb5cc79cecfc5db71e719b15b4384a0
+      size: 2741343
+    - path: data/get_device_days/device_day
+      md5: 7b41d13d2d0f87894b9829a01c149c2d.dir
+      size: 2440684
+      nfiles: 1
+    - path: data/um/ping
+      md5: 27dbaced5ca2a34a30074bf11fd52551.dir
+      size: 92024227
+      nfiles: 3
+    - path: src/create_filtered_dataset.py
+      md5: 3b412b53b25de948db97694945d6a93d
+      size: 2609
+    params:
+      params.yaml:
+        create_filtered_dataset.min_am: 5
+        create_filtered_dataset.min_pm: 5
+        create_filtered_dataset.min_reliable_days: 1
+        create_filtered_dataset.min_sum: 50
+        create_filtered_dataset.specific_to_locale:
+        - Budapest
+        - Pest
+        min_locale_rate: 0.8
+    outs:
+    - path: data/create_filtered_dataset/filtered_ping
+      md5: 9894c2513e89dd118301d86d25aa975c.dir
+      size: 16546150
+      nfiles: 1

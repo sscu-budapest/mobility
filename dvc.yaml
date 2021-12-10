@@ -1,8 +1,38 @@
 stages:
-  locale_specific_devices:
-    cmd: python -m src locale_specific_devices
+  get_device_counties:
+    cmd: python -m src get_device_counties
     deps:
     - data/um/ping
-    - src/locale_specific_devices.py
+    - src/get_device_counties.py
+    params:
+    - min_locale_rate
     outs:
-    - data/locale_specific_devices/local_device.parquet
+    - data/get_device_counties/device_county.parquet
+  get_device_days:
+    cmd: python -m src get_device_days
+    deps:
+    - data/um/ping
+    - src/get_device_days.py
+    params:
+    - get_device_days.am_end
+    - get_device_days.am_start
+    - get_device_days.pm_end
+    - get_device_days.pm_start
+    outs:
+    - data/get_device_days/device_day
+  create_filtered_dataset:
+    cmd: python -m src create_filtered_dataset
+    deps:
+    - data/get_device_counties/device_county.parquet
+    - data/get_device_days/device_day
+    - data/um/ping
+    - src/create_filtered_dataset.py
+    params:
+    - create_filtered_dataset.min_am
+    - create_filtered_dataset.min_pm
+    - create_filtered_dataset.min_reliable_days
+    - create_filtered_dataset.min_sum
+    - create_filtered_dataset.specific_to_locale
+    - min_locale_rate
+    outs:
+    - data/create_filtered_dataset/filtered_ping
