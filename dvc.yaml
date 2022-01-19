@@ -36,3 +36,22 @@ stages:
     - min_locale_rate
     outs:
     - data/create_filtered_dataset/filtered_ping
+  stop_detection:
+    cmd: python -m src stop_detection
+    deps:
+    - data/create_filtered_dataset/filtered_ping
+    - src/stop_detection.py
+    params:
+    - stop_detection.distance_metric
+    - stop_detection.home_arrive
+    - stop_detection.home_depart
+    - stop_detection.max_time_between
+    - stop_detection.min_size
+    - stop_detection.min_staying_time
+    - stop_detection.min_work_hours
+    - stop_detection.r1
+    - stop_detection.r2
+    - stop_detection.work_end
+    - stop_detection.work_start
+    outs:
+    - data/stop_detection/stop
