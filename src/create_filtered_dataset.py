@@ -1,3 +1,8 @@
+from functools import partial
+from multiprocessing import cpu_count
+
+import pandas as pd
+from atqo import parallel_map
 from colassigner import ColAssigner
 from sscutils import ScruTable
 
@@ -74,15 +79,22 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
     merger_df = reliable_local_df.reset_index().loc[
         lambda df: df[um.PingFeatures.device_id].isin(good_devices), merge_cols
     ]
-    um.ping_table.get_full_ddf().map_partitions(
-        _merge_write, merger_df, meta={}, align_dataframes=False, enforce_metadata=False, transform_divisions=False
-    ).compute()
+
+    nworkers = cpu_count()
+    parallel_map(
+        partial(_merge_write, merger_df=merger_df),
+        um.ping_table.trepo.paths,
+        dist_api="mp",
+        batch_size=nworkers * 2,
+        workers=nworkers,
+        pbar=True,
+    )
     # TODO: fix parsing thing
     # parsing type dict gets empty...
 
 
-def _merge_write(df, merger_df):
-    df.merge(
+def _merge_write(df_path, merger_df):
+    pd.read_parquet(df_path).merge(
         merger_df,
         how="inner",
     ).pipe(filtered_ping_table.extend, parse=False, try_dask=False)

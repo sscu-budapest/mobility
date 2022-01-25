@@ -53,8 +53,8 @@ stages:
       size: 92024227
       nfiles: 3
     - path: src/create_filtered_dataset.py
-      md5: 6ebc4c97b2125bfa914a9e3858614540
-      size: 2614
+      md5: 22a1bbb01608822543ef36aaa5a8bb1a
+      size: 2979
     params:
       params.yaml:
         create_filtered_dataset.min_am: 5
@@ -67,19 +67,19 @@ stages:
         min_locale_rate: 0.8
     outs:
     - path: data/create_filtered_dataset/filtered_ping
-      md5: 807e50b32afd2cedfff3d6b284afc7b3.dir
-      size: 17223694
+      md5: d0a29b33c88eaaf9956d9a827bdfbf33.dir
+      size: 16546150
       nfiles: 1
   stop_detection:
     cmd: python -m src stop_detection
     deps:
     - path: data/create_filtered_dataset/filtered_ping
-      md5: 807e50b32afd2cedfff3d6b284afc7b3.dir
-      size: 17223694
+      md5: d0a29b33c88eaaf9956d9a827bdfbf33.dir
+      size: 16546150
       nfiles: 1
     - path: src/stop_detection.py
-      md5: 2502c1c261c959a85e3626acdec89bfa
-      size: 4709
+      md5: 1d3f8ebc0725349d50129ec273a90448
+      size: 4738
     params:
       params.yaml:
         stop_detection.distance_metric: haversine
@@ -95,6 +95,6 @@ stages:
         stop_detection.work_start: 8
     outs:
     - path: data/stop_detection/stop
-      md5: 1687e5761d6d76828d004d564fa2c28e.dir
-      size: 1949082
+      md5: b9052b530b1216894422ce7f5143e3f3.dir
+      size: 1949453
       nfiles: 1
