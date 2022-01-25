@@ -2,3 +2,4 @@ sscutils
 geopandas
 rtree
 pygeos
+infostop

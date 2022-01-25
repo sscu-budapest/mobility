@@ -85,7 +85,7 @@ class Labeler(ColAssigner):
 base_groupers = [FilteredPingFeatures.device_id, FilteredPingFeatures.year_month, FilteredPingFeatures.dayofmonth]
 stop_table = ScruTable(
     features=StopFeatures,
-    partitioning_cols=base_groupers,
+    partitioning_cols=base_groupers[1:],
 )
 
 
@@ -93,17 +93,19 @@ def proc_device_day(day_df, model, day: DaySetup):
     try:
         labeled_df = day_df.sort_values(FilteredPingFeatures.datetime).pipe(Labeler(model, day))
     except NoStops:
-        return 1
+        return pd.DataFrame()
     stop_df = labeled_df.groupby([Labeler.stop_number, Labeler.place_label, *base_groupers]).apply(
         _by_stop, day.min_work_hours
     ).reset_index().loc[lambda df: df[Labeler.place_label] > -1, :]
-    if stop_df.shape[0]:
-        stop_df.pipe(stop_table.extend)
-    return 0
+    return stop_df
 
 
 def proc_partition(partition_df, model, day):
-    partition_df.groupby(base_groupers).apply(proc_device_day, model, day)
+    dfs = []
+    for _, gdf in partition_df.groupby(base_groupers):
+        dfs.append(proc_device_day(gdf, model, day))
+    if dfs:
+        pd.concat(dfs).pipe(stop_table.extend, verbose=False, try_dask=False)
     return 0
 
 
@@ -137,7 +139,7 @@ def step(
     )
 
     filtered_ping_table.get_full_ddf().map_partitions(
-        proc_partition, model, dayconf, enforce_metadata=False, meta=(None, "f8")
+        proc_partition, model, dayconf, enforce_metadata=False, meta={}
     ).compute()
 
 

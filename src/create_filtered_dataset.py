@@ -72,15 +72,13 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
 
     merge_cols = [um.PingFeatures.device_id, um.PingFeatures.year_month, um.PingFeatures.dayofmonth]
 
-    (
-        um.ping_table.get_full_ddf()
+    merged_pings = um.ping_table.get_full_ddf()\
         .merge(
             reliable_local_df.reset_index().loc[
                 lambda ddf: ddf[um.PingFeatures.device_id].isin(good_devices), merge_cols
             ],
             how="inner",
         )
-        .compute()
-        .pipe(filtered_ping_table.replace_all, parse=False)
-        # TODO wrong metadata gets to bedrock
-    )
+    merged_pings.pipe(filtered_ping_table.extend, parse=False)
+    # TODO: fix parsing thing
+    # parsing type dict gets empty...
