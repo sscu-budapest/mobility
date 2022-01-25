@@ -94,9 +94,12 @@ def proc_device_day(day_df, model, day: DaySetup):
         labeled_df = day_df.sort_values(FilteredPingFeatures.datetime).pipe(Labeler(model, day))
     except NoStops:
         return pd.DataFrame()
-    stop_df = labeled_df.groupby([Labeler.stop_number, Labeler.place_label, *base_groupers]).apply(
-        _by_stop, day.min_work_hours
-    ).reset_index().loc[lambda df: df[Labeler.place_label] > -1, :]
+    stop_df = (
+        labeled_df.groupby([Labeler.stop_number, Labeler.place_label, *base_groupers])
+        .apply(_by_stop, day.min_work_hours)
+        .reset_index()
+        .loc[lambda df: df[Labeler.place_label] > -1, :]
+    )
     return stop_df
 
 

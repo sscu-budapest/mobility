@@ -71,14 +71,18 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
     )
 
     merge_cols = [um.PingFeatures.device_id, um.PingFeatures.year_month, um.PingFeatures.dayofmonth]
-
-    merged_pings = um.ping_table.get_full_ddf()\
-        .merge(
-            reliable_local_df.reset_index().loc[
-                lambda ddf: ddf[um.PingFeatures.device_id].isin(good_devices), merge_cols
-            ],
-            how="inner",
-        )
-    merged_pings.pipe(filtered_ping_table.extend, parse=False)
+    merger_df = reliable_local_df.reset_index().loc[
+        lambda df: df[um.PingFeatures.device_id].isin(good_devices), merge_cols
+    ]
+    um.ping_table.get_full_ddf().map_partitions(
+        _merge_write, merger_df, meta={}, align_dataframes=False, enforce_metadata=False, transform_divisions=False
+    ).compute()
     # TODO: fix parsing thing
     # parsing type dict gets empty...
+
+
+def _merge_write(df, merger_df):
+    df.merge(
+        merger_df,
+        how="inner",
+    ).pipe(filtered_ping_table.extend, parse=False, try_dask=False)
