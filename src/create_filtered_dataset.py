@@ -49,7 +49,7 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
 
     idx = pd.IndexSlice
 
-    local_devices = (
+    local_devices = set(
         device_county_table.get_full_df()
         .loc[idx[specific_to_locale, :], :]
         .groupby(DeviceCountyIndex.device_id)
@@ -69,7 +69,7 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
         .compute()
     )
 
-    good_devices = (
+    good_devices = set(
         reliable_local_df.groupby(DeviceDayIndex.device_id)[ReliableCols.is_reliable]
         .sum()
         .loc[lambda s: s >= min_reliable_days]
