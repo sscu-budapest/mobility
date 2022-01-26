@@ -145,7 +145,9 @@ def step(
         distance_metric=distance_metric,
     )
 
-    parallel_map(partial(proc_partition, model=model, day=dayconf), filtered_ping_table.trepo.paths, pbar=True)
+    parallel_map(
+        partial(proc_partition, model=model, day=dayconf), filtered_ping_table.trepo.paths, pbar=True, dist_api="mp"
+    )
 
 
 def _by_stop(df, min_work_hours):
