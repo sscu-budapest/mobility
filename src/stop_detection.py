@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
+from functools import partial
 
 import pandas as pd
+from atqo import parallel_map
 from colassigner import ColAssigner
 from infostop import Infostop
 from sscutils import CompositeTypeBase, ScruTable, TableFeaturesBase
@@ -92,7 +94,8 @@ stop_table = ScruTable(
 def proc_device_day(day_df, model, day: DaySetup):
     try:
         labeled_df = day_df.sort_values(FilteredPingFeatures.datetime).pipe(Labeler(model, day))
-    except NoStops:
+    except Exception:
+        # TODO log and handle this
         return pd.DataFrame()
     stop_df = (
         labeled_df.groupby([Labeler.stop_number, Labeler.place_label, *base_groupers])
@@ -103,13 +106,14 @@ def proc_device_day(day_df, model, day: DaySetup):
     return stop_df
 
 
-def proc_partition(partition_df, model, day):
+def proc_partition(partition_path, model, day):
     dfs = []
-    for _, gdf in partition_df.groupby(base_groupers):
-        dfs.append(proc_device_day(gdf, model, day))
+    for _, gdf in pd.read_parquet(partition_path).groupby(base_groupers):
+        g_out = proc_device_day(gdf, model, day)
+        if not g_out.empty:
+            dfs.append(g_out)
     if dfs:
         pd.concat(dfs).pipe(stop_table.extend, verbose=False, try_dask=False)
-    return 0
 
 
 @pipereg.register(
@@ -141,9 +145,7 @@ def step(
         distance_metric=distance_metric,
     )
 
-    filtered_ping_table.get_full_ddf().map_partitions(
-        proc_partition, model, dayconf, enforce_metadata=False, meta={}
-    ).compute()
+    parallel_map(partial(proc_partition, model=model, day=dayconf), filtered_ping_table.trepo.paths, pbar=True)
 
 
 def _by_stop(df, min_work_hours):
