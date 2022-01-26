@@ -22,7 +22,6 @@ class FilteredPingFeatures(um.PingFeatures):
 
 class ReliableCols(ColAssigner):
     def __init__(self, min_am, min_pm, min_sum):
-        super().__init__()
         self.min_am = min_am
         self.min_pm = min_pm
         self.min_sum = min_sum
@@ -48,9 +47,11 @@ filtered_ping_table = ScruTable(FilteredPingFeatures, partitioning_cols=[um.Ping
 )
 def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_locale_rate):
 
+    idx = pd.IndexSlice
+
     local_devices = (
         device_county_table.get_full_df()
-        .loc[(specific_to_locale, slice(None)), :]
+        .loc[idx[specific_to_locale, :], :]
         .groupby(DeviceCountyIndex.device_id)
         .sum()
         .loc[
@@ -63,7 +64,7 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
 
     reliable_local_df = (
         device_day_table.get_full_df()
-        .loc[(local_devices, slice(None), slice(None)), :]
+        .loc[idx[local_devices, :, :], :]
         .pipe(ReliableCols(min_am, min_pm, min_sum))
         .loc[lambda df: df[ReliableCols.is_reliable], :]
     )
@@ -82,7 +83,7 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
 
     nworkers = cpu_count()
     parallel_map(
-        partial(_merge_write, merger_df=merger_df),
+        partial(_merge_write, merger_df=merger_df, table=filtered_ping_table),
         um.ping_table.trepo.paths,
         dist_api="mp",
         batch_size=nworkers * 2,
@@ -93,8 +94,8 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
     # parsing type dict gets empty...
 
 
-def _merge_write(df_path, merger_df):
+def _merge_write(df_path, merger_df, table):
     pd.read_parquet(df_path).merge(
         merger_df,
         how="inner",
-    ).pipe(filtered_ping_table.extend, parse=False, try_dask=False)
+    ).pipe(table.extend, parse=False, try_dask=False)
