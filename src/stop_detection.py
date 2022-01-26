@@ -91,29 +91,17 @@ stop_table = ScruTable(
 )
 
 
-def proc_device_day(day_df, model, day: DaySetup):
-    try:
-        labeled_df = day_df.sort_values(FilteredPingFeatures.datetime).pipe(Labeler(model, day))
-    except Exception:
-        # TODO log and handle this
-        return pd.DataFrame()
-    stop_df = (
-        labeled_df.groupby([Labeler.stop_number, Labeler.place_label, *base_groupers])
-        .apply(_by_stop, day.min_work_hours)
-        .reset_index()
-        .loc[lambda df: df[Labeler.place_label] > -1, :]
-    )
-    return stop_df
-
-
-def proc_partition(partition_path, model, day):
+def proc_partition(partition_path, model, day: DaySetup):
     dfs = []
-    for _, gdf in pd.read_parquet(partition_path).groupby(base_groupers):
-        g_out = proc_device_day(gdf, model, day)
-        if not g_out.empty:
-            dfs.append(g_out)
+    for _, day_df in pd.read_parquet(partition_path).groupby(base_groupers):
+        try:
+            day_df.sort_values(FilteredPingFeatures.datetime).pipe(Labeler(model, day)).pipe(dfs.append)
+        except Exception:
+            # TODO log and handle this
+            pass
+
     if dfs:
-        pd.concat(dfs).pipe(stop_table.extend, verbose=False, try_dask=False)
+        pd.concat(dfs).pipe(_gb_stop, day.min_work_hours).pipe(stop_table.extend, verbose=False, try_dask=False)
 
 
 @pipereg.register(
@@ -150,21 +138,31 @@ def step(
     )
 
 
-def _by_stop(df, min_work_hours):
-    start, end = df[FilteredPingFeatures.datetime].iloc[[0, -1]]
-    dur = (end - start).total_seconds()
-    return pd.Series(
-        {
-            StopFeatures.n_events: df.shape[0],
-            StopFeatures.interval.start: start,
-            StopFeatures.interval.end: end,
-            StopFeatures.center.lon: df[FilteredPingFeatures.loc.lon].pipe(_center),
-            StopFeatures.center.lat: df[FilteredPingFeatures.loc.lat].pipe(_center),
-            StopFeatures.is_home: (df[Labeler.is_top_home] & df[Labeler.is_first_and_last]).all(),
-            StopFeatures.is_work: (dur >= min_work_hours * 60 ** 2) & df[Labeler.is_worktime].any(),
-        }
+def _gb_stop(labeled_df, min_work_hours):
+    dt_col = FilteredPingFeatures.datetime
+    return (
+        labeled_df.groupby([Labeler.stop_number, Labeler.place_label, *base_groupers])
+        .agg(
+            **{
+                StopFeatures.n_events: pd.NamedAgg(dt_col, "count"),
+                StopFeatures.interval.start: pd.NamedAgg(dt_col, "first"),
+                StopFeatures.interval.end: pd.NamedAgg(dt_col, "last"),
+                StopFeatures.center.lon: pd.NamedAgg(FilteredPingFeatures.loc.lon, "mean"),
+                StopFeatures.center.lat: pd.NamedAgg(FilteredPingFeatures.loc.lat, "mean"),
+                "any_not_home": pd.NamedAgg(Labeler.is_top_home, "min"),
+                "not_f_and_last": pd.NamedAgg(Labeler.is_first_and_last, "min"),
+                "some_worktime": pd.NamedAgg(Labeler.is_worktime, "max"),
+            }
+        )
+        .assign(
+            **{
+                "duration": lambda df: (
+                    df[StopFeatures.interval.end] - df[StopFeatures.interval.start]
+                ).dt.total_seconds(),
+                StopFeatures.is_home: lambda df: ~df[["any_not_home", "not_f_and_last"]].any(axis=1),
+                StopFeatures.is_work: lambda df: df["some_worktime"] & (df["duration"] >= min_work_hours * 60 ** 2),
+            }
+        )
+        .reset_index()
+        .loc[lambda df: df[Labeler.place_label] > -1, :]
     )
-
-
-def _center(s: pd.Series):
-    return (s.max() + s.min()) / 2
