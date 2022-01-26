@@ -38,7 +38,9 @@ class ReliableCols(ColAssigner):
         )
 
 
-filtered_ping_table = ScruTable(FilteredPingFeatures, partitioning_cols=[um.PingFeatures.year_month])
+filtered_ping_table = ScruTable(
+    FilteredPingFeatures, partitioning_cols=[um.PingFeatures.year_month, um.PingFeatures.dayofmonth]
+)
 
 
 @pipereg.register(
@@ -86,7 +88,6 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
         partial(_merge_write, merger_df=merger_df, table=filtered_ping_table),
         um.ping_table.trepo.paths,
         dist_api="mp",
-        batch_size=nworkers * 2,
         workers=nworkers,
         pbar=True,
         verbose=True,
