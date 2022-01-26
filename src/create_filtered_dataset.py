@@ -62,11 +62,11 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
         .index
     )
 
+    # parallelize this
     reliable_local_df = (
-        device_day_table.get_full_df()
-        .loc[idx[local_devices, :, :], :]
-        .pipe(ReliableCols(min_am, min_pm, min_sum))
-        .loc[lambda df: df[ReliableCols.is_reliable], :]
+        device_day_table.get_full_ddf()
+        .map_partitions(_to_rel_locals, devices=local_devices, assigner=ReliableCols(min_am, min_pm, min_sum))
+        .compute()
     )
 
     good_devices = (
@@ -89,6 +89,7 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
         batch_size=nworkers * 2,
         workers=nworkers,
         pbar=True,
+        verbose=True,
     )
     # TODO: fix parsing thing
     # parsing type dict gets empty...
@@ -99,3 +100,7 @@ def _merge_write(df_path, merger_df, table):
         merger_df,
         how="inner",
     ).pipe(table.extend, parse=False, try_dask=False)
+
+
+def _to_rel_locals(df, devices, assigner):
+    return df.loc[df.index.isin(devices, level=0), :].pipe(assigner).loc[lambda df: df[ReliableCols.is_reliable], :]
