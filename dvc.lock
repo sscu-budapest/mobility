@@ -4,8 +4,8 @@ stages:
     cmd: python -m src dump_samples
     deps:
     - path: src/create_samples.py
-      md5: 563ac57e981f65d0317ed37ec2d0fb90
-      size: 953
+      md5: fdcf52468148be18882f7b67d13d2d6f
+      size: 1045
     outs:
     - path: data/sample
       md5: 0c9a4a12d05d6572a3330190e7ffa7ce.dir
