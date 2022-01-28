@@ -1,0 +1,12 @@
+md5: b1cdee9505ea8bdc8a61f124fdac931f
+frozen: true
+deps:
+- path: data/complete
+  repo:
+    url: https://github.com/sscu-budapest/gps-ping-data
+    rev_lock: a84985508cd5d17e203ba54b4eb2a24529998a2f
+outs:
+- md5: 35531fa84d9981f7f622df97121ffa8c.dir
+  size: 62594655120
+  nfiles: 1990
+  path: um
