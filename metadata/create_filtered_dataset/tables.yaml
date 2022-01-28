@@ -1,0 +1,5 @@
+filtered_ping:
+  subject_of_records: FilteredPing
+  partitioning_cols:
+  - year_month
+  - dayofmonth

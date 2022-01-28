@@ -1,0 +1,12 @@
+device_county:
+  subject_of_records: DeviceCounty
+  features:
+  - name: count
+    dtype: int
+  - name: rate
+    dtype: float
+  index:
+  - name: device_id
+    dtype: str
+  - name: county
+    dtype: str

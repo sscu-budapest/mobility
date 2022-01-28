@@ -1,0 +1,17 @@
+ping:
+  subject_of_records: Ping
+  features:
+  - name: device_id
+    dtype: str
+  - name: datetime
+    dtype: datetime
+  - name: year_month
+    dtype: str
+  - name: dayofmonth
+    dtype: str
+  - prefix: loc
+    dtype: Coordinates
+  partitioning_cols:
+  - year_month
+  - dayofmonth
+  partition_max_rows: 2000000

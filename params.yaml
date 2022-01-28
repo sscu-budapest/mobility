@@ -1,0 +1,26 @@
+get_device_days:
+  am_start: 5
+  am_end: 10
+  pm_start: 16
+  pm_end: 20
+create_filtered_dataset:
+  min_am: 5
+  min_pm: 5
+  min_sum: 50
+  min_reliable_days: 30
+  specific_to_locale: 
+    - "Budapest"
+    - "Pest"
+min_locale_rate: 0.8
+stop_detection:
+  work_start: 8
+  work_end: 17
+  home_arrive: 20
+  home_depart: 8
+  min_work_hours: 4
+  r1: 20
+  r2: 200
+  min_staying_time: 300
+  max_time_between: 86400
+  min_size: 2
+  distance_metric: "haversine"
