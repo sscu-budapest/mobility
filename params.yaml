@@ -7,7 +7,7 @@ create_filtered_dataset:
   min_am: 5
   min_pm: 5
   min_sum: 50
-  min_reliable_days: 1
+  min_reliable_days: 30
   specific_to_locale: 
     - "Budapest"
     - "Pest"
