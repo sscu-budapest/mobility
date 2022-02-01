@@ -7,10 +7,13 @@ from atqo import parallel_map
 from colassigner import ColAssigner
 from infostop import Infostop
 from sscutils import CompositeTypeBase, ScruTable, TableFeaturesBase
+from structlog import get_logger
 
 from .create_filtered_dataset import FilteredPingFeatures, filtered_ping_table
 from .imported_namespaces import um
 from .pipereg import pipereg
+
+logger = get_logger()
 
 
 class NoStops(Exception):
@@ -73,7 +76,9 @@ class Labeler(ColAssigner):
         return (df[Labeler.hour] >= self.day.home_arrive) | (df[Labeler.hour] <= self.day.home_depart)
 
     def is_top_home(self, df):
-        hometime_events = df.groupby(Labeler.place_label)[Labeler.is_hometime].sum()
+        hometime_events = df.groupby(Labeler.place_label)[Labeler.is_hometime].sum().drop(-1, errors="ignore")
+        if not len(hometime_events):
+            return False
         top_label = hometime_events.idxmax()
         if hometime_events[top_label] < 1:
             return False
@@ -81,7 +86,11 @@ class Labeler(ColAssigner):
 
     def is_first_and_last(self, df):
         _col = df[Labeler.place_label]
-        return (_col == _col.iloc[0]) & (_col == _col.iloc[-1])
+        try:
+            e1, el = _col.loc[_col != -1].iloc[[1, -1]]
+        except IndexError:
+            return False
+        return (_col == e1) & (_col == el)
 
 
 base_groupers = [FilteredPingFeatures.device_id, FilteredPingFeatures.year_month, FilteredPingFeatures.dayofmonth]
@@ -96,8 +105,10 @@ def proc_partition(partition_path, model, day: DaySetup):
     for _, day_df in pd.read_parquet(partition_path).groupby(base_groupers):
         try:
             day_df.sort_values(FilteredPingFeatures.datetime).pipe(Labeler(model, day)).pipe(dfs.append)
-        except Exception:
+        except Exception as e:
             # TODO log and handle this
+            if not isinstance(e, NoStops):
+                logger.exception(e)
             pass
 
     if dfs:
@@ -149,8 +160,8 @@ def _gb_stop(labeled_df, min_work_hours):
                 StopFeatures.interval.end: pd.NamedAgg(dt_col, "last"),
                 StopFeatures.center.lon: pd.NamedAgg(FilteredPingFeatures.loc.lon, "mean"),
                 StopFeatures.center.lat: pd.NamedAgg(FilteredPingFeatures.loc.lat, "mean"),
-                "any_not_home": pd.NamedAgg(Labeler.is_top_home, "min"),
-                "not_f_and_last": pd.NamedAgg(Labeler.is_first_and_last, "min"),
+                "top_home": pd.NamedAgg(Labeler.is_top_home, "max"),
+                "f_and_last": pd.NamedAgg(Labeler.is_first_and_last, "max"),
                 "some_worktime": pd.NamedAgg(Labeler.is_worktime, "max"),
             }
         )
@@ -159,7 +170,7 @@ def _gb_stop(labeled_df, min_work_hours):
                 "duration": lambda df: (
                     df[StopFeatures.interval.end] - df[StopFeatures.interval.start]
                 ).dt.total_seconds(),
-                StopFeatures.is_home: lambda df: ~df[["any_not_home", "not_f_and_last"]].any(axis=1),
+                StopFeatures.is_home: lambda df: df[["top_home", "f_and_last"]].all(axis=1),
                 StopFeatures.is_work: lambda df: df["some_worktime"] & (df["duration"] >= min_work_hours * 60 ** 2),
             }
         )
