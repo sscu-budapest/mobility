@@ -36,7 +36,7 @@ def duration_minutes(s):
 
 def proc_partition_path(part_path, min_count, min_duration):
     part_df = pd.read_parquet(part_path)
-    raster_df = (
+    agg_df = (
         part_df.assign(
             **{
                 RasterHourIndex.raster_id: get_raster_id,
@@ -47,7 +47,11 @@ def proc_partition_path(part_path, min_count, min_duration):
             um.PingFeatures.datetime
         ]
         .agg([duration_minutes, "count"])
-        .loc[lambda df: (df["count"] >= min_count) & (df["duration_minutes"] >= min_duration)]
+    )
+    if agg_df.empty:
+        return
+    raster_df = (
+        agg_df.loc[lambda df: (df["count"] >= min_count) & (df["duration_minutes"] >= min_duration)]
         .groupby(get_all_cols(RasterHourIndex))[[RasterHourFeatures.count]]
         .agg("count")
     )
@@ -75,6 +79,6 @@ def step(min_count, min_duration):
         dist_api="mp",
         pbar=True,
         raise_errors=True,
-        verbose=True
+        verbose=True,
     )
     parallel_map(regroup, raster_table.trepo.paths, dist_api="mp")
