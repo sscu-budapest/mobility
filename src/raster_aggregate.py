@@ -1,4 +1,5 @@
 import datetime as dt
+from functools import partial
 
 import geopandas
 import pandas as pd
@@ -62,9 +63,4 @@ def proc_gdf(gdf, min_count, min_duration):
 
 @pipereg.register(dependencies=[um.ping_table], outputs=[raster_table])
 def step(min_count, min_duration):
-    (
-        um.ping_table.get_full_ddf()
-        .groupby([um.PingFeatures.year_month, um.PingFeatures.dayofmonth])
-        .apply(proc_gdf, min_count=min_count, min_duration=min_duration, meta=("c", None))
-        .compute()
-    )
+    um.ping_table.trepo.map_partitions(partial(proc_gdf, min_count=min_count, min_duration=min_duration))
