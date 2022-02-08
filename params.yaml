@@ -12,6 +12,9 @@ create_filtered_dataset:
     - "Budapest"
     - "Pest"
 min_locale_rate: 0.8
+raster_aggregate:
+  min_count: 3
+  min_duration: 15
 stop_detection:
   work_start: 8
   work_end: 17
