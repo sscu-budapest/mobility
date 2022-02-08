@@ -1,9 +1,7 @@
 import datetime as dt
-from functools import partial
 
 import geopandas
 import pandas as pd
-from atqo import parallel_map
 from colassigner import get_all_cols
 from sscutils import IndexBase, ScruTable, TableFeaturesBase
 
@@ -34,13 +32,12 @@ def duration_minutes(s):
     return (s.max() - s.min()).total_seconds() / 60
 
 
-def proc_partition_path(part_path, min_count, min_duration):
-    part_df = pd.read_parquet(part_path)
+def proc_gdf(gdf, min_count, min_duration):
     agg_df = (
-        part_df.assign(
+        gdf.assign(
             **{
                 RasterHourIndex.raster_id: get_raster_id,
-                RasterHourIndex.hour: part_df[um.PingFeatures.datetime].dt.floor("h"),
+                RasterHourIndex.hour: gdf[um.PingFeatures.datetime].dt.floor("h"),
             }
         )
         .groupby([um.PingFeatures.device_id, RasterHourIndex.raster_id, RasterHourIndex.hour])[
@@ -63,22 +60,11 @@ def proc_partition_path(part_path, min_count, min_duration):
     )
 
 
-def regroup(dfp):
-    # not pretty :()
-    _df = pd.read_parquet(dfp)
-    _df.groupby(_df.index.names).agg({RasterHourFeatures.month: "first", RasterHourFeatures.count: "sum"}).to_parquet(
-        dfp
-    )
-
-
 @pipereg.register(dependencies=[um.ping_table], outputs=[raster_table])
 def step(min_count, min_duration):
-    parallel_map(
-        partial(proc_partition_path, min_count=min_count, min_duration=min_duration),
-        um.ping_table.trepo.paths,
-        dist_api="mp",
-        pbar=True,
-        raise_errors=True,
-        verbose=True,
+    (
+        um.ping_table.get_full_ddf()
+        .groupby([um.PingFeatures.year_month, um.PingFeatures.dayofmonth])
+        .apply(proc_gdf, min_count=min_count, min_duration=min_duration, meta=("c", None))
+        .compute()
     )
-    parallel_map(regroup, raster_table.trepo.paths, dist_api="mp")
