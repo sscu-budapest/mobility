@@ -74,6 +74,7 @@ def step(min_count, min_duration):
         um.ping_table.trepo.paths,
         dist_api="mp",
         pbar=True,
-        raise_errors=True
+        raise_errors=True,
+        verbose=True
     )
     parallel_map(regroup, raster_table.trepo.paths, dist_api="mp")
