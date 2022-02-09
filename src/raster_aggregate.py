@@ -28,12 +28,7 @@ def get_raster_id(df):
         "EPSG:23700"
     )
     _x, _y = [pd.Series(getattr(gser, coord) / 100).astype(int).astype(str) for coord in ["x", "y"]]
-    return _y + "-" + _x
-
-
-def duration_minutes(s):
-    return (s.max() - s.min()).total_seconds() / 60
-
+    return (_y + "-" + _x).values
 
 def proc_gdf(gdf, min_count, min_duration, table):
     agg_df = (
@@ -46,7 +41,8 @@ def proc_gdf(gdf, min_count, min_duration, table):
         .groupby([um.PingFeatures.device_id, RasterHourIndex.raster_id, RasterHourIndex.hour])[
             um.PingFeatures.datetime
         ]
-        .agg([duration_minutes, "count"])
+        .agg(["min", "max", "count"])
+        .assign(duration_minutes=lambda df: (df["max"] - df["min"]).dt.total_seconds() / 60)
     )
     if agg_df.empty:
         return
