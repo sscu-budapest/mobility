@@ -66,5 +66,5 @@ def proc_gdf(gdf, min_count, min_duration, table):
 @pipereg.register(dependencies=[um.ping_table], outputs=[raster_table])
 def step(min_count, min_duration):
     um.ping_table.trepo.map_partitions(
-        partial(proc_gdf, min_count=min_count, min_duration=min_duration, table=raster_table)
+        partial(proc_gdf, min_count=min_count, min_duration=min_duration, table=raster_table), pbar=True
     )
