@@ -33,7 +33,7 @@ def duration_minutes(s):
     return (s.max() - s.min()).total_seconds() / 60
 
 
-def proc_gdf(gdf, min_count, min_duration):
+def proc_gdf(gdf, min_count, min_duration, table):
     agg_df = (
         gdf.assign(
             **{
@@ -53,7 +53,7 @@ def proc_gdf(gdf, min_count, min_duration):
         .groupby(get_all_cols(RasterHourIndex))[[RasterHourFeatures.count]]
         .agg("count")
     )
-    raster_table.extend(
+    table.extend(
         raster_df.assign(
             **{RasterHourFeatures.month: raster_df.index.get_level_values(RasterHourIndex.hour).astype(str).str[:7]}
         ),
@@ -63,4 +63,6 @@ def proc_gdf(gdf, min_count, min_duration):
 
 @pipereg.register(dependencies=[um.ping_table], outputs=[raster_table])
 def step(min_count, min_duration):
-    um.ping_table.trepo.map_partitions(partial(proc_gdf, min_count=min_count, min_duration=min_duration))
+    um.ping_table.trepo.map_partitions(
+        partial(proc_gdf, min_count=min_count, min_duration=min_duration, table=raster_table)
+    )
