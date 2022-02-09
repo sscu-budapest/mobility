@@ -24,9 +24,11 @@ raster_table = ScruTable(RasterHourFeatures, index=RasterHourIndex, partitioning
 
 
 def get_raster_id(df):
-    gser = geopandas.points_from_xy(df[um.PingFeatures.loc.lon], df[um.PingFeatures.loc.lat], crs="EPSG:23700")
-    _x, _y = [pd.Series(getattr(gser, coord) * 100).astype(int).astype(str) for coord in ["x", "y"]]
-    return _x + "-" + _y
+    gser = geopandas.points_from_xy(df[um.PingFeatures.loc.lon], df[um.PingFeatures.loc.lat], crs="EPSG:4326").to_crs(
+        "EPSG:23700"
+    )
+    _x, _y = [pd.Series(getattr(gser, coord) / 100).astype(int).astype(str) for coord in ["x", "y"]]
+    return _y + "-" + _x
 
 
 def duration_minutes(s):
