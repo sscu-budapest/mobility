@@ -62,7 +62,7 @@ class Labeler(ColAssigner):
         self.day = day
 
     def ts(self, df):
-        return df[FilteredPingFeatures.datetime].view(int) / 10 ** 6
+        return df[FilteredPingFeatures.datetime].view(int) / 10 ** 9
 
     def hour(self, df):
         return df[FilteredPingFeatures.datetime].dt.hour
