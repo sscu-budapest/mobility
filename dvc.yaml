@@ -55,3 +55,13 @@ stages:
     - stop_detection.work_start
     outs:
     - data/stop_detection/stop
+  raster_aggregate:
+    cmd: python -m src raster_aggregate
+    deps:
+    - data/um/ping
+    - src/raster_aggregate.py
+    params:
+    - raster_aggregate.min_count
+    - raster_aggregate.min_duration
+    outs:
+    - data/raster_aggregate/raster_hour

@@ -78,8 +78,8 @@ stages:
       size: 7051950857
       nfiles: 731
     - path: src/stop_detection.py
-      md5: 9614e870f403ab9f3d4c63572801d434
-      size: 5169
+      md5: c0e10cae0753b0f0db78dc1ca56d646c
+      size: 7094
     params:
       params.yaml:
         stop_detection.distance_metric: haversine
@@ -95,6 +95,25 @@ stages:
         stop_detection.work_start: 8
     outs:
     - path: data/stop_detection/stop
-      md5: 8dd1d10d07efd222303615be014a09c4.dir
-      size: 1062371401
+      md5: d6ddd93b6ef9d80043528b19c86d2ed7.dir
+      size: 1060526395
       nfiles: 731
+  raster_aggregate:
+    cmd: python -m src raster_aggregate
+    deps:
+    - path: data/um/ping
+      md5: 2cfbbe503eb3213ceee2e3967b99cb52.dir
+      size: 62594655120
+      nfiles: 1990
+    - path: src/raster_aggregate.py
+      md5: e008b81c710df43b9b5edb39efa2e8d5
+      size: 2103
+    params:
+      params.yaml:
+        raster_aggregate.min_count: 1
+        raster_aggregate.min_duration: 0
+    outs:
+    - path: data/raster_aggregate/raster_hour
+      md5: 9ed08cce5b143066cad41138e045dc69.dir
+      size: 4469529782
+      nfiles: 24
