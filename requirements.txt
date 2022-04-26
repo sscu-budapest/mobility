@@ -1,4 +1,5 @@
-sscutils
+datazimmer>=0.2.7
+parquetranger>=0.2.1
 geopandas
 rtree
 pygeos
