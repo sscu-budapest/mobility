@@ -1,0 +1,13 @@
+md5: ef6d92c8d1e0c93a7cdf40ef8b999b4f
+frozen: true
+deps:
+- path: data/gpsping/ubermedia/complete
+  repo:
+    url: https://github.com/sscu-budapest/gps-ping-data
+    rev: zimmer-v0/0.0/2022.4.25.1/complete
+    rev_lock: 7db13fe4268e8715cbe5197afb611fc86460bfff
+outs:
+- md5: 02d717b921c9a8330ed5a7712290f3c9.dir
+  size: 62558414306
+  nfiles: 1990
+  path: complete

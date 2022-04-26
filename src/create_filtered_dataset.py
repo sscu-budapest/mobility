@@ -1,10 +1,11 @@
 from functools import partial
 from multiprocessing import cpu_count
 
+import datazimmer as dz
 import pandas as pd
 from atqo import parallel_map
 from colassigner import ColAssigner
-from sscutils import ScruTable
+from metazimmer.gpsping import ubermedia as um
 
 from .get_device_counties import (
     DeviceCountyFeatures,
@@ -12,8 +13,6 @@ from .get_device_counties import (
     device_county_table,
 )
 from .get_device_days import DeviceDayFeatures, DeviceDayIndex, device_day_table
-from .imported_namespaces import um
-from .pipereg import pipereg
 
 
 class FilteredPingFeatures(um.PingFeatures):
@@ -38,16 +37,19 @@ class ReliableCols(ColAssigner):
         )
 
 
-filtered_ping_table = ScruTable(
-    FilteredPingFeatures, partitioning_cols=[um.PingFeatures.year_month, um.PingFeatures.dayofmonth]
+filtered_ping_table = dz.ScruTable(
+    FilteredPingFeatures,
+    partitioning_cols=[um.PingFeatures.year_month, um.PingFeatures.dayofmonth],
 )
 
 
-@pipereg.register(
-    dependencies=[um.ping_table, device_county_table, device_day_table],
+@dz.register(
+    dependencies=[device_county_table, device_day_table, um.ping_table],
     outputs=[filtered_ping_table],
 )
-def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_locale_rate):
+def step(
+    min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_locale_rate
+):
 
     idx = pd.IndexSlice
 
@@ -58,17 +60,24 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
         .sum()
         .loc[
             lambda df: (df[DeviceCountyFeatures.rate] >= min_locale_rate)
-            & (df[DeviceCountyFeatures.count] >= (min_sum * min_reliable_days * min_locale_rate)),
+            & (
+                df[DeviceCountyFeatures.count]
+                >= (min_sum * min_reliable_days * min_locale_rate)
+            ),
             :,
         ]
         .index
     )
 
     # parallelize this
-    reliable_local_df = (
-        device_day_table.get_full_ddf()
-        .map_partitions(_to_rel_locals, devices=local_devices, assigner=ReliableCols(min_am, min_pm, min_sum))
-        .compute()
+    reliable_local_df = pd.concat(
+        device_day_table.map_partitions(
+            fun=partial(
+                _to_rel_locals,
+                devices=local_devices,
+                assigner=ReliableCols(min_am, min_pm, min_sum),
+            ),
+        )
     )
 
     good_devices = set(
@@ -78,7 +87,11 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
         .index
     )
 
-    merge_cols = [um.PingFeatures.device_id, um.PingFeatures.year_month, um.PingFeatures.dayofmonth]
+    merge_cols = [
+        um.PingFeatures.device_id,
+        um.PingFeatures.year_month,
+        um.PingFeatures.dayofmonth,
+    ]
     merger_df = reliable_local_df.reset_index().loc[
         lambda df: df[um.PingFeatures.device_id].isin(good_devices), merge_cols
     ]
@@ -86,7 +99,7 @@ def step(min_am, min_pm, min_sum, min_reliable_days, specific_to_locale, min_loc
     nworkers = cpu_count()
     parallel_map(
         partial(_merge_write, merger_df=merger_df, table=filtered_ping_table),
-        um.ping_table.trepo.paths,
+        um.ping_table.paths,
         dist_api="mp",
         workers=nworkers,
         pbar=True,
@@ -104,4 +117,8 @@ def _merge_write(df_path, merger_df, table):
 
 
 def _to_rel_locals(df, devices, assigner):
-    return df.loc[df.index.isin(devices, level=0), :].pipe(assigner).loc[lambda df: df[ReliableCols.is_reliable], :]
+    return (
+        df.loc[df.index.isin(devices, level=0), :]
+        .pipe(assigner)
+        .loc[lambda df: df[ReliableCols.is_reliable], :]
+    )
