@@ -4,23 +4,23 @@ Devices with at least 0.8 of their pings belonging to the same county
 
 | county                       |   Ping Count |   Device Count | Ping Rate   | Device Rate   |
 |:-----------------------------|-------------:|---------------:|:------------|:--------------|
-| Budapest                     |      1184280 |          13650 | 31.6%       | 26.5%         |
-| Pest megye                   |       552220 |           7444 | 14.7%       | 14.4%         |
-| Győr-Moson-Sopron megye      |       204116 |           2928 | 5.4%        | 5.7%          |
-| Hajdú-Bihar megye            |       164577 |           2286 | 4.4%        | 4.4%          |
-| Csongrád-Csanád megye        |       162044 |           2197 | 4.3%        | 4.3%          |
-| Borsod-Abaúj-Zemplén megye   |       158747 |           2412 | 4.2%        | 4.7%          |
-| Fejér megye                  |       152553 |           2144 | 4.1%        | 4.2%          |
-| Bács-Kiskun megye            |       150106 |           2208 | 4.0%        | 4.3%          |
-| Szabolcs-Szatmár-Bereg megye |       124280 |           1916 | 3.3%        | 3.7%          |
-| Baranya megye                |       115307 |           1642 | 3.1%        | 3.2%          |
-| Komárom-Esztergom megye      |       104456 |           1608 | 2.8%        | 3.1%          |
-| Veszprém megye               |       100296 |           1648 | 2.7%        | 3.2%          |
-| Zala megye                   |        93777 |           1337 | 2.5%        | 2.6%          |
-| Somogy megye                 |        86210 |           1303 | 2.3%        | 2.5%          |
-| Békés megye                  |        80144 |           1241 | 2.1%        | 2.4%          |
-| Jász-Nagykun-Szolnok megye   |        78089 |           1382 | 2.1%        | 2.7%          |
-| Vas megye                    |        77527 |           1331 | 2.1%        | 2.6%          |
-| Heves megye                  |        77434 |           1282 | 2.1%        | 2.5%          |
-| Tolna megye                  |        52768 |            893 | 1.4%        | 1.7%          |
-| Nógrád megye                 |        30340 |            683 | 0.8%        | 1.3%          |
+| Budapest                     |       935034 |          27406 | 29.7%       | 23.4%         |
+| Pest megye                   |       326114 |          13328 | 10.3%       | 11.4%         |
+| Győr-Moson-Sopron megye      |       176977 |           7980 | 5.6%        | 6.8%          |
+| Hajdú-Bihar megye            |       174993 |           5184 | 5.5%        | 4.4%          |
+| Borsod-Abaúj-Zemplén megye   |       153002 |           5293 | 4.9%        | 4.5%          |
+| Csongrád-Csanád megye        |       152267 |           4880 | 4.8%        | 4.2%          |
+| Bács-Kiskun megye            |       128735 |           5726 | 4.1%        | 4.9%          |
+| Baranya megye                |       120524 |           4577 | 3.8%        | 3.9%          |
+| Szabolcs-Szatmár-Bereg megye |       118568 |           4180 | 3.8%        | 3.6%          |
+| Fejér megye                  |       117275 |           4866 | 3.7%        | 4.2%          |
+| Veszprém megye               |        98461 |           4337 | 3.1%        | 3.7%          |
+| Somogy megye                 |        94115 |           3693 | 3.0%        | 3.2%          |
+| Komárom-Esztergom megye      |        88633 |           3731 | 2.8%        | 3.2%          |
+| Vas megye                    |        85082 |           4595 | 2.7%        | 3.9%          |
+| Zala megye                   |        79799 |           3923 | 2.5%        | 3.3%          |
+| Békés megye                  |        79785 |           3465 | 2.5%        | 3.0%          |
+| Jász-Nagykun-Szolnok megye   |        69871 |           3257 | 2.2%        | 2.8%          |
+| Heves megye                  |        67857 |           2694 | 2.2%        | 2.3%          |
+| Tolna megye                  |        56475 |           2375 | 1.8%        | 2.0%          |
+| Nógrád megye                 |        29701 |           1618 | 0.9%        | 1.4%          |

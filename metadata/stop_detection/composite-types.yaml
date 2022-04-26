@@ -1,6 +1,0 @@
-Duration:
-  features:
-  - name: start
-    dtype: datetime
-  - name: end
-    dtype: datetime

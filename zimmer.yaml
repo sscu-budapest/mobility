@@ -1,0 +1,42 @@
+name: mobility
+version: v0.1
+imported_projects:
+  gpsping: {}
+envs:
+  complete:
+    import_envs:
+      gpsping: complete
+    params:
+      get_device_days:
+        am_start: 5
+        am_end: 10
+        pm_start: 16
+        pm_end: 20
+      create_filtered_dataset:
+        min_am: 5
+        min_pm: 5
+        min_sum: 50
+        min_reliable_days: 1
+        specific_to_locale: 
+          - "Budapest"
+          - "Pest"
+      min_locale_rate: 0.8
+      raster_aggregate:
+        min_count: 3
+        min_duration: 15
+      stop_detection:
+        work_start: 8
+        work_end: 17
+        home_arrive: 20
+        home_depart: 8
+        min_work_hours: 4
+        r1: 370
+        r2: 140
+        min_staying_time: 270
+        max_time_between: 86400
+        min_size: 2
+        distance_metric: "haversine"
+  small:
+    parent: complete
+    import_envs:
+      gpsping: non_covid_tuesday
