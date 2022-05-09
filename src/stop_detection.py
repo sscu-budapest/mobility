@@ -79,7 +79,8 @@ class Labeler(ColAssigner):
                 raise ValueError("No stop events found")
             return out
         except Exception as e:
-            assert "No stop events found" in str(e)
+            # assert "No stop events found" in str(e)
+            logger.warning(f"some infostop error {e}")
             raise NoStops("hopefully")
 
     def stop_number(self, df):
