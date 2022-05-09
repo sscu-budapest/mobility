@@ -19,8 +19,7 @@ class DeviceCountyFeatures(dz.TableFeaturesBase):
     rate = float
 
 
-report_md_path = Path("reports", "local_device_distribution.md")
-
+device_dist_report = dz.ReportFile("local_device_distribution.md")
 device_county_table = dz.ScruTable(DeviceCountyFeatures, index=DeviceCountyIndex)
 
 
@@ -136,7 +135,7 @@ def step(min_locale_rate):
         lambda df: df[DeviceCountyFeatures.rate] >= min_locale_rate, :
     ]
     report_table = get_report_table(local_devices)
-    report_md_path.write_text(
+    device_dist_report.write_text(
         "\n\n".join(
             [
                 "# Distribution of Local Devices",
