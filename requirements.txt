@@ -4,3 +4,5 @@ geopandas
 rtree
 pygeos
 infostop
+dask
+distributed
