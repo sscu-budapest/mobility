@@ -125,8 +125,8 @@ stages:
       size: 62558414306
       nfiles: 1990
     - path: src/get_device_counties.py
-      md5: 7fbae7d164d9f1d05180d1f826845b28
-      size: 4143
+      md5: 54689939227163a2b38a27e06c56da25
+      size: 4148
     params:
       zimmer.yaml:
         envs.complete.params.min_locale_rate: 0.8
