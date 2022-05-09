@@ -69,7 +69,7 @@ class Labeler(ColAssigner):
 
     def place_label(self, df):
         arr = df.loc[
-            :, [um.PingFeatures.loc.lon, um.PingFeatures.loc.lat, Labeler.ts]
+            :, [um.PingFeatures.loc.lat, um.PingFeatures.loc.lon, Labeler.ts]
         ].values
         try:
             return self.model.fit_predict(arr)
