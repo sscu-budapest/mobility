@@ -18,7 +18,7 @@ stages:
         envs.complete.params.get_device_days.pm_start: 16
     outs:
     - path: data/mobility/get_device_days/small/device_day
-      md5: 42e30a4c505d577ee8bd99db62b75db4.dir
+      md5: 3449860da7064a39fdbb6b09cd9eded1.dir
       size: 5171811
       nfiles: 1
   small-get_device_counties:
@@ -29,14 +29,14 @@ stages:
       size: 81374809
       nfiles: 3
     - path: src/get_device_counties.py
-      md5: 7fbae7d164d9f1d05180d1f826845b28
-      size: 4143
+      md5: 54689939227163a2b38a27e06c56da25
+      size: 4148
     params:
       zimmer.yaml:
         envs.complete.params.min_locale_rate: 0.8
     outs:
     - path: data/mobility/get_device_counties/small/device_county.parquet
-      md5: ca4967ea6604fd8d2878ac6cc52b0309
+      md5: b3913e3a385555df27d397eb49d0cf82
       size: 5537140
   small-raster_aggregate:
     cmd: datazimmer run-step small-raster_aggregate
@@ -54,7 +54,7 @@ stages:
         envs.complete.params.raster_aggregate.min_duration: 15
     outs:
     - path: data/mobility/raster_aggregate/small/raster_hour
-      md5: 4cb35de75092e01307b3ef4b3f4e6b89.dir
+      md5: 49367c508325a8d3be58bba1bac290bf.dir
       size: 741164
       nfiles: 1
   small-create_filtered_dataset:
@@ -65,10 +65,10 @@ stages:
       size: 81374809
       nfiles: 3
     - path: data/mobility/get_device_counties/small/device_county.parquet
-      md5: ca4967ea6604fd8d2878ac6cc52b0309
+      md5: b3913e3a385555df27d397eb49d0cf82
       size: 5537140
     - path: data/mobility/get_device_days/small/device_day
-      md5: 42e30a4c505d577ee8bd99db62b75db4.dir
+      md5: 3449860da7064a39fdbb6b09cd9eded1.dir
       size: 5171811
       nfiles: 1
     - path: src/create_filtered_dataset.py
@@ -86,19 +86,19 @@ stages:
         envs.complete.params.min_locale_rate: 0.8
     outs:
     - path: data/mobility/create_filtered_dataset/small/filtered_ping
-      md5: 5704521d0f9222cdbefcbef07a046d5a.dir
-      size: 7501975
+      md5: 1072983d5abb11a00e1612e874714521.dir
+      size: 7645451
       nfiles: 1
   small-stop_detection:
     cmd: datazimmer run-step small-stop_detection
     deps:
     - path: data/mobility/create_filtered_dataset/small/filtered_ping
-      md5: 5704521d0f9222cdbefcbef07a046d5a.dir
-      size: 7501975
+      md5: 1072983d5abb11a00e1612e874714521.dir
+      size: 7645451
       nfiles: 1
     - path: src/stop_detection.py
-      md5: 8a44be7854e18d06574898e7d5460c62
-      size: 7413
+      md5: 06c0b02f256c66d7b3eedb0139f5f900
+      size: 7319
     params:
       zimmer.yaml:
         envs.complete.params.stop_detection.distance_metric: haversine
@@ -114,8 +114,8 @@ stages:
         envs.complete.params.stop_detection.work_start: 8
     outs:
     - path: data/mobility/stop_detection/small/stop
-      md5: d1a9e59a5982cc2838c0373496c01156.dir
-      size: 1216889
+      md5: fd9fd5a9f688a50baf86fdc1cddd4180.dir
+      size: 1216991
       nfiles: 1
   complete-get_device_counties:
     cmd: datazimmer run-step complete-get_device_counties
