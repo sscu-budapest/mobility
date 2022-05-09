@@ -217,8 +217,9 @@ def step(
 
     ddf = (
         filtered_ping_table.get_full_ddf()
-        .groupby(um.PingFeatures.device_id, as_index=False)
+        .groupby(um.PingFeatures.device_id)
         .apply(proc_user, meta=pd.DataFrame(columns=get_all_cols(StopFeatures)), model=model, day=dayconf)
+        .reset_index(drop=True)
     )
     stop_table.replace_all(ddf, parse=False)
 

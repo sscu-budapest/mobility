@@ -97,8 +97,8 @@ stages:
       size: 7645451
       nfiles: 1
     - path: src/stop_detection.py
-      md5: 06c0b02f256c66d7b3eedb0139f5f900
-      size: 7319
+      md5: 99eb28fe9470d1fc7deb8974f814a253
+      size: 7335
     params:
       zimmer.yaml:
         envs.complete.params.stop_detection.distance_metric: haversine
