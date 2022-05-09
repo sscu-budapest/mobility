@@ -1,13 +1,12 @@
+import shutil
 from dataclasses import dataclass
 from datetime import datetime
-from distributed.client import Client
 
 import datazimmer as dz
 import geopandas
 import pandas as pd
-import shutil
-
 from colassigner import ColAssigner, get_all_cols
+from distributed.client import Client
 from infostop import Infostop
 from metazimmer.gpsping import ubermedia as um
 from structlog import get_logger
@@ -57,8 +56,8 @@ class StopFeatures(dz.TableFeaturesBase):
 
 
 class Labeler(ColAssigner):
-    def __init__(self, model, day: DaySetup) -> None:
-        self.model = model
+    def __init__(self, model_params, day: DaySetup) -> None:
+        self.model = Infostop(**model_params)
         self.day = day
 
     def ts(self, df):
@@ -75,7 +74,9 @@ class Labeler(ColAssigner):
         try:
             out = self.model.fit_predict(arr)
             if out.shape[0] != arr.shape[0]:
-                logger.warning(f"mismatched shapes {out.shape} - {arr.shape}", df=df.head(2).T)
+                logger.warning(
+                    f"mismatched shapes {out.shape} - {arr.shape}", df=df.head(2).T
+                )
                 raise ValueError("No stop events found")
             return out
         except Exception as e:
@@ -169,10 +170,10 @@ stop_table = dz.ScruTable(
 )
 
 
-def proc_user(user_df, model, day: DaySetup):
+def proc_user(user_df, model_params: dict, day: DaySetup):
     try:
         labeled_df = user_df.sort_values(um.PingFeatures.datetime).pipe(
-            Labeler(model, day)
+            Labeler(model_params, day)
         )
     except Exception as e:
         # TODO log and handle this
@@ -186,6 +187,7 @@ def proc_user(user_df, model, day: DaySetup):
         .pipe(add_speed_cols)
         .loc[:, get_all_cols(StopFeatures)]
     )
+
 
 @dz.register(
     dependencies=[filtered_ping_table],
@@ -207,7 +209,7 @@ def step(
 
     dayconf = DaySetup(work_start, work_end, home_arrive, home_depart, min_work_hours)
 
-    model = Infostop(
+    model_params = dict(
         r1=r1,
         r2=r2,
         min_staying_time=min_staying_time,
@@ -216,7 +218,7 @@ def step(
         distance_metric=distance_metric,
     )
 
-    shutil.make_archive("src", 'zip', ".", base_dir="src")
+    shutil.make_archive("src", "zip", ".", base_dir="src")
     client = Client()
     client.upload_file("src.zip")
     print("CLIENT: ", client)
@@ -224,7 +226,12 @@ def step(
     ddf = (
         filtered_ping_table.get_full_ddf()
         .groupby(um.PingFeatures.device_id)
-        .apply(proc_user, meta=pd.DataFrame(columns=get_all_cols(StopFeatures)), model=model, day=dayconf)
+        .apply(
+            proc_user,
+            meta=pd.DataFrame(columns=get_all_cols(StopFeatures)),
+            model_params=model_params,
+            day=dayconf,
+        )
         .reset_index(drop=True)
     )
     stop_table.replace_all(ddf, parse=False)
@@ -246,12 +253,8 @@ def _gb_stop(labeled_df, min_work_hours):
                 StopFeatures.n_events: pd.NamedAgg(dt_col, "count"),
                 StopFeatures.interval.start: pd.NamedAgg(dt_col, "first"),
                 StopFeatures.interval.end: pd.NamedAgg(dt_col, "last"),
-                StopFeatures.center.lon: pd.NamedAgg(
-                    um.PingFeatures.loc.lon, "mean"
-                ),
-                StopFeatures.center.lat: pd.NamedAgg(
-                    um.PingFeatures.loc.lat, "mean"
-                ),
+                StopFeatures.center.lon: pd.NamedAgg(um.PingFeatures.loc.lon, "mean"),
+                StopFeatures.center.lat: pd.NamedAgg(um.PingFeatures.loc.lat, "mean"),
                 "top_home": pd.NamedAgg(Labeler.is_top_home, "max"),
                 "f_and_last": pd.NamedAgg(Labeler.is_first_and_last, "max"),
                 "some_worktime": pd.NamedAgg(Labeler.is_worktime, "max"),
