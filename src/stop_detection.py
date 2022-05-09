@@ -71,8 +71,13 @@ class Labeler(ColAssigner):
         arr = df.loc[
             :, [um.PingFeatures.loc.lat, um.PingFeatures.loc.lon, Labeler.ts]
         ].values
+
         try:
-            return self.model.fit_predict(arr)
+            out = self.model.fit_predict(arr)
+            if out.shape[0] != arr.shape[0]:
+                logger.warning(f"mismatched shapes {out.shape} - {arr.shape}", df=df.head(2).T)
+                raise ValueError("No stop events found")
+            return out
         except Exception as e:
             assert "No stop events found" in str(e)
             raise NoStops("hopefully")
