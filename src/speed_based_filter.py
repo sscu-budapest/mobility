@@ -5,7 +5,7 @@ import metazimmer.gpsping.ubermedia as um
 import pandas as pd
 from colassigner import Col
 
-from .util import localize
+from .util import get_client, localize
 
 
 class Arrival(dz.CompositeTypeBase):
@@ -61,10 +61,13 @@ filtered_ping_table = dz.ScruTable(
 drop_stat_table = dz.ScruTable(DropStat)
 
 
-@dz.register(dependencies=[um.ping_table], outputs=[filtered_ping_table])
+@dz.register(
+    dependencies=[um.ping_table], outputs=[filtered_ping_table, drop_stat_table]
+)
 def filter_pings(min_pings_by_device, max_speed):
 
-    ddf = um.ping_table.get_full_ddf().persist()
+    get_client()
+    ddf = um.ping_table.get_full_ddf()
 
     drops = (
         ddf.groupby(um.GpsPing.device_id)
