@@ -1,10 +1,9 @@
 import datetime as dt
-from functools import partial
 
 import datazimmer as dz
 from metazimmer.gpsping import ubermedia as um
 
-from .util import to_geo
+from .util import get_client, to_geo
 
 
 class GeohashHour(dz.AbstractEntity):
@@ -61,7 +60,13 @@ def proc_gdf(gdf, min_count, min_duration, table):
 
 @dz.register(dependencies=[um.ping_table], outputs=[h3_table])
 def step(min_count, min_duration):
-    pfun = partial(
-        proc_gdf, min_count=min_count, min_duration=min_duration, table=h3_table
-    )
-    um.ping_table.map_partitions(fun=pfun, pbar=True)
+    get_client()
+    um.ping_table.get_full_ddf().groupby(
+        [um.GpsPing.year_month, um.GpsPing.dayofmonth]
+    ).apply(
+        proc_gdf,
+        min_count=min_count,
+        min_duration=min_duration,
+        table=h3_table,
+        meta=None,
+    ).compute()

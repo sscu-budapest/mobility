@@ -81,8 +81,11 @@ class SemanticStop(Stop, StopExtension):
     # is_home = bool
     # is_work = bool
 
+
 def proc_device(device_df, dayconf: DaySetup):
-    return device_df.pipe(StopExtension(device_df, dayconf)).loc[:, semantic_stop_table.all_cols]
+    return device_df.pipe(StopExtension(device_df, dayconf)).loc[
+        :, semantic_stop_table.all_cols
+    ]
 
 
 semantic_stop_table = dz.ScruTable(SemanticStop)
