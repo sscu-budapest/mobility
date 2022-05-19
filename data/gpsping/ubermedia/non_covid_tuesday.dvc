@@ -1,13 +1,13 @@
-md5: 035a39464ce4be8eccd2aa6327bdc090
+md5: 6f9006fe80ca714788ff7fb67cdb19af
 frozen: true
 deps:
 - path: data/gpsping/ubermedia/non_covid_tuesday
   repo:
     url: https://github.com/sscu-budapest/gps-ping-data
-    rev: zimmer-v0/0.0/2022.4.25.1/non_covid_tuesday
-    rev_lock: 7db13fe4268e8715cbe5197afb611fc86460bfff
+    rev: zimmer-v0/0.1/2022.5.16.1/non_covid_tuesday
+    rev_lock: e923903ce9d515977dea858683f19e53c8fa1eb6
 outs:
-- md5: 4c4f4d78e62cd14569eead60db1f8e1b.dir
-  size: 81374809
+- md5: ebe84294fcb96d80f2a641b48769e862.dir
+  size: 82183556
   nfiles: 3
   path: non_covid_tuesday
