@@ -3,6 +3,7 @@ parquetranger>=0.2.1
 geopandas
 rtree
 pygeos
+h3pandas
 infostop
-dask
+dask[complete]
 distributed
