@@ -2,25 +2,23 @@ import zipfile
 from pathlib import Path
 
 import datazimmer as dz
-import geopandas
+import geopandas as gpd
 import pandas as pd
 import requests
-from colassigner import get_all_cols
-from metazimmer.gpsping import ubermedia as um
+
+from .filtered_stops import Stop, filtered_stop_table
+from .util import to_geo
 
 
-class DeviceCountyIndex(dz.IndexBase):
-    device_id = str  # TODO: wet - this is taken from ping table.
-    county = str
-
-
-class DeviceCountyFeatures(dz.TableFeaturesBase):
+class DeviceCounty(dz.AbstractEntity):
+    device_id = dz.Index & str
+    county = dz.Index & str
     count = int
     rate = float
 
 
 device_dist_report = dz.ReportFile("local_device_distribution.md")
-device_county_table = dz.ScruTable(DeviceCountyFeatures, index=DeviceCountyIndex)
+device_county_table = dz.ScruTable(DeviceCounty)
 
 
 def get_hungdf():
@@ -36,7 +34,7 @@ def get_hungdf():
             zip_ref.extractall("/tmp")
 
     return (
-        geopandas.read_file(gpath)
+        gpd.read_file(gpath)
         .loc[
             lambda df: df["fclass"].isin(["county", "city"])
             & (df["name"] != "Bratislava"),
@@ -47,37 +45,24 @@ def get_hungdf():
     )
 
 
-def to_geo(df):
-    return geopandas.GeoDataFrame(
-        df,
-        geometry=geopandas.points_from_xy(
-            df[um.PingFeatures.loc.lon], df[um.PingFeatures.loc.lat]
-        ),
-        crs="EPSG:4326",
-    )
-
-
 def gpjoin(df, gdf):
-    return geopandas.sjoin(to_geo(df), gdf, op="within", how="left").rename(
-        columns={"index_right": DeviceCountyIndex.county}
+    return gpd.sjoin(to_geo(df, Stop.center), gdf, op="within", how="left").rename(
+        columns={"index_right": DeviceCounty.county}
     )
 
 
-def ping_gb(df, gdf):
+def stop_gb(df, gdf):
     return (
         df.pipe(gpjoin, gdf)
-        .groupby([um.PingFeatures.device_id, DeviceCountyIndex.county])[
-            um.PingFeatures.datetime
-        ]
-        .count()
+        .groupby([Stop.device_id, DeviceCounty.county])
+        .agg(**{DeviceCounty.count: pd.NamedAgg(Stop.n_events, "sum")})
         .reset_index()
-        .rename(columns={um.PingFeatures.datetime: DeviceCountyFeatures.count})
     )
 
 
 def get_report_table(df):
     return (
-        df.groupby(DeviceCountyIndex.county)[DeviceCountyFeatures.count]
+        df.groupby(DeviceCounty.county)[DeviceCounty.count]
         .agg(["sum", "count"])
         .rename(columns={"sum": "Ping Count", "count": "Device Count"})
         .pipe(
@@ -98,33 +83,31 @@ def get_report_table(df):
     )
 
 
-@dz.register(dependencies=[um.ping_table], outputs=[device_county_table])
+@dz.register(dependencies=[filtered_stop_table], outputs=[device_county_table])
 def step(min_locale_rate):
 
-    ddf = um.ping_table.get_full_ddf()
+    ddf = filtered_stop_table.get_full_ddf()
 
     device_locale_count_df = (
         ddf.map_partitions(
-            ping_gb,
+            stop_gb,
             gdf=get_hungdf(),
             meta=pd.DataFrame(
                 {
-                    DeviceCountyIndex.device_id: pd.Series([], dtype="str"),
-                    DeviceCountyIndex.county: pd.Series([], dtype="str"),
-                    DeviceCountyFeatures.count: pd.Series([], dtype="int"),
+                    DeviceCounty.device_id: pd.Series([], dtype="str"),
+                    DeviceCounty.county: pd.Series([], dtype="str"),
+                    DeviceCounty.count: pd.Series([], dtype="int"),
                 }
             ),
         )
-        .groupby(get_all_cols(DeviceCountyIndex))[DeviceCountyFeatures.count]
+        .groupby(device_county_table.index_cols)[DeviceCounty.count]
         .sum()
         .compute()
         .to_frame()
         .assign(
             **{
-                DeviceCountyFeatures.rate: lambda df: df[DeviceCountyFeatures.count]
-                / df.groupby(um.PingFeatures.device_id)[
-                    DeviceCountyFeatures.count
-                ].transform("sum")
+                DeviceCounty.rate: lambda df: df[DeviceCounty.count]
+                / df.groupby(Stop.device_id)[DeviceCounty.count].transform("sum")
             }
         )
     )
@@ -132,7 +115,7 @@ def step(min_locale_rate):
     device_locale_count_df.pipe(device_county_table.replace_all)
 
     local_devices = device_locale_count_df.loc[
-        lambda df: df[DeviceCountyFeatures.rate] >= min_locale_rate, :
+        lambda df: df[DeviceCounty.rate] >= min_locale_rate, :
     ]
     report_table = get_report_table(local_devices)
     device_dist_report.write_text(
