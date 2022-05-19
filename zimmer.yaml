@@ -1,41 +1,34 @@
 name: mobility
-version: v0.1
+version: v0.2
 imported_projects:
-  gpsping: {}
+  gpsping: 
+    version: ">=0.1"
 envs:
   complete:
     import_envs:
       gpsping: complete
     params:
-      get_device_days:
-        am_start: 5
-        am_end: 10
-        pm_start: 16
-        pm_end: 20
-      create_filtered_dataset:
-        min_am: 5
-        min_pm: 5
-        min_sum: 50
-        min_reliable_days: 1
-        specific_to_locale: 
-          - "Budapest"
-          - "Pest"
-      min_locale_rate: 0.8
-      raster_aggregate:
+      morning_end: 8
+      work_end: 17
+      home_arrive: 20
+      speed_based_filter:
+        max_speed: 300
+        min_pings_by_device: 20
+      filtered_stops:
+        min_stops_to_count: 4
+        min_destinations: 2
+      h3_hour_aggregate:
         min_count: 3
         min_duration: 15
-      stop_detection:
-        work_start: 8
-        work_end: 17
-        home_arrive: 20
-        home_depart: 8
-        min_work_hours: 4
+      initial_stops:
         r1: 370
         r2: 140
         min_staying_time: 270
-        max_time_between: 86400
+        max_time_between: 7200
         min_size: 2
         distance_metric: "haversine"
+      device_counties:
+        min_locale_rate: 0.8
   small:
     parent: complete
     import_envs:
