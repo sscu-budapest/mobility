@@ -1,6 +1,7 @@
 import datetime as dt
 
 import datazimmer as dz
+import pandas as pd
 from metazimmer.gpsping import ubermedia as um
 
 from .util import get_client, to_geo
@@ -56,6 +57,7 @@ def proc_gdf(gdf, min_count, min_duration, table):
         ),
         try_dask=False,
     )
+    return pd.DataFrame()
 
 
 @dz.register(dependencies=[um.ping_table], outputs=[h3_table])
@@ -68,5 +70,5 @@ def step(min_count, min_duration):
         min_count=min_count,
         min_duration=min_duration,
         table=h3_table,
-        meta=None,
+        meta=pd.DataFrame(),
     ).compute()
