@@ -99,7 +99,7 @@ def proc_device(device_df, min_pings, max_speed, out_table):
             if _df.shape[0] < min_pings:
                 misses.append(_df.pipe(_to_drop_stat, speed=False))
             else:
-                out_table.extend(_df)
+                out_table.extend(_df, try_dask=False)
             return pd.concat(misses).fillna(0)
         misses.append(_df.loc[speeding, :].pipe(_to_drop_stat, speed=True))
         _df = _df.loc[~speeding, :]
