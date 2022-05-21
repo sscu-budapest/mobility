@@ -22,7 +22,7 @@ def get_client():
     try:
         client = Client.current()
     except ValueError:
-        client = Client()
+        client = Client(death_timeout=30)
     client.upload_file("src.zip")
     print("CLIENT", client)
     Path("src.zip").unlink()
