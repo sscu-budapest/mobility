@@ -1,236 +1,143 @@
 schema: '2.0'
 stages:
-  small-get_device_days:
-    cmd: datazimmer run-step small-get_device_days
+  small-speed_based_filter:
+    cmd: dz run-step small-speed_based_filter
     deps:
-    - path: data/gpsping/ubermedia/non_covid_tuesday/ping
-      md5: 7157e7a019ec8bc35bfc410fbe9a9a44.dir
-      size: 81374809
-      nfiles: 3
-    - path: src/get_device_days.py
-      md5: 328532b8bd8d5fc9edd1c575013e5b2a
-      size: 1639
+    - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+      md5: c5f39162b3d0a97cae8fdec5516393cd.dir
+      size: 110825870
+      nfiles: 256
+    - path: src/speed_based_filter.py
+      md5: 46ee5deb84df614cd1bb8b8094145604
+      size: 3544
     params:
       zimmer.yaml:
-        envs.complete.params.get_device_days.am_end: 10
-        envs.complete.params.get_device_days.am_start: 5
-        envs.complete.params.get_device_days.pm_end: 20
-        envs.complete.params.get_device_days.pm_start: 16
+        envs.complete.params.speed_based_filter.max_speed: 300
+        envs.complete.params.speed_based_filter.min_pings_by_device: 20
     outs:
-    - path: data/mobility/get_device_days/small/device_day
-      md5: 3449860da7064a39fdbb6b09cd9eded1.dir
-      size: 5171811
+    - path: data/mobility/speed_based_filter/small/drop_stat.parquet
+      md5: 24ae1791772e87f7c146ac261d6e329d
+      size: 2961
+    - path: data/mobility/speed_based_filter/small/ping_with_arrival
+      md5: f55a0a07325a74fb78ade5bae47f71d5.dir
+      size: 151865130
+      nfiles: 256
+  small-initial_stops:
+    cmd: dz run-step small-initial_stops
+    deps:
+    - path: data/mobility/speed_based_filter/small/ping_with_arrival
+      md5: f55a0a07325a74fb78ade5bae47f71d5.dir
+      size: 151865130
+      nfiles: 256
+    - path: src/initial_stops.py
+      md5: 860ec5f28569ee02658f35cfef253664
+      size: 3920
+    params:
+      zimmer.yaml:
+        envs.complete.params.initial_stops.distance_metric: haversine
+        envs.complete.params.initial_stops.max_time_between: 7200
+        envs.complete.params.initial_stops.min_size: 2
+        envs.complete.params.initial_stops.min_staying_time: 270
+        envs.complete.params.initial_stops.r1: 370
+        envs.complete.params.initial_stops.r2: 140
+    outs:
+    - path: data/mobility/initial_stops/small/stop
+      md5: e36458c1c5acaffe50d48da366adf54a.dir
+      size: 12376114
+      nfiles: 256
+  small-filtered_stops:
+    cmd: dz run-step small-filtered_stops
+    deps:
+    - path: data/mobility/initial_stops/small/stop
+      md5: e36458c1c5acaffe50d48da366adf54a.dir
+      size: 12376114
+      nfiles: 256
+    - path: src/filtered_stops.py
+      md5: ba3fc10261636a4c432fc542b892656c
+      size: 1062
+    params:
+      zimmer.yaml:
+        envs.complete.params.filtered_stops.min_destinations: 2
+        envs.complete.params.filtered_stops.min_stops_to_count: 4
+    outs:
+    - path: data/mobility/filtered_stops/small/stop
+      md5: bba09e05eaaea20be5ba2d035b472689.dir
+      size: 378417
+      nfiles: 30
+  small-device_counties:
+    cmd: dz run-step small-device_counties
+    deps:
+    - path: data/mobility/filtered_stops/small/stop
+      md5: bba09e05eaaea20be5ba2d035b472689.dir
+      size: 378417
+      nfiles: 30
+    - path: src/device_counties.py
+      md5: f0d99a61f58758fbc12a4a1a4179c48f
+      size: 3621
+    params:
+      zimmer.yaml:
+        envs.complete.params.device_counties.min_locale_rate: 0.8
+    outs:
+    - path: data/mobility/device_counties/small/device_county.parquet
+      md5: bd9b506026cd07a57764ba2213480f78
+      size: 5610
+  small-stop_reporting:
+    cmd: dz run-step small-stop_reporting
+    deps:
+    - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+      md5: c5f39162b3d0a97cae8fdec5516393cd.dir
+      size: 110825870
+      nfiles: 256
+    - path: data/mobility/filtered_stops/small/stop
+      md5: bba09e05eaaea20be5ba2d035b472689.dir
+      size: 378417
+      nfiles: 30
+    - path: data/mobility/initial_stops/small/stop
+      md5: e36458c1c5acaffe50d48da366adf54a.dir
+      size: 12376114
+      nfiles: 256
+    - path: src/stop_reporting.py
+      md5: be6efcb50ca917f1dd12c32bf8cafad8
+      size: 1887
+    outs:
+    - path: reports/small/stop_look.md
+      md5: 395dae535686ad0e1130337ace3d5813
+      size: 734
+  small-h3_hour_aggregate:
+    cmd: dz run-step small-h3_hour_aggregate
+    deps:
+    - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+      md5: c5f39162b3d0a97cae8fdec5516393cd.dir
+      size: 110825870
+      nfiles: 256
+    - path: src/h3_hour_aggregate.py
+      md5: 0e3c9d2310e2660ef6493c30f7a544ef
+      size: 1836
+    params:
+      zimmer.yaml:
+        envs.complete.params.h3_hour_aggregate.min_count: 3
+        envs.complete.params.h3_hour_aggregate.min_duration: 15
+    outs:
+    - path: data/mobility/h3_hour_aggregate/small/hash_hour
+      md5: f83ae3eb654adeb9da7fdc44740408ad.dir
+      size: 517324
       nfiles: 1
-  small-get_device_counties:
-    cmd: datazimmer run-step small-get_device_counties
+  small-semantic_stops:
+    cmd: dz run-step small-semantic_stops
     deps:
-    - path: data/gpsping/ubermedia/non_covid_tuesday/ping
-      md5: 7157e7a019ec8bc35bfc410fbe9a9a44.dir
-      size: 81374809
-      nfiles: 3
-    - path: src/get_device_counties.py
-      md5: 54689939227163a2b38a27e06c56da25
-      size: 4148
+    - path: data/mobility/filtered_stops/small/stop
+      md5: bba09e05eaaea20be5ba2d035b472689.dir
+      size: 378417
+      nfiles: 30
+    - path: src/semantic_stops.py
+      md5: 8a49b67a5aa32a755590b41eccb5a569
+      size: 3166
     params:
       zimmer.yaml:
-        envs.complete.params.min_locale_rate: 0.8
+        envs.complete.params.home_arrive: 20
+        envs.complete.params.morning_end: 8
+        envs.complete.params.work_end: 17
     outs:
-    - path: data/mobility/get_device_counties/small/device_county.parquet
-      md5: b3913e3a385555df27d397eb49d0cf82
-      size: 5537140
-  small-raster_aggregate:
-    cmd: datazimmer run-step small-raster_aggregate
-    deps:
-    - path: data/gpsping/ubermedia/non_covid_tuesday/ping
-      md5: 7157e7a019ec8bc35bfc410fbe9a9a44.dir
-      size: 81374809
-      nfiles: 3
-    - path: src/raster_aggregate.py
-      md5: b91a560550053228bfe59da0e8d986be
-      size: 2276
-    params:
-      zimmer.yaml:
-        envs.complete.params.raster_aggregate.min_count: 3
-        envs.complete.params.raster_aggregate.min_duration: 15
-    outs:
-    - path: data/mobility/raster_aggregate/small/raster_hour
-      md5: 49367c508325a8d3be58bba1bac290bf.dir
-      size: 741164
-      nfiles: 1
-  small-create_filtered_dataset:
-    cmd: datazimmer run-step small-create_filtered_dataset
-    deps:
-    - path: data/gpsping/ubermedia/non_covid_tuesday/ping
-      md5: 7157e7a019ec8bc35bfc410fbe9a9a44.dir
-      size: 81374809
-      nfiles: 3
-    - path: data/mobility/get_device_counties/small/device_county.parquet
-      md5: b3913e3a385555df27d397eb49d0cf82
-      size: 5537140
-    - path: data/mobility/get_device_days/small/device_day
-      md5: 3449860da7064a39fdbb6b09cd9eded1.dir
-      size: 5171811
-      nfiles: 1
-    - path: src/create_filtered_dataset.py
-      md5: f16ed3af923f1f3b63405fd02e27e5f0
-      size: 3320
-    params:
-      zimmer.yaml:
-        envs.complete.params.create_filtered_dataset.min_am: 5
-        envs.complete.params.create_filtered_dataset.min_pm: 5
-        envs.complete.params.create_filtered_dataset.min_reliable_days: 1
-        envs.complete.params.create_filtered_dataset.min_sum: 50
-        envs.complete.params.create_filtered_dataset.specific_to_locale:
-        - Budapest
-        - Pest
-        envs.complete.params.min_locale_rate: 0.8
-    outs:
-    - path: data/mobility/create_filtered_dataset/small/filtered_ping
-      md5: 1072983d5abb11a00e1612e874714521.dir
-      size: 7645451
-      nfiles: 1
-  small-stop_detection:
-    cmd: datazimmer run-step small-stop_detection
-    deps:
-    - path: data/mobility/create_filtered_dataset/small/filtered_ping
-      md5: 1072983d5abb11a00e1612e874714521.dir
-      size: 7645451
-      nfiles: 1
-    - path: src/stop_detection.py
-      md5: 99eb28fe9470d1fc7deb8974f814a253
-      size: 7335
-    params:
-      zimmer.yaml:
-        envs.complete.params.stop_detection.distance_metric: haversine
-        envs.complete.params.stop_detection.home_arrive: 20
-        envs.complete.params.stop_detection.home_depart: 8
-        envs.complete.params.stop_detection.max_time_between: 86400
-        envs.complete.params.stop_detection.min_size: 2
-        envs.complete.params.stop_detection.min_staying_time: 270
-        envs.complete.params.stop_detection.min_work_hours: 4
-        envs.complete.params.stop_detection.r1: 370
-        envs.complete.params.stop_detection.r2: 140
-        envs.complete.params.stop_detection.work_end: 17
-        envs.complete.params.stop_detection.work_start: 8
-    outs:
-    - path: data/mobility/stop_detection/small/stop
-      md5: fd9fd5a9f688a50baf86fdc1cddd4180.dir
-      size: 1216991
-      nfiles: 1
-  complete-get_device_counties:
-    cmd: datazimmer run-step complete-get_device_counties
-    deps:
-    - path: data/gpsping/ubermedia/complete/ping
-      md5: e9e14339faf257a9668d92af746ecd97.dir
-      size: 62558414306
-      nfiles: 1990
-    - path: src/get_device_counties.py
-      md5: 54689939227163a2b38a27e06c56da25
-      size: 4148
-    params:
-      zimmer.yaml:
-        envs.complete.params.min_locale_rate: 0.8
-    outs:
-    - path: data/mobility/get_device_counties/complete/device_county.parquet
-      md5: 31b081b79eb3723b69d606f7613db420
-      size: 370102631
-  complete-get_device_days:
-    cmd: datazimmer run-step complete-get_device_days
-    deps:
-    - path: data/gpsping/ubermedia/complete/ping
-      md5: e9e14339faf257a9668d92af746ecd97.dir
-      size: 62558414306
-      nfiles: 1990
-    - path: src/get_device_days.py
-      md5: 328532b8bd8d5fc9edd1c575013e5b2a
-      size: 1639
-    params:
-      zimmer.yaml:
-        envs.complete.params.get_device_days.am_end: 10
-        envs.complete.params.get_device_days.am_start: 5
-        envs.complete.params.get_device_days.pm_end: 20
-        envs.complete.params.get_device_days.pm_start: 16
-    outs:
-    - path: data/mobility/get_device_days/complete/device_day
-      md5: 7217fa16ec20441ff58d4045f63ec358.dir
-      size: 2766778386
-      nfiles: 25
-  complete-create_filtered_dataset:
-    cmd: datazimmer run-step complete-create_filtered_dataset
-    deps:
-    - path: data/gpsping/ubermedia/complete/ping
-      md5: e9e14339faf257a9668d92af746ecd97.dir
-      size: 62558414306
-      nfiles: 1990
-    - path: data/mobility/get_device_counties/complete/device_county.parquet
-      md5: 31b081b79eb3723b69d606f7613db420
-      size: 370102631
-    - path: data/mobility/get_device_days/complete/device_day
-      md5: 7217fa16ec20441ff58d4045f63ec358.dir
-      size: 2766778386
-      nfiles: 25
-    - path: src/create_filtered_dataset.py
-      md5: f16ed3af923f1f3b63405fd02e27e5f0
-      size: 3320
-    params:
-      zimmer.yaml:
-        envs.complete.params.create_filtered_dataset.min_am: 5
-        envs.complete.params.create_filtered_dataset.min_pm: 5
-        envs.complete.params.create_filtered_dataset.min_reliable_days: 1
-        envs.complete.params.create_filtered_dataset.min_sum: 50
-        envs.complete.params.create_filtered_dataset.specific_to_locale:
-        - Budapest
-        - Pest
-        envs.complete.params.min_locale_rate: 0.8
-    outs:
-    - path: data/mobility/create_filtered_dataset/complete/filtered_ping
-      md5: 37543329f209bfc3a9502daf51467410.dir
-      size: 7763293798
-      nfiles: 731
-  complete-raster_aggregate:
-    cmd: datazimmer run-step complete-raster_aggregate
-    deps:
-    - path: data/gpsping/ubermedia/complete/ping
-      md5: e9e14339faf257a9668d92af746ecd97.dir
-      size: 62558414306
-      nfiles: 1990
-    - path: src/raster_aggregate.py
-      md5: b91a560550053228bfe59da0e8d986be
-      size: 2276
-    params:
-      zimmer.yaml:
-        envs.complete.params.raster_aggregate.min_count: 3
-        envs.complete.params.raster_aggregate.min_duration: 15
-    outs:
-    - path: data/mobility/raster_aggregate/complete/raster_hour
-      md5: 29f9f14e8fa40268704f9a0436820884.dir
-      size: 885384078
-      nfiles: 24
-  complete-stop_detection:
-    cmd: datazimmer run-step complete-stop_detection
-    deps:
-    - path: data/mobility/create_filtered_dataset/complete/filtered_ping
-      md5: 37543329f209bfc3a9502daf51467410.dir
-      size: 7763293798
-      nfiles: 731
-    - path: src/stop_detection.py
-      md5: 8a44be7854e18d06574898e7d5460c62
-      size: 7413
-    params:
-      zimmer.yaml:
-        envs.complete.params.stop_detection.distance_metric: haversine
-        envs.complete.params.stop_detection.home_arrive: 20
-        envs.complete.params.stop_detection.home_depart: 8
-        envs.complete.params.stop_detection.max_time_between: 86400
-        envs.complete.params.stop_detection.min_size: 2
-        envs.complete.params.stop_detection.min_staying_time: 270
-        envs.complete.params.stop_detection.min_work_hours: 4
-        envs.complete.params.stop_detection.r1: 370
-        envs.complete.params.stop_detection.r2: 140
-        envs.complete.params.stop_detection.work_end: 17
-        envs.complete.params.stop_detection.work_start: 8
-    outs:
-    - path: data/mobility/stop_detection/complete/stop
-      md5: 73a263f8744721ced55b68fd7e697f45.dir
-      size: 984287043
-      nfiles: 731
+    - path: data/mobility/semantic_stops/small/semantic_stop.parquet
+      md5: 0b2e25b4c4da20b3098757478b8d3bc2
+      size: 92769

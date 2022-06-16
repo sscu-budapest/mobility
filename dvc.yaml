@@ -1,143 +1,163 @@
 stages:
-  complete-get_device_counties:
-    cmd: datazimmer run-step complete-get_device_counties
+  complete-speed_based_filter:
+    cmd: dz run-step complete-speed_based_filter
     deps:
-    - data/gpsping/ubermedia/complete/ping
-    - src/get_device_counties.py
+    - data/gpsping/ubermedia/complete/extended_ping
+    - src/speed_based_filter.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.min_locale_rate
+      - envs.complete.params.speed_based_filter.max_speed
+      - envs.complete.params.speed_based_filter.min_pings_by_device
     outs:
-    - data/mobility/get_device_counties/complete/device_county.parquet
-  small-get_device_counties:
-    cmd: datazimmer run-step small-get_device_counties
+    - data/mobility/speed_based_filter/complete/drop_stat.parquet
+    - data/mobility/speed_based_filter/complete/ping_with_arrival
+  small-speed_based_filter:
+    cmd: dz run-step small-speed_based_filter
     deps:
-    - data/gpsping/ubermedia/non_covid_tuesday/ping
-    - src/get_device_counties.py
+    - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+    - src/speed_based_filter.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.min_locale_rate
+      - envs.complete.params.speed_based_filter.max_speed
+      - envs.complete.params.speed_based_filter.min_pings_by_device
     outs:
-    - data/mobility/get_device_counties/small/device_county.parquet
-  complete-get_device_days:
-    cmd: datazimmer run-step complete-get_device_days
+    - data/mobility/speed_based_filter/small/drop_stat.parquet
+    - data/mobility/speed_based_filter/small/ping_with_arrival
+  complete-initial_stops:
+    cmd: dz run-step complete-initial_stops
     deps:
-    - data/gpsping/ubermedia/complete/ping
-    - src/get_device_days.py
+    - data/mobility/speed_based_filter/complete/ping_with_arrival
+    - src/initial_stops.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.get_device_days.am_end
-      - envs.complete.params.get_device_days.am_start
-      - envs.complete.params.get_device_days.pm_end
-      - envs.complete.params.get_device_days.pm_start
+      - envs.complete.params.initial_stops.distance_metric
+      - envs.complete.params.initial_stops.max_time_between
+      - envs.complete.params.initial_stops.min_size
+      - envs.complete.params.initial_stops.min_staying_time
+      - envs.complete.params.initial_stops.r1
+      - envs.complete.params.initial_stops.r2
     outs:
-    - data/mobility/get_device_days/complete/device_day
-  small-get_device_days:
-    cmd: datazimmer run-step small-get_device_days
+    - data/mobility/initial_stops/complete/stop
+  small-initial_stops:
+    cmd: dz run-step small-initial_stops
     deps:
-    - data/gpsping/ubermedia/non_covid_tuesday/ping
-    - src/get_device_days.py
+    - data/mobility/speed_based_filter/small/ping_with_arrival
+    - src/initial_stops.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.get_device_days.am_end
-      - envs.complete.params.get_device_days.am_start
-      - envs.complete.params.get_device_days.pm_end
-      - envs.complete.params.get_device_days.pm_start
+      - envs.complete.params.initial_stops.distance_metric
+      - envs.complete.params.initial_stops.max_time_between
+      - envs.complete.params.initial_stops.min_size
+      - envs.complete.params.initial_stops.min_staying_time
+      - envs.complete.params.initial_stops.r1
+      - envs.complete.params.initial_stops.r2
     outs:
-    - data/mobility/get_device_days/small/device_day
-  complete-create_filtered_dataset:
-    cmd: datazimmer run-step complete-create_filtered_dataset
+    - data/mobility/initial_stops/small/stop
+  complete-filtered_stops:
+    cmd: dz run-step complete-filtered_stops
     deps:
-    - data/gpsping/ubermedia/complete/ping
-    - data/mobility/get_device_counties/complete/device_county.parquet
-    - data/mobility/get_device_days/complete/device_day
-    - src/create_filtered_dataset.py
+    - data/mobility/initial_stops/complete/stop
+    - src/filtered_stops.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.create_filtered_dataset.min_am
-      - envs.complete.params.create_filtered_dataset.min_pm
-      - envs.complete.params.create_filtered_dataset.min_reliable_days
-      - envs.complete.params.create_filtered_dataset.min_sum
-      - envs.complete.params.create_filtered_dataset.specific_to_locale
-      - envs.complete.params.min_locale_rate
+      - envs.complete.params.filtered_stops.min_destinations
+      - envs.complete.params.filtered_stops.min_stops_to_count
     outs:
-    - data/mobility/create_filtered_dataset/complete/filtered_ping
-  small-create_filtered_dataset:
-    cmd: datazimmer run-step small-create_filtered_dataset
+    - data/mobility/filtered_stops/complete/stop
+  small-filtered_stops:
+    cmd: dz run-step small-filtered_stops
     deps:
-    - data/gpsping/ubermedia/non_covid_tuesday/ping
-    - data/mobility/get_device_counties/small/device_county.parquet
-    - data/mobility/get_device_days/small/device_day
-    - src/create_filtered_dataset.py
+    - data/mobility/initial_stops/small/stop
+    - src/filtered_stops.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.create_filtered_dataset.min_am
-      - envs.complete.params.create_filtered_dataset.min_pm
-      - envs.complete.params.create_filtered_dataset.min_reliable_days
-      - envs.complete.params.create_filtered_dataset.min_sum
-      - envs.complete.params.create_filtered_dataset.specific_to_locale
-      - envs.complete.params.min_locale_rate
+      - envs.complete.params.filtered_stops.min_destinations
+      - envs.complete.params.filtered_stops.min_stops_to_count
     outs:
-    - data/mobility/create_filtered_dataset/small/filtered_ping
-  complete-raster_aggregate:
-    cmd: datazimmer run-step complete-raster_aggregate
+    - data/mobility/filtered_stops/small/stop
+  complete-device_counties:
+    cmd: dz run-step complete-device_counties
     deps:
-    - data/gpsping/ubermedia/complete/ping
-    - src/raster_aggregate.py
+    - data/mobility/filtered_stops/complete/stop
+    - src/device_counties.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.raster_aggregate.min_count
-      - envs.complete.params.raster_aggregate.min_duration
+      - envs.complete.params.device_counties.min_locale_rate
     outs:
-    - data/mobility/raster_aggregate/complete/raster_hour
-  small-raster_aggregate:
-    cmd: datazimmer run-step small-raster_aggregate
+    - data/mobility/device_counties/complete/device_county.parquet
+  small-device_counties:
+    cmd: dz run-step small-device_counties
     deps:
-    - data/gpsping/ubermedia/non_covid_tuesday/ping
-    - src/raster_aggregate.py
+    - data/mobility/filtered_stops/small/stop
+    - src/device_counties.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.raster_aggregate.min_count
-      - envs.complete.params.raster_aggregate.min_duration
+      - envs.complete.params.device_counties.min_locale_rate
     outs:
-    - data/mobility/raster_aggregate/small/raster_hour
-  complete-stop_detection:
-    cmd: datazimmer run-step complete-stop_detection
+    - data/mobility/device_counties/small/device_county.parquet
+  complete-h3_hour_aggregate:
+    cmd: dz run-step complete-h3_hour_aggregate
     deps:
-    - data/mobility/create_filtered_dataset/complete/filtered_ping
-    - src/stop_detection.py
+    - data/gpsping/ubermedia/complete/extended_ping
+    - src/h3_hour_aggregate.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.stop_detection.distance_metric
-      - envs.complete.params.stop_detection.home_arrive
-      - envs.complete.params.stop_detection.home_depart
-      - envs.complete.params.stop_detection.max_time_between
-      - envs.complete.params.stop_detection.min_size
-      - envs.complete.params.stop_detection.min_staying_time
-      - envs.complete.params.stop_detection.min_work_hours
-      - envs.complete.params.stop_detection.r1
-      - envs.complete.params.stop_detection.r2
-      - envs.complete.params.stop_detection.work_end
-      - envs.complete.params.stop_detection.work_start
+      - envs.complete.params.h3_hour_aggregate.min_count
+      - envs.complete.params.h3_hour_aggregate.min_duration
     outs:
-    - data/mobility/stop_detection/complete/stop
-  small-stop_detection:
-    cmd: datazimmer run-step small-stop_detection
+    - data/mobility/h3_hour_aggregate/complete/hash_hour
+  small-h3_hour_aggregate:
+    cmd: dz run-step small-h3_hour_aggregate
     deps:
-    - data/mobility/create_filtered_dataset/small/filtered_ping
-    - src/stop_detection.py
+    - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+    - src/h3_hour_aggregate.py
     params:
     - zimmer.yaml:
-      - envs.complete.params.stop_detection.distance_metric
-      - envs.complete.params.stop_detection.home_arrive
-      - envs.complete.params.stop_detection.home_depart
-      - envs.complete.params.stop_detection.max_time_between
-      - envs.complete.params.stop_detection.min_size
-      - envs.complete.params.stop_detection.min_staying_time
-      - envs.complete.params.stop_detection.min_work_hours
-      - envs.complete.params.stop_detection.r1
-      - envs.complete.params.stop_detection.r2
-      - envs.complete.params.stop_detection.work_end
-      - envs.complete.params.stop_detection.work_start
+      - envs.complete.params.h3_hour_aggregate.min_count
+      - envs.complete.params.h3_hour_aggregate.min_duration
     outs:
-    - data/mobility/stop_detection/small/stop
+    - data/mobility/h3_hour_aggregate/small/hash_hour
+  complete-semantic_stops:
+    cmd: dz run-step complete-semantic_stops
+    deps:
+    - data/mobility/filtered_stops/complete/stop
+    - src/semantic_stops.py
+    params:
+    - zimmer.yaml:
+      - envs.complete.params.home_arrive
+      - envs.complete.params.morning_end
+      - envs.complete.params.work_end
+    outs:
+    - data/mobility/semantic_stops/complete/semantic_stop.parquet
+  small-semantic_stops:
+    cmd: dz run-step small-semantic_stops
+    deps:
+    - data/mobility/filtered_stops/small/stop
+    - src/semantic_stops.py
+    params:
+    - zimmer.yaml:
+      - envs.complete.params.home_arrive
+      - envs.complete.params.morning_end
+      - envs.complete.params.work_end
+    outs:
+    - data/mobility/semantic_stops/small/semantic_stop.parquet
+  complete-stop_reporting:
+    cmd: dz run-step complete-stop_reporting
+    deps:
+    - data/gpsping/ubermedia/complete/extended_ping
+    - data/mobility/filtered_stops/complete/stop
+    - data/mobility/initial_stops/complete/stop
+    - src/stop_reporting.py
+    outs:
+    - reports/complete/stop_look.md:
+        cache: false
+  small-stop_reporting:
+    cmd: dz run-step small-stop_reporting
+    deps:
+    - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+    - data/mobility/filtered_stops/small/stop
+    - data/mobility/initial_stops/small/stop
+    - src/stop_reporting.py
+    outs:
+    - reports/small/stop_look.md:
+        cache: false

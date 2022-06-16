@@ -7,7 +7,7 @@ from metazimmer.gpsping import ubermedia as um
 from .util import get_client, to_geo
 
 
-class GeohashHour(dz.AbstractEntity):
+class HashHour(dz.AbstractEntity):
     geohash = dz.Index & str
     hour = dz.Index & dt.datetime
 
@@ -15,7 +15,7 @@ class GeohashHour(dz.AbstractEntity):
     count = int
 
 
-h3_table = dz.ScruTable(GeohashHour, partitioning_cols=[GeohashHour.year_month])
+h3_table = dz.ScruTable(HashHour, partitioning_cols=[HashHour.year_month])
 
 
 def get_h3_id(df):
@@ -26,8 +26,8 @@ def proc_gdf(gdf, min_count, min_duration, table):
     agg_df = (
         gdf.assign(
             **{
-                GeohashHour.geohash: get_h3_id,
-                GeohashHour.hour: gdf[um.GpsPing.datetime].dt.floor("h"),
+                HashHour.geohash: get_h3_id,
+                HashHour.hour: gdf[um.GpsPing.datetime].dt.floor("h"),
             }
         )
         .groupby([um.GpsPing.device_id, *h3_table.index_cols])[um.GpsPing.datetime]
@@ -43,14 +43,14 @@ def proc_gdf(gdf, min_count, min_duration, table):
             lambda df: (df["count"] >= min_count)
             & (df["duration_minutes"] >= min_duration)
         ]
-        .groupby(h3_table.index_cols)[[GeohashHour.count]]
+        .groupby(h3_table.index_cols)[[HashHour.count]]
         .agg("count")
     )
 
     table.extend(
         h3_df.assign(
             **{
-                GeohashHour.year_month: h3_df.index.get_level_values(GeohashHour.hour)
+                HashHour.year_month: h3_df.index.get_level_values(HashHour.hour)
                 .astype(str)
                 .str[:7]
             }
@@ -63,9 +63,7 @@ def proc_gdf(gdf, min_count, min_duration, table):
 @dz.register(dependencies=[um.ping_table], outputs=[h3_table])
 def step(min_count, min_duration):
     get_client()
-    um.ping_table.get_full_ddf().groupby(
-        [um.GpsPing.year_month, um.GpsPing.dayofmonth]
-    ).apply(
+    um.ping_table.get_full_ddf().groupby(um.ExtendedPing.year_month).apply(
         proc_gdf,
         min_count=min_count,
         min_duration=min_duration,

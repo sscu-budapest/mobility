@@ -70,9 +70,9 @@ def filter_pings(min_pings_by_device, max_speed):
     ddf = um.ping_table.get_full_ddf()
 
     drops = (
-        ddf.groupby(um.GpsPing.device_id)
+        ddf.groupby(um.ExtendedPing.device_group)
         .apply(
-            proc_device,
+            proc_device_group,
             max_speed=max_speed,
             min_pings=min_pings_by_device,
             out_table=filtered_ping_table,
@@ -86,23 +86,33 @@ def filter_pings(min_pings_by_device, max_speed):
     drop_stat_table.replace_all(drops)
 
 
-def proc_device(device_df, min_pings, max_speed, out_table):
-    if device_df.shape[0] < min_pings:
-        return device_df.pipe(_to_drop_stat, speed=False)
-    _df = device_df.pipe(DeviceGroupExtension())
+def proc_device_group(dg_df, min_pings, max_speed, out_table):
     misses = [pd.DataFrame(columns=drop_stat_table.all_cols)]
+    user_dfs = []
+    for _, d_df in dg_df.pipe(DeviceGroupExtension()).groupby(um.GpsPing.device_id):
+        if d_df.shape[0] < min_pings:
+            misses.append(_to_drop_stat(d_df, False))
+            continue
+        new_misses, proc_df = proc_device(d_df, max_speed)
+        misses += new_misses
+        if proc_df.shape[0] < min_pings:
+            misses.append(proc_df.pipe(_to_drop_stat, speed=False))
+        else:
+            user_dfs.append(proc_df)
+    out_table.extend(pd.concat(user_dfs), try_dask=False)
+    return pd.concat(misses).fillna(0)
+
+
+def proc_device(device_df, max_speed):
+    misses = []
     while True:
-        _df = _df.pipe(ArrivalExtension())
-        speed_ser = _df[PingWithArrival.incoming.speed]
+        device_df = device_df.pipe(ArrivalExtension())
+        speed_ser = device_df[PingWithArrival.incoming.speed]
         speeding = (speed_ser > max_speed) | (speed_ser.shift(-1) > max_speed)
         if not speeding.sum():
-            if _df.shape[0] < min_pings:
-                misses.append(_df.pipe(_to_drop_stat, speed=False))
-            else:
-                out_table.extend(_df, try_dask=False)
-            return pd.concat(misses).fillna(0)
-        misses.append(_df.loc[speeding, :].pipe(_to_drop_stat, speed=True))
-        _df = _df.loc[~speeding, :]
+            return misses, device_df
+        misses.append(device_df.loc[speeding, :].pipe(_to_drop_stat, speed=True))
+        device_df = device_df.loc[~speeding, :]
 
 
 def _to_drop_stat(df, speed):
