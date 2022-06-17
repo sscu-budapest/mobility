@@ -100,7 +100,7 @@ def proc_device_group(dg_df, min_pings, max_speed, out_table):
         else:
             user_dfs.append(proc_df)
     out_table.extend(pd.concat(user_dfs), try_dask=False)
-    return pd.concat(misses).fillna(0)
+    return pd.concat(misses).fillna(0).groupby(DropStat.day).sum().reset_index()
 
 
 def proc_device(device_df, max_speed):

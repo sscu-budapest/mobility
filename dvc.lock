@@ -8,8 +8,8 @@ stages:
       size: 110825870
       nfiles: 256
     - path: src/speed_based_filter.py
-      md5: 46ee5deb84df614cd1bb8b8094145604
-      size: 3544
+      md5: 0881e9766a8c5707befde339a8d4e082
+      size: 3919
     params:
       zimmer.yaml:
         envs.complete.params.speed_based_filter.max_speed: 300
@@ -19,15 +19,15 @@ stages:
       md5: 24ae1791772e87f7c146ac261d6e329d
       size: 2961
     - path: data/mobility/speed_based_filter/small/ping_with_arrival
-      md5: f55a0a07325a74fb78ade5bae47f71d5.dir
-      size: 151865130
+      md5: 2929a894f42f427248e4ce0965dbedde.dir
+      size: 151871244
       nfiles: 256
   small-initial_stops:
     cmd: dz run-step small-initial_stops
     deps:
     - path: data/mobility/speed_based_filter/small/ping_with_arrival
-      md5: f55a0a07325a74fb78ade5bae47f71d5.dir
-      size: 151865130
+      md5: 2929a894f42f427248e4ce0965dbedde.dir
+      size: 151871244
       nfiles: 256
     - path: src/initial_stops.py
       md5: 860ec5f28569ee02658f35cfef253664
@@ -111,8 +111,8 @@ stages:
       size: 110825870
       nfiles: 256
     - path: src/h3_hour_aggregate.py
-      md5: 0e3c9d2310e2660ef6493c30f7a544ef
-      size: 1836
+      md5: 0d9caaf418f9764068e2025264ecb692
+      size: 1822
     params:
       zimmer.yaml:
         envs.complete.params.h3_hour_aggregate.min_count: 3
