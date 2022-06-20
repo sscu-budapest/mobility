@@ -115,6 +115,8 @@ def filter_pings(min_pings_by_device, max_speed):
         ddf = dd.read_parquet([*fpaths])
         new_future = _getfut(ddf)
         seq.add(new_future)
+        del decorated_future
+
 
     drop_stat_table.replace_all(
         pd.concat(drop_dfs).fillna(0).groupby(DropStat.day).sum().reset_index()
@@ -128,6 +130,7 @@ def _getkey(path):
 def decorate_df(ddf, max_speed, min_pings):
     return (
         ddf.drop(um.ExtendedPing.year_month, axis=1)
+        .compute()
         .groupby(um.ExtendedPing.device_id)
         .apply(
             proc_device,
@@ -135,7 +138,6 @@ def decorate_df(ddf, max_speed, min_pings):
             min_pings=min_pings,
             meta=_COMBINED_META,
         )
-        .compute()
         .reset_index(drop=True)
     )
 
