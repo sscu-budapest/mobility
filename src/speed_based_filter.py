@@ -136,7 +136,7 @@ def decorate_df(ddf, max_speed, min_pings):
             proc_device,
             max_speed=max_speed,
             min_pings=min_pings,
-            meta=_COMBINED_META,
+            # meta=_COMBINED_META,
         )
         .reset_index(drop=True)
     )
