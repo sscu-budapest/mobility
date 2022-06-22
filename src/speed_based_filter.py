@@ -1,14 +1,12 @@
 from datetime import datetime
-from itertools import groupby, islice
-from multiprocessing import cpu_count
-from pathlib import Path
+from functools import partial
 
-import dask.dataframe as dd
 import datazimmer as dz
 import metazimmer.gpsping.ubermedia as um
 import pandas as pd
+from atqo import parallel_map
+from atqo.distributed_apis import DEFAULT_MULTI_API
 from colassigner import Col
-from distributed import as_completed
 
 from .util import get_client, localize
 
@@ -44,12 +42,7 @@ class ArrivalExtension(dz.AbstractEntity):
     incoming = Arrival
 
 
-class DeviceGroupExtension(dz.AbstractEntity):
-    def device_group(self, df) -> Col[str]:
-        return df.loc[:, um.GpsPing.device_id].str[:2]
-
-
-class PingWithArrival(DeviceGroupExtension, ArrivalExtension, um.GpsPing):
+class PingWithArrival(ArrivalExtension, um.ExtendedPing):
     pass
 
 
@@ -65,104 +58,69 @@ filtered_ping_table = dz.ScruTable(
 )
 drop_stat_table = dz.ScruTable(DropStat)
 
-_DROP_COL = "_to_drop"
-_COMBINED_META = pd.DataFrame(
-    columns=sorted(
-        [
-            _DROP_COL,
-            *set(drop_stat_table.feature_cols).union(set(filtered_ping_table.all_cols)),
-        ]
-    )
-)
-_drop_initer = {
-    DropStat.high_speed: 0,
-    DropStat.insufficient_pings: 0,
-    _DROP_COL: False,
-}
-
 
 @dz.register(
     dependencies=[um.ping_table], outputs=[filtered_ping_table, drop_stat_table]
 )
 def filter_pings(min_pings_by_device, max_speed):
 
-    batch_size = cpu_count()
-    client = get_client()
-    drop_dfs = []
-    gb_iter = groupby(sorted(um.ping_table.paths, key=_getkey), _getkey)
-
-    def _getfut(ddf):
-        return client.submit(
-            decorate_df, ddf, max_speed=max_speed, min_pings=min_pings_by_device
-        )
-
-    futures = []
-    for _, fpaths in islice(gb_iter, batch_size):
-        ddf = dd.read_parquet([*fpaths])
-        futures.append(_getfut(ddf))
-
-    seq = as_completed(futures)
-    for decorated_future in seq:
-        decorated_df = decorated_future.result()
-        drop_dfs.append(
-            decorated_df.loc[decorated_df[_DROP_COL], :].pipe(_to_drop_stat)
-        )
-        filtered_ping_table.extend(decorated_df.loc[~decorated_df[_DROP_COL], :])
-        try:
-            _, fpaths = next(gb_iter)
-        except StopIteration:
-            continue
-        ddf = dd.read_parquet([*fpaths])
-        new_future = _getfut(ddf)
-        seq.add(new_future)
-        del decorated_future
-
-
+    get_client()
+    proc_paths = partial(
+        proc_device_group_paths,
+        max_speed=max_speed,
+        min_pings=min_pings_by_device,
+        out_table=filtered_ping_table,
+    )
+    drop_dfs = parallel_map(
+        proc_paths,
+        [*um.ping_table.get_partition_paths(partition_col=um.ExtendedPing.device_group)],
+        dist_api=DEFAULT_MULTI_API,
+        pbar=True,
+    )
     drop_stat_table.replace_all(
         pd.concat(drop_dfs).fillna(0).groupby(DropStat.day).sum().reset_index()
     )
 
 
-def _getkey(path):
-    return Path(path).parts[-1]
+def proc_device_group_paths(gpaths, min_pings, max_speed, out_table):
+    dg_df = pd.concat(map(pd.read_parquet, gpaths))
+    misses = [pd.DataFrame(columns=drop_stat_table.all_cols)]
+    user_dfs = []
+    for _, d_df in dg_df.groupby(um.GpsPing.device_id):
+        if d_df.shape[0] < min_pings:
+            misses.append(_to_drop_stat(d_df, False))
+            continue
+        new_misses, proc_df = proc_device(d_df, max_speed)
+        misses += new_misses
+        if proc_df.shape[0] < min_pings:
+            misses.append(proc_df.pipe(_to_drop_stat, speed=False))
+        else:
+            user_dfs.append(proc_df)
+    out_table.extend(pd.concat(user_dfs), try_dask=False)
+    return pd.concat(misses).fillna(0).groupby(DropStat.day).sum().reset_index()
 
 
-def decorate_df(ddf, max_speed, min_pings):
-    return (
-        ddf.drop(um.ExtendedPing.year_month, axis=1)
-        .compute()
-        .groupby(um.ExtendedPing.device_id)
-        .apply(
-            proc_device,
-            max_speed=max_speed,
-            min_pings=min_pings,
-            # meta=_COMBINED_META,
-        )
-        .reset_index(drop=True)
-    )
-
-
-def proc_device(dev_df, max_speed, min_pings):
+def proc_device(device_df, max_speed):
     misses = []
-    remaining_df = dev_df.assign(**_drop_initer)
     while True:
-        remaining_df = remaining_df.pipe(ArrivalExtension())
-        if remaining_df.shape[0] < min_pings:
-            misses.append(remaining_df.assign(**{DropStat.insufficient_pings: 1}))
-            remaining_df = pd.DataFrame()
-            break
-        speed_ser = remaining_df[PingWithArrival.incoming.speed]
+        device_df = device_df.pipe(ArrivalExtension())
+        speed_ser = device_df[PingWithArrival.incoming.speed]
         speeding = (speed_ser > max_speed) | (speed_ser.shift(-1) > max_speed)
         if not speeding.sum():
-            break
-        misses.append(remaining_df.loc[speeding, :].assign(**{DropStat.high_speed: 1}))
-        remaining_df = remaining_df.loc[~speeding, :]
-    return pd.concat(misses + [remaining_df]).loc[:, _COMBINED_META.columns]
+            return misses, device_df
+        misses.append(device_df.loc[speeding, :].pipe(_to_drop_stat, speed=True))
+        device_df = device_df.loc[~speeding, :]
 
 
-def _to_drop_stat(df):
+def _to_drop_stat(df, speed):
     return (
         df.rename(columns={um.GpsPing.datetime: DropStat.day})
+        .assign(
+            **{
+                DropStat.high_speed: int(speed),
+                DropStat.insufficient_pings: int(not speed),
+            }
+        )
         .set_index(DropStat.day)
         .resample("1D")[drop_stat_table.feature_cols]
         .sum()
