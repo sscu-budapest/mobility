@@ -5,6 +5,7 @@ from multiprocessing import cpu_count
 import datazimmer as dz
 import pandas as pd
 import psutil
+from atqo import MULTI_GC_API
 from colassigner import ColAssigner
 from infostop import Infostop
 from metazimmer.gpsping.ubermedia import Coordinates
@@ -82,11 +83,8 @@ def proc_device(device_df, model_params: dict):
 
 def proc_partition(partition_df, params: dict, table: dz.ScruTable):
     table.extend(
-        partition_df.groupby(PingWithArrival.device_id)
-        .apply(
-            proc_device,
-            model_params=params,
-        )
+        partition_df.groupby(PingWithArrival.device_id, as_index=False)
+        .apply(proc_device, model_params=params)
         .reset_index(drop=True),
         try_dask=False,
     )
@@ -118,6 +116,8 @@ def step(
     filtered_ping_table.map_partitions(
         fun=partial(proc_partition, params=model_params, table=stop_table),
         workers=workers,
+        pbar=True,
+        dist_api=MULTI_GC_API,
     )
 
 

@@ -30,8 +30,8 @@ stages:
       size: 152030727
       nfiles: 256
     - path: src/initial_stops.py
-      md5: ea2911e3c3781a8b60fdacfb4ca04f2c
-      size: 4102
+      md5: c8315d47473cce818f105852fb5b557d
+      size: 4163
     params:
       zimmer.yaml:
         envs.complete.params.initial_stops.distance_metric: haversine
