@@ -141,3 +141,25 @@ stages:
     - path: data/mobility/semantic_stops/small/semantic_stop.parquet
       md5: 0b2e25b4c4da20b3098757478b8d3bc2
       size: 92769
+  complete-speed_based_filter:
+    cmd: dz run-step complete-speed_based_filter
+    deps:
+    - path: data/gpsping/ubermedia/complete/extended_ping
+      md5: 64ec416a6f2996899f2220d8481ab83c.dir
+      size: 74947155079
+      nfiles: 6400
+    - path: src/speed_based_filter.py
+      md5: 72887b7c9438f98440c13870ec134270
+      size: 3931
+    params:
+      zimmer.yaml:
+        envs.complete.params.speed_based_filter.max_speed: 300
+        envs.complete.params.speed_based_filter.min_pings_by_device: 20
+    outs:
+    - path: data/mobility/speed_based_filter/complete/drop_stat.parquet
+      md5: c72b88377e29c2018a94cc78e899c040
+      size: 17223
+    - path: data/mobility/speed_based_filter/complete/ping_with_arrival
+      md5: ab2c899daf96e7a9fbe4b99d2a99a5c5.dir
+      size: 112002849932
+      nfiles: 256
