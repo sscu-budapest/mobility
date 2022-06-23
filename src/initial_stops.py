@@ -1,8 +1,10 @@
 from datetime import datetime
 from functools import partial
+from multiprocessing import cpu_count
 
 import datazimmer as dz
 import pandas as pd
+import psutil
 from colassigner import ColAssigner
 from infostop import Infostop
 from metazimmer.gpsping.ubermedia import Coordinates
@@ -111,8 +113,11 @@ def step(
         distance_metric=distance_metric,
     )
 
+    mem_gb = psutil.virtual_memory().total / 2**30
+    workers = min(cpu_count(), int(mem_gb / 10) + 1)
     filtered_ping_table.map_partitions(
-        fun=partial(proc_partition, params=model_params, table=stop_table)
+        fun=partial(proc_partition, params=model_params, table=stop_table),
+        workers=workers,
     )
 
 
