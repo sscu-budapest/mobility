@@ -30,8 +30,8 @@ stages:
       size: 152030727
       nfiles: 256
     - path: src/initial_stops.py
-      md5: 860ec5f28569ee02658f35cfef253664
-      size: 3920
+      md5: ea2911e3c3781a8b60fdacfb4ca04f2c
+      size: 4102
     params:
       zimmer.yaml:
         envs.complete.params.initial_stops.distance_metric: haversine
@@ -111,16 +111,16 @@ stages:
       size: 110825870
       nfiles: 256
     - path: src/h3_hour_aggregate.py
-      md5: 0d9caaf418f9764068e2025264ecb692
-      size: 1822
+      md5: 8d319a662b6f4105969247aa74d6a8db
+      size: 1862
     params:
       zimmer.yaml:
         envs.complete.params.h3_hour_aggregate.min_count: 3
         envs.complete.params.h3_hour_aggregate.min_duration: 15
     outs:
     - path: data/mobility/h3_hour_aggregate/small/hash_hour
-      md5: f83ae3eb654adeb9da7fdc44740408ad.dir
-      size: 517324
+      md5: 8c7d45025a209854810e2fd302f44dde.dir
+      size: 517276
       nfiles: 1
   small-semantic_stops:
     cmd: dz run-step small-semantic_stops

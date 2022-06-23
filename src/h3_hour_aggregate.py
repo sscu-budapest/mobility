@@ -1,14 +1,16 @@
 import datetime as dt
+from functools import partial
 
 import datazimmer as dz
 import pandas as pd
+from atqo import parallel_map
 from metazimmer.gpsping import ubermedia as um
 
-from .util import get_client, to_geo
+from .util import to_geo
 
 
 class HashHour(dz.AbstractEntity):
-    geohash = dz.Index & str
+    hid = dz.Index & str
     hour = dz.Index & dt.datetime
 
     year_month = str
@@ -22,11 +24,12 @@ def get_h3_id(df):
     return df.pipe(to_geo).h3.geo_to_h3(10).index.to_numpy()
 
 
-def proc_gdf(gdf, min_count, min_duration, table):
+def proc_month_paths(paths, min_count, min_duration, table):
+    gdf = pd.concat(map(pd.read_parquet, paths))
     agg_df = (
         gdf.assign(
             **{
-                HashHour.geohash: get_h3_id,
+                HashHour.hid: get_h3_id,
                 HashHour.hour: gdf[um.GpsPing.datetime].dt.floor("h"),
             }
         )
@@ -46,27 +49,20 @@ def proc_gdf(gdf, min_count, min_duration, table):
         .groupby(h3_table.index_cols)[[HashHour.count]]
         .agg("count")
     )
-
-    table.extend(
-        h3_df.assign(
-            **{
-                HashHour.year_month: h3_df.index.get_level_values(HashHour.hour)
-                .astype(str)
-                .str[:7]
-            }
-        ),
-        try_dask=False,
-    )
-    return pd.DataFrame()
+    hour_col = h3_df.index.get_level_values(HashHour.hour).astype(str).str[:7]
+    table.extend(h3_df.assign(**{HashHour.year_month: hour_col}), try_dask=False)
 
 
 @dz.register(dependencies=[um.ping_table], outputs=[h3_table])
 def step(min_count, min_duration):
-    get_client()
-    um.ping_table.get_full_ddf().groupby(um.ExtendedPing.year_month).apply(
-        proc_gdf,
+    proc_paths = partial(
+        proc_month_paths,
         min_count=min_count,
         min_duration=min_duration,
         table=h3_table,
-        meta=pd.DataFrame(),
-    ).compute()
+    )
+    parallel_map(
+        proc_paths,
+        [*um.ping_table.get_partition_paths(partition_col=um.ExtendedPing.year_month)],
+        pbar=True,
+    )
