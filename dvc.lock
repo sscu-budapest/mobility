@@ -30,8 +30,8 @@ stages:
       size: 152030727
       nfiles: 256
     - path: src/initial_stops.py
-      md5: c8315d47473cce818f105852fb5b557d
-      size: 4163
+      md5: 275b942384e96f0d1b231b69c4fd6f93
+      size: 4385
     params:
       zimmer.yaml:
         envs.complete.params.initial_stops.distance_metric: haversine
@@ -162,4 +162,46 @@ stages:
     - path: data/mobility/speed_based_filter/complete/ping_with_arrival
       md5: ab2c899daf96e7a9fbe4b99d2a99a5c5.dir
       size: 112002849932
+      nfiles: 256
+  complete-initial_stops:
+    cmd: dz run-step complete-initial_stops
+    deps:
+    - path: data/mobility/speed_based_filter/complete/ping_with_arrival
+      md5: ab2c899daf96e7a9fbe4b99d2a99a5c5.dir
+      size: 112002849932
+      nfiles: 256
+    - path: src/initial_stops.py
+      md5: 275b942384e96f0d1b231b69c4fd6f93
+      size: 4385
+    params:
+      zimmer.yaml:
+        envs.complete.params.initial_stops.distance_metric: haversine
+        envs.complete.params.initial_stops.max_time_between: 7200
+        envs.complete.params.initial_stops.min_size: 2
+        envs.complete.params.initial_stops.min_staying_time: 270
+        envs.complete.params.initial_stops.r1: 370
+        envs.complete.params.initial_stops.r2: 140
+    outs:
+    - path: data/mobility/initial_stops/complete/stop
+      md5: 78df028653f512175b90c54fe8aedce7.dir
+      size: 7278642899
+      nfiles: 256
+  complete-filtered_stops:
+    cmd: dz run-step complete-filtered_stops
+    deps:
+    - path: data/mobility/initial_stops/complete/stop
+      md5: 78df028653f512175b90c54fe8aedce7.dir
+      size: 7278642899
+      nfiles: 256
+    - path: src/filtered_stops.py
+      md5: ba3fc10261636a4c432fc542b892656c
+      size: 1062
+    params:
+      zimmer.yaml:
+        envs.complete.params.filtered_stops.min_destinations: 2
+        envs.complete.params.filtered_stops.min_stops_to_count: 4
+    outs:
+    - path: data/mobility/filtered_stops/complete/stop
+      md5: f34be16b05e33d15a5d24293820aec2a.dir
+      size: 5870983977
       nfiles: 256

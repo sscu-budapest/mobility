@@ -1,3 +1,5 @@
+import gc
+
 from datetime import datetime
 from functools import partial
 from multiprocessing import cpu_count
@@ -5,7 +7,6 @@ from multiprocessing import cpu_count
 import datazimmer as dz
 import pandas as pd
 import psutil
-from atqo import MULTI_GC_API
 from colassigner import ColAssigner
 from infostop import Infostop
 from metazimmer.gpsping.ubermedia import Coordinates
@@ -41,7 +42,7 @@ class Stop(dz.AbstractEntity):
 
 class Labeler(ColAssigner):
     def __init__(self, model_params) -> None:
-        self.model = Infostop(**model_params)
+        self.model_params = model_params
 
     def ts(self, df):
         return df[PingWithArrival.datetime].view(int) / 10**9
@@ -52,8 +53,11 @@ class Labeler(ColAssigner):
             :, [PingWithArrival.loc.lat, PingWithArrival.loc.lon, Labeler.ts]
         ].to_numpy()
 
+        model = Infostop(**self.model_params)
         try:
-            return self.model.fit_predict(arr)
+            out = model.fit_predict(arr)
+            del model
+            return out
         except Exception as e:
             # assert "No stop events found" in str(e)
             if not ("No stop events found" in str(e)):
@@ -64,7 +68,7 @@ class Labeler(ColAssigner):
         return (df[Labeler.place_label] != df[Labeler.place_label].shift(1)).cumsum()
 
 
-stop_table = dz.ScruTable(Stop, partitioning_cols=[Stop.device_group])
+stop_table = dz.ScruTable(Stop, partitioning_cols=filtered_ping_table.partitioning_cols)
 
 
 def proc_device(device_df, model_params: dict):
@@ -81,13 +85,15 @@ def proc_device(device_df, model_params: dict):
     return labeled_df.pipe(_gb_stop)
 
 
-def proc_partition(partition_df, params: dict, table: dz.ScruTable):
-    table.extend(
+def proc_partition(partition_df, params: dict):
+    gid = partition_df["device_group"].iloc[0]
+    odf = (
         partition_df.groupby(PingWithArrival.device_id, as_index=False)
         .apply(proc_device, model_params=params)
-        .reset_index(drop=True),
-        try_dask=False,
+        .reset_index(drop=True)
     )
+    logger.info("got odf", gid=gid, shape=odf.shape, gc_res=gc.collect(), mem=str(psutil.virtual_memory()))
+    stop_table.extend(odf, try_dask=False)
 
 
 @dz.register(
@@ -114,10 +120,11 @@ def step(
     mem_gb = psutil.virtual_memory().total / 2**30
     workers = min(cpu_count(), int(mem_gb / 10) + 1)
     filtered_ping_table.map_partitions(
-        fun=partial(proc_partition, params=model_params, table=stop_table),
+        fun=partial(proc_partition, params=model_params),
         workers=workers,
         pbar=True,
-        dist_api=MULTI_GC_API,
+        verbose=True,
+        restart_after=1
     )
 
 
