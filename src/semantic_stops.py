@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import partial
 
 import datazimmer as dz
 import numpy as np
@@ -82,29 +83,22 @@ class SemanticStop(Stop, StopExtension):
     # is_work = bool
 
 
-def proc_device(device_df, dayconf: DaySetup):
-    return device_df.pipe(StopExtension(device_df, dayconf)).loc[
-        :, semantic_stop_table.all_cols
-    ]
+def proc_device_group_partition(gdf, dayconf: DaySetup, out_table):
+    out_table.replace_group(
+        gdf.groupby(Stop.device_id).apply(lambda df: StopExtension(df, dayconf)(df))
+    )
+    
 
 
-semantic_stop_table = dz.ScruTable(SemanticStop)
+semantic_stop_table = dz.ScruTable(SemanticStop, partitioning_cols=filtered_stop_table.partitioning_cols)
 
 
 @dz.register(dependencies=[filtered_stop_table], outputs=[semantic_stop_table])
 def step(morning_end: int, work_end: int, home_arrive: int):
 
     dayconf = DaySetup(morning_end, work_end, home_arrive)
-    get_client()
-
-    ddf = (
-        filtered_stop_table.get_full_ddf()
-        .groupby(Stop.device_id)
-        .apply(
-            proc_device,
-            meta=pd.DataFrame(columns=semantic_stop_table.all_cols),
-            dayconf=dayconf,
-        )
-        .reset_index(drop=True)
+    filtered_stop_table.map_partitions(
+        partial(proc_device_group_partition, dayconf=dayconf, out_table=semantic_stop_table),
+        pbar=True,
     )
     semantic_stop_table.replace_all(ddf, parse=False)
