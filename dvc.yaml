@@ -128,7 +128,7 @@ stages:
       - envs.complete.params.morning_end
       - envs.complete.params.work_end
     outs:
-    - data/mobility/semantic_stops/complete/semantic_stop.parquet
+    - data/mobility/semantic_stops/complete/semantic_stop
   small-semantic_stops:
     cmd: dz run-step small-semantic_stops
     deps:
@@ -140,7 +140,7 @@ stages:
       - envs.complete.params.morning_end
       - envs.complete.params.work_end
     outs:
-    - data/mobility/semantic_stops/small/semantic_stop.parquet
+    - data/mobility/semantic_stops/small/semantic_stop
   complete-stop_reporting:
     cmd: dz run-step complete-stop_reporting
     deps:

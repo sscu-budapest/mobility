@@ -205,3 +205,42 @@ stages:
       md5: f34be16b05e33d15a5d24293820aec2a.dir
       size: 5870983977
       nfiles: 256
+  complete-device_counties:
+    cmd: dz run-step complete-device_counties
+    deps:
+    - path: data/mobility/filtered_stops/complete/stop
+      md5: f34be16b05e33d15a5d24293820aec2a.dir
+      size: 5870983977
+      nfiles: 256
+    - path: src/device_counties.py
+      md5: f0d99a61f58758fbc12a4a1a4179c48f
+      size: 3621
+    params:
+      zimmer.yaml:
+        envs.complete.params.device_counties.min_locale_rate: 0.8
+    outs:
+    - path: data/mobility/device_counties/complete/device_county.parquet
+      md5: 339450af56e2ea6662ce0fd4789d1ef6
+      size: 28217411
+  complete-stop_reporting:
+    cmd: dz run-step complete-stop_reporting
+    deps:
+    - path: data/gpsping/ubermedia/complete/extended_ping
+      md5: 64ec416a6f2996899f2220d8481ab83c.dir
+      size: 74947155079
+      nfiles: 6400
+    - path: data/mobility/filtered_stops/complete/stop
+      md5: f34be16b05e33d15a5d24293820aec2a.dir
+      size: 5870983977
+      nfiles: 256
+    - path: data/mobility/initial_stops/complete/stop
+      md5: 78df028653f512175b90c54fe8aedce7.dir
+      size: 7278642899
+      nfiles: 256
+    - path: src/stop_reporting.py
+      md5: be6efcb50ca917f1dd12c32bf8cafad8
+      size: 1887
+    outs:
+    - path: reports/complete/stop_look.md
+      md5: 360a979727529cfcd533351a027efc9a
+      size: 734

@@ -84,10 +84,9 @@ class SemanticStop(Stop, StopExtension):
 
 
 def proc_device_group_partition(gdf, dayconf: DaySetup, out_table):
-    out_table.replace_group(
+    out_table.replace_groups(
         gdf.groupby(Stop.device_id).apply(lambda df: StopExtension(df, dayconf)(df))
     )
-    
 
 
 semantic_stop_table = dz.ScruTable(SemanticStop, partitioning_cols=filtered_stop_table.partitioning_cols)
@@ -98,7 +97,6 @@ def step(morning_end: int, work_end: int, home_arrive: int):
 
     dayconf = DaySetup(morning_end, work_end, home_arrive)
     filtered_stop_table.map_partitions(
-        partial(proc_device_group_partition, dayconf=dayconf, out_table=semantic_stop_table),
+        fun=partial(proc_device_group_partition, dayconf=dayconf, out_table=semantic_stop_table),
         pbar=True,
     )
-    semantic_stop_table.replace_all(ddf, parse=False)
