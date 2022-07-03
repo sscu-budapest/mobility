@@ -130,17 +130,19 @@ stages:
       size: 378417
       nfiles: 30
     - path: src/semantic_stops.py
-      md5: 8a49b67a5aa32a755590b41eccb5a569
-      size: 3166
+      md5: 5de9c7f358935a02b9053279f51189a6
+      size: 5947
     params:
       zimmer.yaml:
         envs.complete.params.home_arrive: 20
         envs.complete.params.morning_end: 8
+        envs.complete.params.semantic_stops.time_unit: W
         envs.complete.params.work_end: 17
     outs:
-    - path: data/mobility/semantic_stops/small/semantic_stop.parquet
-      md5: 0b2e25b4c4da20b3098757478b8d3bc2
-      size: 92769
+    - path: data/mobility/semantic_stops/small/semantic_stop
+      md5: 3d02a360e6e0d2c6f71afe4d93b9975c.dir
+      size: 794853
+      nfiles: 30
   complete-speed_based_filter:
     cmd: dz run-step complete-speed_based_filter
     deps:

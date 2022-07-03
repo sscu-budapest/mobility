@@ -29,6 +29,9 @@ envs:
         distance_metric: "haversine"
       device_counties:
         min_locale_rate: 0.8
+      semantic_stops:
+        time_unit: W
+        
   small:
     parent: complete
     import_envs:
