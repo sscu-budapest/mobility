@@ -1,10 +1,12 @@
 import datetime as dt
 from functools import partial
+from multiprocessing import cpu_count
 
 import datazimmer as dz
 import pandas as pd
 from atqo import parallel_map
 from metazimmer.gpsping import ubermedia as um
+import psutil
 
 from .util import to_geo
 
@@ -24,7 +26,7 @@ def get_h3_id(df):
     return df.pipe(to_geo).h3.geo_to_h3(10).index.to_numpy()
 
 
-def proc_month_paths(paths, min_count, min_duration, table):
+def proc_month_paths(paths, min_count, min_duration, table: dz.ScruTable):
     gdf = pd.concat(map(pd.read_parquet, paths))
     agg_df = (
         gdf.assign(
@@ -50,11 +52,16 @@ def proc_month_paths(paths, min_count, min_duration, table):
         .agg("count")
     )
     hour_col = h3_df.index.get_level_values(HashHour.hour).astype(str).str[:7]
-    table.extend(h3_df.assign(**{HashHour.year_month: hour_col}), try_dask=False)
+    table.replace_groups(
+        h3_df.assign(**{HashHour.year_month: hour_col}), try_dask=False
+    )
 
 
 @dz.register(dependencies=[um.ping_table], outputs=[h3_table])
 def step(min_count, min_duration):
+    mem_gb = psutil.virtual_memory().total / 2**30
+    workers = min(cpu_count(), int(mem_gb / 10) + 1)
+
     proc_paths = partial(
         proc_month_paths,
         min_count=min_count,
@@ -65,4 +72,5 @@ def step(min_count, min_duration):
         proc_paths,
         [*um.ping_table.get_partition_paths(partition_col=um.ExtendedPing.year_month)],
         pbar=True,
+        workers=workers,
     )
