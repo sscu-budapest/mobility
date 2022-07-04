@@ -31,8 +31,13 @@ envs:
         min_locale_rate: 0.8
       semantic_stops:
         time_unit: W
-        
+        min_work_hours: 3
+        min_home_hours: 8
   small:
     parent: complete
     import_envs:
       gpsping: non_covid_tuesday
+    params:
+      semantic_stops:
+        min_work_hours: 0.5
+        min_home_hours: 2

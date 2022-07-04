@@ -20,6 +20,13 @@ class DaySetup:
     home_arrive: int
 
 
+@dataclass
+class TimeSetup:
+    time_bin: str
+    min_work_hours: float
+    min_home_hours: float
+
+
 class ArrivalFromPing(Arrival):
     def __init__(self) -> None:
         self._arr_cols = StopExtension.from_last_ping
@@ -57,8 +64,9 @@ class SpecialPlace(dz.CompositeTypeBase):
 
     time = float  # minutes
     total_time_in_period = float  # minutes
-    is_max_in_period = bool
+    # is_max_in_period = bool
     distance = float  # meters
+    identified = bool
 
 
 class SemanticStop(Stop, StopExtension):
@@ -69,13 +77,15 @@ class SemanticStop(Stop, StopExtension):
     work = SpecialPlace
 
 
-def proc_device_group_partition(gdf, dayconf: DaySetup, period, out_table):
+def proc_device_group_partition(gdf, dayconf: DaySetup, time_setup, out_table):
     out_table.replace_groups(
-        gdf.groupby(Stop.device_id, as_index=False).apply(proc_device, dayconf, period)
+        gdf.groupby(Stop.device_id, as_index=False)
+        .apply(proc_device, dayconf, time_setup)
+        .reset_index(drop=True)
     )
 
 
-def proc_device(dedf, dayconf: DaySetup, period: str):
+def proc_device(dedf, dayconf: DaySetup, time_setup: TimeSetup):
 
     extended_df = (
         _get_times_df(dedf, dayconf)
@@ -83,37 +93,43 @@ def proc_device(dedf, dayconf: DaySetup, period: str):
         .assign(
             **{
                 SemanticStop.time_bin: lambda df: df[Stop.interval.start]
-                .dt.to_period(period)
+                .dt.to_period(time_setup.time_bin)
                 .dt.to_timestamp()
             }
         )
     )
     _gcols = [Stop.place_label, SemanticStop.time_bin]
     _places = [SemanticStop.work, SemanticStop.home]
+    _mins = [time_setup.min_work_hours, time_setup.min_home_hours]
     period_sums = (
         extended_df.groupby(_gcols)[[_p.time for _p in _places]]
         .transform("sum")
         .rename(columns={_p.time: _p.total_time_in_period for _p in _places})
     )
     period_maxes = (
-        pd.concat([period_sums, extended_df[_gcols]], axis=1)
-        .loc[~extended_df[Stop.is_between_stops], :]
-        .groupby(_gcols)
+        pd.concat(
+            [
+                period_sums * ~extended_df[[Stop.is_between_stops]].values,
+                extended_df[_gcols],
+            ],
+            axis=1,
+        )
+        .groupby(SemanticStop.time_bin)[[_p.total_time_in_period for _p in _places]]
         .transform("max")
         .rename(columns=lambda s: f"max_{s}")
     )
 
     return (
         pd.concat([extended_df, period_sums, period_maxes], axis=1)
-        .fillna(0)
         .pipe(
             lambda df: df.assign(
                 **{
-                    _p.is_max_in_period: (
+                    _p.identified: (
                         df[_p.total_time_in_period]
                         == df[f"max_{_p.total_time_in_period}"]
                     )
-                    for _p in _places
+                    & (df[_p.total_time_in_period] >= (60 * _minh))
+                    for _p, _minh in zip(_places, _mins)
                 }
             )
         )
@@ -131,14 +147,22 @@ semantic_stop_table = dz.ScruTable(
 
 
 @dz.register(dependencies=[filtered_stop_table], outputs=[semantic_stop_table])
-def step(morning_end: int, work_end: int, home_arrive: int, time_unit: str):
+def step(
+    morning_end: int,
+    work_end: int,
+    home_arrive: int,
+    time_unit: str,
+    min_work_hours: float,
+    min_home_hours: float,
+):
 
     dayconf = DaySetup(morning_end, work_end, home_arrive)
+    time_setup = TimeSetup(time_unit, min_work_hours, min_home_hours)
     filtered_stop_table.map_partitions(
         fun=partial(
             proc_device_group_partition,
             dayconf=dayconf,
-            period=time_unit,
+            time_setup=time_setup,
             out_table=semantic_stop_table,
         ),
         pbar=True,
@@ -202,5 +226,5 @@ def _loc(df, coords: Coordinates, filter_col):
 
 def _get_dist_from_latest(df, place: SpecialPlace):
     start_points = localize(df, Stop.center)
-    end_points = localize(_loc(df, Stop.center, place.is_max_in_period), Stop.center)
+    end_points = localize(_loc(df, Stop.center, place.identified), Stop.center)
     return start_points.distance(end_points)

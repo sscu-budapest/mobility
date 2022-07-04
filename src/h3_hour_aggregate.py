@@ -52,9 +52,7 @@ def proc_month_paths(paths, min_count, min_duration, table: dz.ScruTable):
         .agg("count")
     )
     hour_col = h3_df.index.get_level_values(HashHour.hour).astype(str).str[:7]
-    table.replace_groups(
-        h3_df.assign(**{HashHour.year_month: hour_col}), try_dask=False
-    )
+    table.extend(h3_df.assign(**{HashHour.year_month: hour_col}), try_dask=False)
 
 
 @dz.register(dependencies=[um.ping_table], outputs=[h3_table])
@@ -73,4 +71,5 @@ def step(min_count, min_duration):
         [*um.ping_table.get_partition_paths(partition_col=um.ExtendedPing.year_month)],
         pbar=True,
         workers=workers,
+        restart_after=1,
     )

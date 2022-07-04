@@ -111,8 +111,8 @@ stages:
       size: 110825870
       nfiles: 256
     - path: src/h3_hour_aggregate.py
-      md5: 8d319a662b6f4105969247aa74d6a8db
-      size: 1862
+      md5: 1fb49e988c34fd5a3d5ddc40c9e96503
+      size: 2083
     params:
       zimmer.yaml:
         envs.complete.params.h3_hour_aggregate.min_count: 3
@@ -130,18 +130,20 @@ stages:
       size: 378417
       nfiles: 30
     - path: src/semantic_stops.py
-      md5: 5de9c7f358935a02b9053279f51189a6
-      size: 5947
+      md5: 2064a0c4b83f0a246e25d7bbff42ca93
+      size: 6550
     params:
       zimmer.yaml:
         envs.complete.params.home_arrive: 20
         envs.complete.params.morning_end: 8
         envs.complete.params.semantic_stops.time_unit: W
         envs.complete.params.work_end: 17
+        envs.small.params.semantic_stops.min_home_hours: 2
+        envs.small.params.semantic_stops.min_work_hours: 0.5
     outs:
     - path: data/mobility/semantic_stops/small/semantic_stop
-      md5: 3d02a360e6e0d2c6f71afe4d93b9975c.dir
-      size: 794853
+      md5: 17f11aedf605a0fcf536bfb6b324f89f.dir
+      size: 771765
       nfiles: 30
   complete-speed_based_filter:
     cmd: dz run-step complete-speed_based_filter

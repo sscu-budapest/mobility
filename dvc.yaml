@@ -126,6 +126,8 @@ stages:
     - zimmer.yaml:
       - envs.complete.params.home_arrive
       - envs.complete.params.morning_end
+      - envs.complete.params.semantic_stops.min_home_hours
+      - envs.complete.params.semantic_stops.min_work_hours
       - envs.complete.params.semantic_stops.time_unit
       - envs.complete.params.work_end
     outs:
@@ -141,6 +143,8 @@ stages:
       - envs.complete.params.morning_end
       - envs.complete.params.semantic_stops.time_unit
       - envs.complete.params.work_end
+      - envs.small.params.semantic_stops.min_home_hours
+      - envs.small.params.semantic_stops.min_work_hours
     outs:
     - data/mobility/semantic_stops/small/semantic_stop
   complete-stop_reporting:
