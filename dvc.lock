@@ -248,3 +248,26 @@ stages:
     - path: reports/complete/stop_look.md
       md5: 360a979727529cfcd533351a027efc9a
       size: 734
+  complete-semantic_stops:
+    cmd: dz run-step complete-semantic_stops
+    deps:
+    - path: data/mobility/filtered_stops/complete/stop
+      md5: f34be16b05e33d15a5d24293820aec2a.dir
+      size: 5870983977
+      nfiles: 256
+    - path: src/semantic_stops.py
+      md5: 2064a0c4b83f0a246e25d7bbff42ca93
+      size: 6550
+    params:
+      zimmer.yaml:
+        envs.complete.params.home_arrive: 20
+        envs.complete.params.morning_end: 8
+        envs.complete.params.semantic_stops.min_home_hours: 8
+        envs.complete.params.semantic_stops.min_work_hours: 3
+        envs.complete.params.semantic_stops.time_unit: W
+        envs.complete.params.work_end: 17
+    outs:
+    - path: data/mobility/semantic_stops/complete/semantic_stop
+      md5: 8ee41928323b7b2d73c4530713535c82.dir
+      size: 11289128899
+      nfiles: 256
