@@ -1,5 +1,4 @@
 import gc
-
 from datetime import datetime
 from functools import partial
 from multiprocessing import cpu_count
@@ -7,9 +6,10 @@ from multiprocessing import cpu_count
 import datazimmer as dz
 import pandas as pd
 import psutil
+from atqo import parallel_map
 from colassigner import ColAssigner
 from infostop import Infostop
-from metazimmer.gpsping.ubermedia import Coordinates
+from metazimmer.gpsping.meta import Coordinates
 from structlog import get_logger
 
 from .speed_based_filter import PingWithArrival, filtered_ping_table
@@ -85,21 +85,23 @@ def proc_device(device_df, model_params: dict):
     return labeled_df.pipe(_gb_stop)
 
 
-def proc_partition(partition_df, params: dict):
-    gid = partition_df["device_group"].iloc[0]
+def proc_partition(partition_path, params: dict):
     odf = (
-        partition_df.groupby(PingWithArrival.device_id, as_index=False)
+        filtered_ping_table.trepo.read_df_from_path(partition_path)
+        .groupby(PingWithArrival.device_id, as_index=False)
         .apply(proc_device, model_params=params)
         .reset_index(drop=True)
     )
-    logger.info("got odf", gid=gid, shape=odf.shape, gc_res=gc.collect(), mem=str(psutil.virtual_memory()))
-    stop_table.extend(odf, try_dask=False)
+    logger.info(
+        "got odf",
+        shape=odf.shape,
+        gc_res=gc.collect(),
+        mem=str(psutil.virtual_memory()),
+    )
+    stop_table.extend(odf)
 
 
-@dz.register(
-    dependencies=[filtered_ping_table],
-    outputs=[stop_table],
-)
+@dz.register(dependencies=[filtered_ping_table], outputs=[stop_table])
 def step(
     r1,
     r2,
@@ -119,12 +121,13 @@ def step(
 
     mem_gb = psutil.virtual_memory().total / 2**30
     workers = min(cpu_count(), int(mem_gb / 10) + 1)
-    filtered_ping_table.map_partitions(
-        fun=partial(proc_partition, params=model_params),
-        workers=workers,
-        pbar=True,
-        verbose=True,
-        restart_after=1
+    list(
+        parallel_map(
+            partial(proc_partition, params=model_params),
+            filtered_ping_table.paths,
+            workers=workers,
+            pbar=True,
+        )
     )
 
 

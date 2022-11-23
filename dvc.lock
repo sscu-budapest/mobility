@@ -1,37 +1,37 @@
 schema: '2.0'
 stages:
   small-speed_based_filter:
-    cmd: dz run-step small-speed_based_filter
+    cmd: dz run-step speed_based_filter small
     deps:
     - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
-      md5: c5f39162b3d0a97cae8fdec5516393cd.dir
-      size: 110825870
+      md5: 9b14c017f57467aeb5f77eff57858c56.dir
+      size: 110562089
       nfiles: 256
     - path: src/speed_based_filter.py
-      md5: 72887b7c9438f98440c13870ec134270
-      size: 3931
+      md5: dd38e2dd073ebad7838800426c2691a0
+      size: 3898
     params:
       zimmer.yaml:
         envs.complete.params.speed_based_filter.max_speed: 300
         envs.complete.params.speed_based_filter.min_pings_by_device: 20
     outs:
     - path: data/mobility/speed_based_filter/small/drop_stat.parquet
-      md5: 24ae1791772e87f7c146ac261d6e329d
+      md5: 264631a88fb20d2108b01895aa683e49
       size: 2961
     - path: data/mobility/speed_based_filter/small/ping_with_arrival
-      md5: 6e5394a46f33f676b081392541b1c131.dir
-      size: 152030727
+      md5: 3c62ea914275d8ef54dfb52b5bfec14a.dir
+      size: 151867452
       nfiles: 256
   small-initial_stops:
-    cmd: dz run-step small-initial_stops
+    cmd: dz run-step initial_stops small
     deps:
     - path: data/mobility/speed_based_filter/small/ping_with_arrival
-      md5: 6e5394a46f33f676b081392541b1c131.dir
-      size: 152030727
+      md5: 3c62ea914275d8ef54dfb52b5bfec14a.dir
+      size: 151867452
       nfiles: 256
     - path: src/initial_stops.py
-      md5: 275b942384e96f0d1b231b69c4fd6f93
-      size: 4385
+      md5: 72869ba5d996dd7b38bc77a2fb1d91c0
+      size: 4426
     params:
       zimmer.yaml:
         envs.complete.params.initial_stops.distance_metric: haversine
@@ -42,96 +42,96 @@ stages:
         envs.complete.params.initial_stops.r2: 140
     outs:
     - path: data/mobility/initial_stops/small/stop
-      md5: e36458c1c5acaffe50d48da366adf54a.dir
-      size: 12376114
+      md5: 8fe87179c7b1cf30b492dbc1611e41ac.dir
+      size: 12260186
       nfiles: 256
   small-filtered_stops:
-    cmd: dz run-step small-filtered_stops
+    cmd: dz run-step filtered_stops small
     deps:
     - path: data/mobility/initial_stops/small/stop
-      md5: e36458c1c5acaffe50d48da366adf54a.dir
-      size: 12376114
+      md5: 8fe87179c7b1cf30b492dbc1611e41ac.dir
+      size: 12260186
       nfiles: 256
     - path: src/filtered_stops.py
-      md5: ba3fc10261636a4c432fc542b892656c
-      size: 1062
+      md5: 7bab4044010b2bdb1ba0f70c93d0f3c1
+      size: 987
     params:
       zimmer.yaml:
         envs.complete.params.filtered_stops.min_destinations: 2
         envs.complete.params.filtered_stops.min_stops_to_count: 4
     outs:
     - path: data/mobility/filtered_stops/small/stop
-      md5: bba09e05eaaea20be5ba2d035b472689.dir
-      size: 378417
+      md5: 07e6feb086daeb0f14240d205b6054f2.dir
+      size: 365127
       nfiles: 30
   small-device_counties:
-    cmd: dz run-step small-device_counties
+    cmd: dz run-step device_counties small
     deps:
     - path: data/mobility/filtered_stops/small/stop
-      md5: bba09e05eaaea20be5ba2d035b472689.dir
-      size: 378417
+      md5: 07e6feb086daeb0f14240d205b6054f2.dir
+      size: 365127
       nfiles: 30
     - path: src/device_counties.py
-      md5: f0d99a61f58758fbc12a4a1a4179c48f
-      size: 3621
+      md5: f5a2002d6a4bbaad8385c927c1396df0
+      size: 3324
     params:
       zimmer.yaml:
         envs.complete.params.device_counties.min_locale_rate: 0.8
     outs:
     - path: data/mobility/device_counties/small/device_county.parquet
-      md5: bd9b506026cd07a57764ba2213480f78
-      size: 5610
+      md5: 48d244f003a78084f0750a33f0dca4c2
+      size: 5617
   small-stop_reporting:
-    cmd: dz run-step small-stop_reporting
+    cmd: dz run-step stop_reporting small
     deps:
     - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
-      md5: c5f39162b3d0a97cae8fdec5516393cd.dir
-      size: 110825870
+      md5: 9b14c017f57467aeb5f77eff57858c56.dir
+      size: 110562089
       nfiles: 256
     - path: data/mobility/filtered_stops/small/stop
-      md5: bba09e05eaaea20be5ba2d035b472689.dir
-      size: 378417
+      md5: 07e6feb086daeb0f14240d205b6054f2.dir
+      size: 365127
       nfiles: 30
     - path: data/mobility/initial_stops/small/stop
-      md5: e36458c1c5acaffe50d48da366adf54a.dir
-      size: 12376114
+      md5: 8fe87179c7b1cf30b492dbc1611e41ac.dir
+      size: 12260186
       nfiles: 256
     - path: src/stop_reporting.py
-      md5: be6efcb50ca917f1dd12c32bf8cafad8
-      size: 1887
+      md5: c0e4f8e91ab8720c15db07f710e2194b
+      size: 1757
     outs:
     - path: reports/small/stop_look.md
       md5: 395dae535686ad0e1130337ace3d5813
       size: 734
   small-h3_hour_aggregate:
-    cmd: dz run-step small-h3_hour_aggregate
+    cmd: dz run-step h3_hour_aggregate small
     deps:
     - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
-      md5: c5f39162b3d0a97cae8fdec5516393cd.dir
-      size: 110825870
+      md5: 9b14c017f57467aeb5f77eff57858c56.dir
+      size: 110562089
       nfiles: 256
     - path: src/h3_hour_aggregate.py
-      md5: 1fb49e988c34fd5a3d5ddc40c9e96503
-      size: 2083
+      md5: 4645865517c7662f2e540bd1b97bf2c9
+      size: 2093
     params:
       zimmer.yaml:
         envs.complete.params.h3_hour_aggregate.min_count: 3
         envs.complete.params.h3_hour_aggregate.min_duration: 15
     outs:
     - path: data/mobility/h3_hour_aggregate/small/hash_hour
-      md5: 8c7d45025a209854810e2fd302f44dde.dir
-      size: 517276
+      md5: c29a7c6faa7b2c91e4a300856b60a57c.dir
+      size: 516801
       nfiles: 1
   small-semantic_stops:
-    cmd: dz run-step small-semantic_stops
+    cmd: dz run-step semantic_stops small
     deps:
     - path: data/mobility/filtered_stops/small/stop
-      md5: bba09e05eaaea20be5ba2d035b472689.dir
-      size: 378417
+      md5: 07e6feb086daeb0f14240d205b6054f2.dir
+      size: 365127
       nfiles: 30
     - path: src/semantic_stops.py
-      md5: 2064a0c4b83f0a246e25d7bbff42ca93
-      size: 6550
+      md5: 14a4ba7d700d86b9f61c7239e43624ae
+      size: 6492
     params:
       zimmer.yaml:
         envs.complete.params.home_arrive: 20
@@ -142,8 +142,8 @@ stages:
         envs.small.params.semantic_stops.min_work_hours: 0.5
     outs:
     - path: data/mobility/semantic_stops/small/semantic_stop
-      md5: 17f11aedf605a0fcf536bfb6b324f89f.dir
-      size: 771765
+      md5: 9b0da7e05053f6f6c952517c0c9a713b.dir
+      size: 758466
       nfiles: 30
   complete-speed_based_filter:
     cmd: dz run-step complete-speed_based_filter

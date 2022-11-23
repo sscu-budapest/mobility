@@ -1,8 +1,8 @@
 name: mobility
-version: v0.3
+version: v0.4
 imported_projects:
   gpsping: 
-    version: "==0.2"
+    version: "==0.3"
 envs:
   complete:
     import_envs:

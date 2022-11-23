@@ -1,4 +1,5 @@
 import zipfile
+from functools import partial
 from pathlib import Path
 
 import datazimmer as dz
@@ -46,14 +47,14 @@ def get_hungdf():
 
 
 def gpjoin(df, gdf):
-    return gpd.sjoin(to_geo(df, Stop.center), gdf, op="within", how="left").rename(
-        columns={"index_right": DeviceCounty.county}
-    )
+    return gpd.sjoin(
+        to_geo(df, Stop.center), gdf, predicate="within", how="left"
+    ).rename(columns={"index_right": DeviceCounty.county})
 
 
 def stop_gb(df, gdf):
     return (
-        df.pipe(gpjoin, gdf)
+        gpjoin(df, gdf)
         .groupby([Stop.device_id, DeviceCounty.county])
         .agg(**{DeviceCounty.count: pd.NamedAgg(Stop.n_events, "sum")})
         .reset_index()
@@ -86,23 +87,12 @@ def get_report_table(df):
 @dz.register(dependencies=[filtered_stop_table], outputs=[device_county_table])
 def step(min_locale_rate):
 
-    ddf = filtered_stop_table.get_full_ddf()
-
     device_locale_count_df = (
-        ddf.map_partitions(
-            stop_gb,
-            gdf=get_hungdf(),
-            meta=pd.DataFrame(
-                {
-                    DeviceCounty.device_id: pd.Series([], dtype="str"),
-                    DeviceCounty.county: pd.Series([], dtype="str"),
-                    DeviceCounty.count: pd.Series([], dtype="int"),
-                }
-            ),
+        pd.concat(
+            filtered_stop_table.map_partitions(fun=partial(stop_gb, gdf=get_hungdf()))
         )
         .groupby(device_county_table.index_cols)[DeviceCounty.count]
         .sum()
-        .compute()
         .to_frame()
         .assign(
             **{

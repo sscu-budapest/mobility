@@ -1,9 +1,4 @@
-datazimmer>=0.2.7
-parquetranger>=0.2.1
+datazimmer>=0.4.3
 geopandas
-rtree
-pygeos
 h3pandas
 infostop
-dask[complete]
-distributed

@@ -5,7 +5,7 @@ from functools import partial
 import datazimmer as dz
 import pandas as pd
 from colassigner import Col, get_all_cols
-from metazimmer.gpsping.ubermedia import Coordinates
+from metazimmer.gpsping.meta import Coordinates
 
 from .filtered_stops import filtered_stop_table
 from .initial_stops import Stop
@@ -77,12 +77,9 @@ class SemanticStop(Stop, StopExtension):
     work = SpecialPlace
 
 
-def proc_device_group_partition(gdf, dayconf: DaySetup, time_setup, out_table):
-    out_table.replace_groups(
-        gdf.groupby(Stop.device_id, as_index=False)
-        .apply(proc_device, dayconf, time_setup)
-        .reset_index(drop=True)
-    )
+def proc_device_group_partition(group_df: pd.DataFrame, dayconf, time_setup):
+    for _, gdf in group_df.groupby(Stop.device_id):
+        semantic_stop_table.extend(proc_device(gdf, dayconf, time_setup))
 
 
 def proc_device(dedf, dayconf: DaySetup, time_setup: TimeSetup):
@@ -158,14 +155,13 @@ def step(
 
     dayconf = DaySetup(morning_end, work_end, home_arrive)
     time_setup = TimeSetup(time_unit, min_work_hours, min_home_hours)
-    filtered_stop_table.map_partitions(
-        fun=partial(
-            proc_device_group_partition,
-            dayconf=dayconf,
-            time_setup=time_setup,
-            out_table=semantic_stop_table,
-        ),
-        pbar=True,
+    list(
+        filtered_stop_table.map_partitions(
+            fun=partial(
+                proc_device_group_partition, dayconf=dayconf, time_setup=time_setup
+            ),
+            pbar=True,
+        )
     )
 
 
@@ -176,8 +172,8 @@ def _get_times_df(dedf: pd.DataFrame, dayconf: DaySetup) -> pd.DataFrame:
         .set_index("_d")
         .sort_index()
         .groupby(Stop.stop_number)
-        .resample("1H")[int_cols]
-        .first()
+        .resample("1H")
+        .agg({ic: "first" for ic in int_cols})
         .assign(
             _s=lambda df: df[int_cols[0]].fillna(method="ffill"),
             _e=lambda df: df[int_cols[1]].fillna(method="bfill"),

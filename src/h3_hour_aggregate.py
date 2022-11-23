@@ -4,9 +4,10 @@ from multiprocessing import cpu_count
 
 import datazimmer as dz
 import pandas as pd
-from atqo import parallel_map
-from metazimmer.gpsping import ubermedia as um
 import psutil
+from atqo import parallel_map
+from metazimmer.gpsping import meta
+from metazimmer.gpsping.ubermedia.raw_proc import ping_table
 
 from .util import to_geo
 
@@ -26,16 +27,16 @@ def get_h3_id(df):
     return df.pipe(to_geo).h3.geo_to_h3(10).index.to_numpy()
 
 
-def proc_month_paths(paths, min_count, min_duration, table: dz.ScruTable):
+def proc_month_groups(paths, min_count, min_duration):
     gdf = pd.concat(map(pd.read_parquet, paths))
     agg_df = (
         gdf.assign(
             **{
                 HashHour.hid: get_h3_id,
-                HashHour.hour: gdf[um.GpsPing.datetime].dt.floor("h"),
+                HashHour.hour: gdf[meta.GpsPing.datetime].dt.floor("h"),
             }
         )
-        .groupby([um.GpsPing.device_id, *h3_table.index_cols])[um.GpsPing.datetime]
+        .groupby([meta.GpsPing.device_id, *h3_table.index_cols])[meta.GpsPing.datetime]
         .agg(["min", "max", "count"])
         .assign(
             duration_minutes=lambda df: (df["max"] - df["min"]).dt.total_seconds() / 60
@@ -52,24 +53,21 @@ def proc_month_paths(paths, min_count, min_duration, table: dz.ScruTable):
         .agg("count")
     )
     hour_col = h3_df.index.get_level_values(HashHour.hour).astype(str).str[:7]
-    table.extend(h3_df.assign(**{HashHour.year_month: hour_col}), try_dask=False)
+    h3_table.extend(h3_df.assign(**{HashHour.year_month: hour_col}))
 
 
-@dz.register(dependencies=[um.ping_table], outputs=[h3_table])
+@dz.register(dependencies=[ping_table], outputs=[h3_table])
 def step(min_count, min_duration):
     mem_gb = psutil.virtual_memory().total / 2**30
     workers = min(cpu_count(), int(mem_gb / 10) + 1)
 
     proc_paths = partial(
-        proc_month_paths,
-        min_count=min_count,
-        min_duration=min_duration,
-        table=h3_table,
+        proc_month_groups, min_count=min_count, min_duration=min_duration
     )
-    parallel_map(
-        proc_paths,
-        [*um.ping_table.get_partition_paths(partition_col=um.ExtendedPing.year_month)],
-        pbar=True,
-        workers=workers,
-        restart_after=1,
-    )
+    iterable = [
+        list(ps)
+        for _, ps in ping_table.get_partition_paths(
+            partition_col=meta.ExtendedPing.year_month
+        )
+    ]
+    list(parallel_map(proc_paths, iterable, pbar=True, workers=workers))

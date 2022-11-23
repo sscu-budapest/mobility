@@ -12,17 +12,13 @@ filtered_stop_table = dz.ScruTable(Stop, partitioning_cols=[Stop.device_group])
     outputs=[filtered_stop_table],
 )
 def step(min_stops_to_count, min_destinations):
-    stop_table.map_partitions(
-        fun=partial(
-            _filter_to_devices,
-            min_stops=min_stops_to_count,
-            min_dests=min_destinations,
-            out_table=filtered_stop_table,
-        ),
+    pfun = partial(
+        _filter_to_devices, min_stops=min_stops_to_count, min_dests=min_destinations
     )
+    list(stop_table.map_partitions(fun=pfun, pbar=True))
 
 
-def _filter_to_devices(df, min_stops, min_dests, out_table):
+def _filter_to_devices(df, min_stops, min_dests):
     good_devices = (
         df.loc[~df[Stop.is_between_stops], :]
         .groupby([Stop.device_id, Stop.place_label])[Stop.n_events]
@@ -34,4 +30,4 @@ def _filter_to_devices(df, min_stops, min_dests, out_table):
         .loc[lambda s: s >= min_dests]
         .index
     )
-    out_table.extend(df.loc[df[Stop.device_id].isin(good_devices), :], try_dask=False)
+    filtered_stop_table.extend(df.loc[df[Stop.device_id].isin(good_devices), :])

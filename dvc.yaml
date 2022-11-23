@@ -1,6 +1,6 @@
 stages:
   complete-speed_based_filter:
-    cmd: dz run-step complete-speed_based_filter
+    cmd: dz run-step speed_based_filter complete
     deps:
     - data/gpsping/ubermedia/complete/extended_ping
     - src/speed_based_filter.py
@@ -12,7 +12,7 @@ stages:
     - data/mobility/speed_based_filter/complete/drop_stat.parquet
     - data/mobility/speed_based_filter/complete/ping_with_arrival
   small-speed_based_filter:
-    cmd: dz run-step small-speed_based_filter
+    cmd: dz run-step speed_based_filter small
     deps:
     - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
     - src/speed_based_filter.py
@@ -24,7 +24,7 @@ stages:
     - data/mobility/speed_based_filter/small/drop_stat.parquet
     - data/mobility/speed_based_filter/small/ping_with_arrival
   complete-initial_stops:
-    cmd: dz run-step complete-initial_stops
+    cmd: dz run-step initial_stops complete
     deps:
     - data/mobility/speed_based_filter/complete/ping_with_arrival
     - src/initial_stops.py
@@ -39,7 +39,7 @@ stages:
     outs:
     - data/mobility/initial_stops/complete/stop
   small-initial_stops:
-    cmd: dz run-step small-initial_stops
+    cmd: dz run-step initial_stops small
     deps:
     - data/mobility/speed_based_filter/small/ping_with_arrival
     - src/initial_stops.py
@@ -54,7 +54,7 @@ stages:
     outs:
     - data/mobility/initial_stops/small/stop
   complete-filtered_stops:
-    cmd: dz run-step complete-filtered_stops
+    cmd: dz run-step filtered_stops complete
     deps:
     - data/mobility/initial_stops/complete/stop
     - src/filtered_stops.py
@@ -65,7 +65,7 @@ stages:
     outs:
     - data/mobility/filtered_stops/complete/stop
   small-filtered_stops:
-    cmd: dz run-step small-filtered_stops
+    cmd: dz run-step filtered_stops small
     deps:
     - data/mobility/initial_stops/small/stop
     - src/filtered_stops.py
@@ -76,7 +76,7 @@ stages:
     outs:
     - data/mobility/filtered_stops/small/stop
   complete-device_counties:
-    cmd: dz run-step complete-device_counties
+    cmd: dz run-step device_counties complete
     deps:
     - data/mobility/filtered_stops/complete/stop
     - src/device_counties.py
@@ -86,7 +86,7 @@ stages:
     outs:
     - data/mobility/device_counties/complete/device_county.parquet
   small-device_counties:
-    cmd: dz run-step small-device_counties
+    cmd: dz run-step device_counties small
     deps:
     - data/mobility/filtered_stops/small/stop
     - src/device_counties.py
@@ -96,7 +96,7 @@ stages:
     outs:
     - data/mobility/device_counties/small/device_county.parquet
   complete-h3_hour_aggregate:
-    cmd: dz run-step complete-h3_hour_aggregate
+    cmd: dz run-step h3_hour_aggregate complete
     deps:
     - data/gpsping/ubermedia/complete/extended_ping
     - src/h3_hour_aggregate.py
@@ -107,7 +107,7 @@ stages:
     outs:
     - data/mobility/h3_hour_aggregate/complete/hash_hour
   small-h3_hour_aggregate:
-    cmd: dz run-step small-h3_hour_aggregate
+    cmd: dz run-step h3_hour_aggregate small
     deps:
     - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
     - src/h3_hour_aggregate.py
@@ -118,7 +118,7 @@ stages:
     outs:
     - data/mobility/h3_hour_aggregate/small/hash_hour
   complete-semantic_stops:
-    cmd: dz run-step complete-semantic_stops
+    cmd: dz run-step semantic_stops complete
     deps:
     - data/mobility/filtered_stops/complete/stop
     - src/semantic_stops.py
@@ -133,7 +133,7 @@ stages:
     outs:
     - data/mobility/semantic_stops/complete/semantic_stop
   small-semantic_stops:
-    cmd: dz run-step small-semantic_stops
+    cmd: dz run-step semantic_stops small
     deps:
     - data/mobility/filtered_stops/small/stop
     - src/semantic_stops.py
@@ -148,7 +148,7 @@ stages:
     outs:
     - data/mobility/semantic_stops/small/semantic_stop
   complete-stop_reporting:
-    cmd: dz run-step complete-stop_reporting
+    cmd: dz run-step stop_reporting complete
     deps:
     - data/gpsping/ubermedia/complete/extended_ping
     - data/mobility/filtered_stops/complete/stop
@@ -158,7 +158,7 @@ stages:
     - reports/complete/stop_look.md:
         cache: false
   small-stop_reporting:
-    cmd: dz run-step small-stop_reporting
+    cmd: dz run-step stop_reporting small
     deps:
     - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
     - data/mobility/filtered_stops/small/stop
