@@ -97,11 +97,11 @@ stages:
       size: 12260186
       nfiles: 256
     - path: src/stop_reporting.py
-      md5: c0e4f8e91ab8720c15db07f710e2194b
-      size: 1757
+      md5: 4257d554dcaec108b0a8f637c7d5c04f
+      size: 2025
     outs:
     - path: reports/small/stop_look.md
-      md5: 395dae535686ad0e1130337ace3d5813
+      md5: edc8b8aadae9654ba346716c1bdbaf6d
       size: 734
   small-h3_hour_aggregate:
     cmd: dz run-step h3_hour_aggregate small

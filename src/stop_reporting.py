@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import datazimmer as dz
 import pandas as pd
 from metazimmer.gpsping.ubermedia.raw_proc import ping_table
@@ -14,23 +16,10 @@ stop_report = dz.ReportFile("stop_look.md")
     outputs_nocache=[stop_report],
 )
 def results():
-    # TODO
-    def get_stats(table):
-        df = table.get_full_df()
-        if Stop.n_events in df.columns:
-            ping_c = df[Stop.n_events].sum()
-        else:
-            ping_c = df.shape[0]
-        return {
-            "Record Count": df.shape[0],
-            "Unique Device": df[Stop.device_id].nunique(),
-            "Ping Count": ping_c,
-        }
-
     report_df = (
         pd.DataFrame(
             {
-                k: get_stats(tab)
+                k: get_stats_of_table(tab)
                 for k, tab in [
                     ("Filtered Stop Table", filtered_stop_table),
                     ("Stop Table", stop_table),
@@ -48,6 +37,28 @@ def results():
     )
 
     stop_report.write_text(report_df.to_markdown())
+
+
+def get_stats_of_table(table: dz.ScruTable):
+    dset = set()
+    dic = defaultdict(lambda: 0)
+    for odic in table.map_partitions(fun=stats_of_df):
+        dset.update(odic.pop("device-set"))
+        for k, v in odic.items():
+            dic[k] += v
+    return {"Unique Device": len(dset)} | dic
+
+
+def stats_of_df(df: pd.DataFrame):
+    if Stop.n_events in df.columns:
+        ping_c = df[Stop.n_events].sum()
+    else:
+        ping_c = df.shape[0]
+    return {
+        "Record Count": df.shape[0],
+        "device-set": set(df[Stop.device_id]),
+        "Ping Count": ping_c,
+    }
 
 
 def _stringify(e):
