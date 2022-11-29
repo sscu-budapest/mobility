@@ -97,7 +97,7 @@ def proc_device(dedf, dayconf: DaySetup, time_setup: TimeSetup):
     )
     _gcols = [Stop.place_label, SemanticStop.time_bin]
     _places = [SemanticStop.work, SemanticStop.home]
-    _mins = [time_setup.min_work_hours, time_setup.min_home_hours]
+    _min_hours = [time_setup.min_work_hours, time_setup.min_home_hours]
     period_sums = (
         extended_df.groupby(_gcols)[[_p.time for _p in _places]]
         .transform("sum")
@@ -116,26 +116,8 @@ def proc_device(dedf, dayconf: DaySetup, time_setup: TimeSetup):
         .rename(columns=lambda s: f"max_{s}")
     )
 
-    return (
-        pd.concat([extended_df, period_sums, period_maxes], axis=1)
-        .pipe(
-            lambda df: df.assign(
-                **{
-                    _p.identified: (
-                        df[_p.total_time_in_period]
-                        == df[f"max_{_p.total_time_in_period}"]
-                    )
-                    & (df[_p.total_time_in_period] >= (60 * _minh))
-                    for _p, _minh in zip(_places, _mins)
-                }
-            )
-        )
-        .pipe(
-            lambda df: df.assign(
-                **{_p.distance: _get_dist_from_latest(df, _p) for _p in _places}
-            )
-        )
-    )
+    p_dic = dict(get_place_dic_items(_places, _min_hours))
+    return pd.concat([extended_df, period_sums, period_maxes], axis=1).assign(**p_dic)
 
 
 semantic_stop_table = dz.ScruTable(
@@ -155,14 +137,8 @@ def step(
 
     dayconf = DaySetup(morning_end, work_end, home_arrive)
     time_setup = TimeSetup(time_unit, min_work_hours, min_home_hours)
-    list(
-        filtered_stop_table.map_partitions(
-            fun=partial(
-                proc_device_group_partition, dayconf=dayconf, time_setup=time_setup
-            ),
-            pbar=True,
-        )
-    )
+    fun = partial(proc_device_group_partition, dayconf=dayconf, time_setup=time_setup)
+    list(filtered_stop_table.map_partitions(fun=fun, pbar=True))
 
 
 def _get_times_df(dedf: pd.DataFrame, dayconf: DaySetup) -> pd.DataFrame:
@@ -207,16 +183,24 @@ def _get_times_df(dedf: pd.DataFrame, dayconf: DaySetup) -> pd.DataFrame:
     )
 
 
-def _loc(df, coords: Coordinates, filter_col):
-    return pd.DataFrame(
-        {
-            col: df[col]
-            .where(df[filter_col])
-            .fillna(method="ffill")
-            .fillna(method="bfill")
-            for col in get_all_cols(coords)
-        },
-        index=df.index,
+def get_place_dic_items(_places: list[SpecialPlace], _min_hours):
+    for _p, _min in zip(_places, _min_hours):
+        yield _p.identified, partial(_id_place, _p, _min)
+        yield _p.distance, partial(_get_dist_from_latest, place=_p)
+
+
+def _id_place(place: SpecialPlace, _min_hour, df):
+    return (
+        df[place.total_time_in_period] == df[f"max_{place.total_time_in_period}"]
+    ) & (df[place.total_time_in_period] >= (60 * _min_hour))
+
+
+def _loc(df: pd.DataFrame, coords: Coordinates, filter_col):
+    return (
+        df.loc[:, get_all_cols(coords)]
+        .where(df[filter_col])
+        .fillna(method="ffill")
+        .fillna(method="bfill")
     )
 
 

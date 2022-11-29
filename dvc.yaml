@@ -167,3 +167,17 @@ stages:
     outs:
     - reports/small/stop_look.md:
         cache: false
+  complete-semantic_info:
+    cmd: dz run-step semantic_info complete
+    deps:
+    - data/mobility/semantic_stops/complete/semantic_stop
+    - src/semantic_info.py
+    outs:
+    - data/mobility/semantic_info/complete/semantic_temporal_info.parquet
+  small-semantic_info:
+    cmd: dz run-step semantic_info small
+    deps:
+    - data/mobility/semantic_stops/small/semantic_stop
+    - src/semantic_info.py
+    outs:
+    - data/mobility/semantic_info/small/semantic_temporal_info.parquet

@@ -130,8 +130,8 @@ stages:
       size: 365127
       nfiles: 30
     - path: src/semantic_stops.py
-      md5: 14a4ba7d700d86b9f61c7239e43624ae
-      size: 6492
+      md5: ed6116a290e20db6a5c2e87d11ae51c7
+      size: 6291
     params:
       zimmer.yaml:
         envs.complete.params.home_arrive: 20
@@ -142,8 +142,8 @@ stages:
         envs.small.params.semantic_stops.min_work_hours: 0.5
     outs:
     - path: data/mobility/semantic_stops/small/semantic_stop
-      md5: 9b0da7e05053f6f6c952517c0c9a713b.dir
-      size: 758466
+      md5: 8d74071c027e3df9402483997e86d00c.dir
+      size: 758952
       nfiles: 30
   complete-speed_based_filter:
     cmd: dz run-step complete-speed_based_filter
@@ -271,3 +271,17 @@ stages:
       md5: 8ee41928323b7b2d73c4530713535c82.dir
       size: 11289128899
       nfiles: 256
+  small-semantic_info:
+    cmd: dz run-step semantic_info small
+    deps:
+    - path: data/mobility/semantic_stops/small/semantic_stop
+      md5: 8d74071c027e3df9402483997e86d00c.dir
+      size: 758952
+      nfiles: 30
+    - path: src/semantic_info.py
+      md5: 4f20d57a892cd967e140734e7143ec8a
+      size: 1118
+    outs:
+    - path: data/mobility/semantic_info/small/semantic_temporal_info.parquet
+      md5: 66eb77b8b06ae64819154d4c8e6484c7
+      size: 6426
