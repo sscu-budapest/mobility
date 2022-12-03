@@ -159,3 +159,25 @@ stages:
     - src/semantic_info.py
     outs:
     - data/mobility/semantic_info/small/semantic_temporal_info.parquet
+  complete-h3_hour_aggregate:
+    cmd: dz run-step h3_hour_aggregate complete
+    deps:
+    - data/gpsping/ubermedia/complete/extended_ping
+    - src/h3_hour_aggregate.py
+    params:
+    - zimmer.yaml:
+      - envs.complete.params.h3_hour_aggregate.min_count
+      - envs.complete.params.h3_hour_aggregate.min_duration
+    outs:
+    - data/mobility/h3_hour_aggregate/complete/hash_hour
+  small-h3_hour_aggregate:
+    cmd: dz run-step h3_hour_aggregate small
+    deps:
+    - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+    - src/h3_hour_aggregate.py
+    params:
+    - zimmer.yaml:
+      - envs.complete.params.h3_hour_aggregate.min_count
+      - envs.complete.params.h3_hour_aggregate.min_duration
+    outs:
+    - data/mobility/h3_hour_aggregate/small/hash_hour

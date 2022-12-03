@@ -266,3 +266,22 @@ stages:
     - path: data/mobility/semantic_info/small/semantic_temporal_info.parquet
       md5: 66eb77b8b06ae64819154d4c8e6484c7
       size: 6426
+  small-h3_hour_aggregate:
+    cmd: dz run-step h3_hour_aggregate small
+    deps:
+    - path: data/gpsping/ubermedia/non_covid_tuesday/extended_ping
+      md5: 9b14c017f57467aeb5f77eff57858c56.dir
+      size: 110562089
+      nfiles: 256
+    - path: src/h3_hour_aggregate.py
+      md5: 1dd003bca026622ae6c266d94da58dc9
+      size: 2542
+    params:
+      zimmer.yaml:
+        envs.complete.params.h3_hour_aggregate.min_count: 3
+        envs.complete.params.h3_hour_aggregate.min_duration: 15
+    outs:
+    - path: data/mobility/h3_hour_aggregate/small/hash_hour
+      md5: da9008a5fd486ae2bf6bb0a88b901ff3.dir
+      size: 516803
+      nfiles: 1
