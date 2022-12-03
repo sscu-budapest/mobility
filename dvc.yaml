@@ -95,28 +95,6 @@ stages:
       - envs.complete.params.device_counties.min_locale_rate
     outs:
     - data/mobility/device_counties/small/device_county.parquet
-  complete-h3_hour_aggregate:
-    cmd: dz run-step h3_hour_aggregate complete
-    deps:
-    - data/gpsping/ubermedia/complete/extended_ping
-    - src/h3_hour_aggregate.py
-    params:
-    - zimmer.yaml:
-      - envs.complete.params.h3_hour_aggregate.min_count
-      - envs.complete.params.h3_hour_aggregate.min_duration
-    outs:
-    - data/mobility/h3_hour_aggregate/complete/hash_hour
-  small-h3_hour_aggregate:
-    cmd: dz run-step h3_hour_aggregate small
-    deps:
-    - data/gpsping/ubermedia/non_covid_tuesday/extended_ping
-    - src/h3_hour_aggregate.py
-    params:
-    - zimmer.yaml:
-      - envs.complete.params.h3_hour_aggregate.min_count
-      - envs.complete.params.h3_hour_aggregate.min_duration
-    outs:
-    - data/mobility/h3_hour_aggregate/small/hash_hour
   complete-semantic_stops:
     cmd: dz run-step semantic_stops complete
     deps:
