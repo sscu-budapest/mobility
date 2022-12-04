@@ -237,8 +237,8 @@ stages:
       size: 5871712048
       nfiles: 256
     - path: src/semantic_stops.py
-      md5: 14a4ba7d700d86b9f61c7239e43624ae
-      size: 6492
+      md5: ed6116a290e20db6a5c2e87d11ae51c7
+      size: 6291
     params:
       zimmer.yaml:
         envs.complete.params.home_arrive: 20
@@ -285,3 +285,36 @@ stages:
       md5: da9008a5fd486ae2bf6bb0a88b901ff3.dir
       size: 516803
       nfiles: 1
+  complete-h3_hour_aggregate:
+    cmd: dz run-step h3_hour_aggregate complete
+    deps:
+    - path: data/gpsping/ubermedia/complete/extended_ping
+      md5: bf495962a3b6a01a463b7f8ea3f58d7a.dir
+      size: 74840147407
+      nfiles: 6144
+    - path: src/h3_hour_aggregate.py
+      md5: 1dd003bca026622ae6c266d94da58dc9
+      size: 2542
+    params:
+      zimmer.yaml:
+        envs.complete.params.h3_hour_aggregate.min_count: 3
+        envs.complete.params.h3_hour_aggregate.min_duration: 15
+    outs:
+    - path: data/mobility/h3_hour_aggregate/complete/hash_hour
+      md5: 05cab3b4398c4dacd4dc610a6ba76973.dir
+      size: 311818744
+      nfiles: 24
+  complete-semantic_info:
+    cmd: dz run-step semantic_info complete
+    deps:
+    - path: data/mobility/semantic_stops/complete/semantic_stop
+      md5: 03a6b4afe5065d814a3fae746cba2407.dir
+      size: 10989794207
+      nfiles: 256
+    - path: src/semantic_info.py
+      md5: 4f20d57a892cd967e140734e7143ec8a
+      size: 1118
+    outs:
+    - path: data/mobility/semantic_info/complete/semantic_temporal_info.parquet
+      md5: 7e2eddafcaef6d59c0ca7bb0e3d5b200
+      size: 132595743
