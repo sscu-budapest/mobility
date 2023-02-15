@@ -168,3 +168,4 @@ Manifest.toml
 dask-worker-space
 .vscode
 *draft*.ipynb
+/raw-data
