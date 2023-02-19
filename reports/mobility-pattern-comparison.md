@@ -1,0 +1,4296 @@
+# Comparison with telecommunications data
+
+
+
+tables show descriptive statistics of h3-hour level mobile carrier traffic data joined to mobility data, grouped by `clipped_count`.
+
+`clipped_count` is clipped at 10, and indicates the unique devices detected in the mobility data for a given hour-h3 combination.
+
+a device is only counted if it satisfies the parameters of `{'min_count': 3, 'min_duration': 15}` in a given h3-hour combination, where duration is measured in minutes
+
+## 2020-10
+
+<style type="text/css">
+#T_b690a_row0_col0, #T_b690a_row1_col7, #T_b690a_row9_col3, #T_b690a_row10_col1, #T_b690a_row10_col2, #T_b690a_row10_col4, #T_b690a_row10_col5, #T_b690a_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_b690a_row0_col1, #T_b690a_row0_col2, #T_b690a_row0_col3, #T_b690a_row0_col4, #T_b690a_row0_col5, #T_b690a_row0_col6, #T_b690a_row1_col3, #T_b690a_row2_col3, #T_b690a_row3_col3, #T_b690a_row4_col0, #T_b690a_row4_col3, #T_b690a_row5_col0, #T_b690a_row5_col3, #T_b690a_row6_col0, #T_b690a_row6_col3, #T_b690a_row7_col0, #T_b690a_row8_col0, #T_b690a_row9_col0, #T_b690a_row9_col7, #T_b690a_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_b690a_row0_col7 {
+  background-color: #569dc8;
+  color: #f1f1f1;
+}
+#T_b690a_row1_col0, #T_b690a_row2_col1 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_b690a_row1_col1, #T_b690a_row1_col6 {
+  background-color: #f4edf6;
+  color: #000000;
+}
+#T_b690a_row1_col2, #T_b690a_row2_col5 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_b690a_row1_col4 {
+  background-color: #f9f2f8;
+  color: #000000;
+}
+#T_b690a_row1_col5, #T_b690a_row2_col4 {
+  background-color: #f5eff6;
+  color: #000000;
+}
+#T_b690a_row2_col0 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_b690a_row2_col2, #T_b690a_row3_col1 {
+  background-color: #e6e2ef;
+  color: #000000;
+}
+#T_b690a_row2_col6 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_b690a_row2_col7, #T_b690a_row6_col7 {
+  background-color: #1c7fb8;
+  color: #f1f1f1;
+}
+#T_b690a_row3_col0 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_b690a_row3_col2, #T_b690a_row4_col5 {
+  background-color: #d9d8ea;
+  color: #000000;
+}
+#T_b690a_row3_col4 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_b690a_row3_col5 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_b690a_row3_col6, #T_b690a_row4_col4 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_b690a_row3_col7 {
+  background-color: #3790c0;
+  color: #f1f1f1;
+}
+#T_b690a_row4_col1 {
+  background-color: #d8d7e9;
+  color: #000000;
+}
+#T_b690a_row4_col2 {
+  background-color: #c6cce3;
+  color: #000000;
+}
+#T_b690a_row4_col6 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_b690a_row4_col7 {
+  background-color: #3d93c2;
+  color: #f1f1f1;
+}
+#T_b690a_row5_col1 {
+  background-color: #bcc7e1;
+  color: #000000;
+}
+#T_b690a_row5_col2 {
+  background-color: #9fbad9;
+  color: #000000;
+}
+#T_b690a_row5_col4 {
+  background-color: #cacee5;
+  color: #000000;
+}
+#T_b690a_row5_col5 {
+  background-color: #bbc7e0;
+  color: #000000;
+}
+#T_b690a_row5_col6 {
+  background-color: #c4cbe3;
+  color: #000000;
+}
+#T_b690a_row5_col7, #T_b690a_row8_col4 {
+  background-color: #308cbe;
+  color: #f1f1f1;
+}
+#T_b690a_row6_col1 {
+  background-color: #94b6d7;
+  color: #000000;
+}
+#T_b690a_row6_col2 {
+  background-color: #65a3cb;
+  color: #f1f1f1;
+}
+#T_b690a_row6_col4, #T_b690a_row6_col6 {
+  background-color: #a4bcda;
+  color: #000000;
+}
+#T_b690a_row6_col5 {
+  background-color: #96b6d7;
+  color: #000000;
+}
+#T_b690a_row7_col1 {
+  background-color: #5c9fc9;
+  color: #f1f1f1;
+}
+#T_b690a_row7_col2 {
+  background-color: #2d8abd;
+  color: #f1f1f1;
+}
+#T_b690a_row7_col3 {
+  background-color: #a9bfdc;
+  color: #000000;
+}
+#T_b690a_row7_col4 {
+  background-color: #7bacd1;
+  color: #f1f1f1;
+}
+#T_b690a_row7_col5 {
+  background-color: #509ac6;
+  color: #f1f1f1;
+}
+#T_b690a_row7_col6 {
+  background-color: #75a9cf;
+  color: #f1f1f1;
+}
+#T_b690a_row7_col7 {
+  background-color: #67a4cc;
+  color: #f1f1f1;
+}
+#T_b690a_row8_col1 {
+  background-color: #2786bb;
+  color: #f1f1f1;
+}
+#T_b690a_row8_col2 {
+  background-color: #0771b1;
+  color: #f1f1f1;
+}
+#T_b690a_row8_col3 {
+  background-color: #c9cee4;
+  color: #000000;
+}
+#T_b690a_row8_col5 {
+  background-color: #056fae;
+  color: #f1f1f1;
+}
+#T_b690a_row8_col6 {
+  background-color: #5a9ec9;
+  color: #f1f1f1;
+}
+#T_b690a_row8_col7 {
+  background-color: #348ebf;
+  color: #f1f1f1;
+}
+#T_b690a_row9_col1 {
+  background-color: #2a88bc;
+  color: #f1f1f1;
+}
+#T_b690a_row9_col2 {
+  background-color: #2987bc;
+  color: #f1f1f1;
+}
+#T_b690a_row9_col4 {
+  background-color: #2484ba;
+  color: #f1f1f1;
+}
+#T_b690a_row9_col5 {
+  background-color: #0568a3;
+  color: #f1f1f1;
+}
+#T_b690a_row9_col6 {
+  background-color: #60a1ca;
+  color: #f1f1f1;
+}
+#T_b690a_row10_col3 {
+  background-color: #04649d;
+  color: #f1f1f1;
+}
+#T_b690a_row10_col7 {
+  background-color: #034165;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_b690a">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_b690a_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_b690a_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_b690a_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_b690a_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_b690a_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_b690a_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_b690a_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_b690a_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_b690a_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_b690a_row0_col0" class="data row0 col0" >12924254.000000</td>
+      <td id="T_b690a_row0_col1" class="data row0 col1" >47.561294</td>
+      <td id="T_b690a_row0_col2" class="data row0 col2" >60.861343</td>
+      <td id="T_b690a_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_b690a_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_b690a_row0_col5" class="data row0 col5" >28.000000</td>
+      <td id="T_b690a_row0_col6" class="data row0 col6" >52.000000</td>
+      <td id="T_b690a_row0_col7" class="data row0 col7" >2797.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_b690a_row1_col0" class="data row1 col0" >1530222.000000</td>
+      <td id="T_b690a_row1_col1" class="data row1 col1" >92.383925</td>
+      <td id="T_b690a_row1_col2" class="data row1 col2" >108.812707</td>
+      <td id="T_b690a_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_b690a_row1_col4" class="data row1 col4" >27.000000</td>
+      <td id="T_b690a_row1_col5" class="data row1 col5" >54.000000</td>
+      <td id="T_b690a_row1_col6" class="data row1 col6" >114.000000</td>
+      <td id="T_b690a_row1_col7" class="data row1 col7" >3342.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_b690a_row2_col0" class="data row2 col0" >438180.000000</td>
+      <td id="T_b690a_row2_col1" class="data row2 col1" >115.828979</td>
+      <td id="T_b690a_row2_col2" class="data row2 col2" >132.640832</td>
+      <td id="T_b690a_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_b690a_row2_col4" class="data row2 col4" >32.000000</td>
+      <td id="T_b690a_row2_col5" class="data row2 col5" >70.000000</td>
+      <td id="T_b690a_row2_col6" class="data row2 col6" >148.000000</td>
+      <td id="T_b690a_row2_col7" class="data row2 col7" >2957.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_b690a_row3_col0" class="data row3 col0" >134550.000000</td>
+      <td id="T_b690a_row3_col1" class="data row3 col1" >138.155652</td>
+      <td id="T_b690a_row3_col2" class="data row3 col2" >157.336800</td>
+      <td id="T_b690a_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_b690a_row3_col4" class="data row3 col4" >38.000000</td>
+      <td id="T_b690a_row3_col5" class="data row3 col5" >85.000000</td>
+      <td id="T_b690a_row3_col6" class="data row3 col6" >178.000000</td>
+      <td id="T_b690a_row3_col7" class="data row3 col7" >2874.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_b690a_row4_col0" class="data row4 col0" >40025.000000</td>
+      <td id="T_b690a_row4_col1" class="data row4 col1" >172.856490</td>
+      <td id="T_b690a_row4_col2" class="data row4 col2" >191.214465</td>
+      <td id="T_b690a_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_b690a_row4_col4" class="data row4 col4" >52.000000</td>
+      <td id="T_b690a_row4_col5" class="data row4 col5" >115.000000</td>
+      <td id="T_b690a_row4_col6" class="data row4 col6" >222.000000</td>
+      <td id="T_b690a_row4_col7" class="data row4 col7" >2861.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_b690a_row5_col0" class="data row5 col0" >11982.000000</td>
+      <td id="T_b690a_row5_col1" class="data row5 col1" >228.345518</td>
+      <td id="T_b690a_row5_col2" class="data row5 col2" >243.842109</td>
+      <td id="T_b690a_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_b690a_row5_col4" class="data row5 col4" >80.000000</td>
+      <td id="T_b690a_row5_col5" class="data row5 col5" >156.000000</td>
+      <td id="T_b690a_row5_col6" class="data row5 col6" >291.000000</td>
+      <td id="T_b690a_row5_col7" class="data row5 col7" >2893.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_b690a_row6_col0" class="data row6 col0" >4062.000000</td>
+      <td id="T_b690a_row6_col1" class="data row6 col1" >292.480551</td>
+      <td id="T_b690a_row6_col2" class="data row6 col2" >306.142915</td>
+      <td id="T_b690a_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_b690a_row6_col4" class="data row6 col4" >107.000000</td>
+      <td id="T_b690a_row6_col5" class="data row6 col5" >197.000000</td>
+      <td id="T_b690a_row6_col6" class="data row6 col6" >369.000000</td>
+      <td id="T_b690a_row6_col7" class="data row6 col7" >2957.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_b690a_row7_col0" class="data row7 col0" >1523.000000</td>
+      <td id="T_b690a_row7_col1" class="data row7 col1" >366.952068</td>
+      <td id="T_b690a_row7_col2" class="data row7 col2" >361.811889</td>
+      <td id="T_b690a_row7_col3" class="data row7 col3" >14.000000</td>
+      <td id="T_b690a_row7_col4" class="data row7 col4" >130.500000</td>
+      <td id="T_b690a_row7_col5" class="data row7 col5" >262.000000</td>
+      <td id="T_b690a_row7_col6" class="data row7 col6" >467.500000</td>
+      <td id="T_b690a_row7_col7" class="data row7 col7" >2750.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_b690a_row8_col0" class="data row8 col0" >708.000000</td>
+      <td id="T_b690a_row8_col1" class="data row8 col1" >432.443503</td>
+      <td id="T_b690a_row8_col2" class="data row8 col2" >406.300727</td>
+      <td id="T_b690a_row8_col3" class="data row8 col3" >13.000000</td>
+      <td id="T_b690a_row8_col4" class="data row8 col4" >167.000000</td>
+      <td id="T_b690a_row8_col5" class="data row8 col5" >336.500000</td>
+      <td id="T_b690a_row8_col6" class="data row8 col6" >512.500000</td>
+      <td id="T_b690a_row8_col7" class="data row8 col7" >2885.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_b690a_row9_col0" class="data row9 col0" >305.000000</td>
+      <td id="T_b690a_row9_col1" class="data row9 col1" >428.262295</td>
+      <td id="T_b690a_row9_col2" class="data row9 col2" >366.529837</td>
+      <td id="T_b690a_row9_col3" class="data row9 col3" >21.000000</td>
+      <td id="T_b690a_row9_col4" class="data row9 col4" >175.000000</td>
+      <td id="T_b690a_row9_col5" class="data row9 col5" >353.000000</td>
+      <td id="T_b690a_row9_col6" class="data row9 col6" >502.000000</td>
+      <td id="T_b690a_row9_col7" class="data row9 col7" >2099.000000</td>
+    </tr>
+    <tr>
+      <th id="T_b690a_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_b690a_row10_col0" class="data row10 col0" >227.000000</td>
+      <td id="T_b690a_row10_col1" class="data row10 col1" >629.903084</td>
+      <td id="T_b690a_row10_col2" class="data row10 col2" >525.721030</td>
+      <td id="T_b690a_row10_col3" class="data row10 col3" >19.000000</td>
+      <td id="T_b690a_row10_col4" class="data row10 col4" >252.500000</td>
+      <td id="T_b690a_row10_col5" class="data row10 col5" >436.000000</td>
+      <td id="T_b690a_row10_col6" class="data row10 col6" >886.500000</td>
+      <td id="T_b690a_row10_col7" class="data row10 col7" >3301.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2020-11
+
+<style type="text/css">
+#T_5ce75_row0_col0, #T_5ce75_row1_col7, #T_5ce75_row10_col1, #T_5ce75_row10_col2, #T_5ce75_row10_col3, #T_5ce75_row10_col4, #T_5ce75_row10_col5, #T_5ce75_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_5ce75_row0_col1, #T_5ce75_row0_col2, #T_5ce75_row0_col3, #T_5ce75_row0_col4, #T_5ce75_row0_col5, #T_5ce75_row0_col6, #T_5ce75_row1_col3, #T_5ce75_row2_col3, #T_5ce75_row3_col3, #T_5ce75_row4_col0, #T_5ce75_row4_col3, #T_5ce75_row5_col0, #T_5ce75_row5_col3, #T_5ce75_row6_col0, #T_5ce75_row6_col3, #T_5ce75_row7_col0, #T_5ce75_row8_col0, #T_5ce75_row9_col0, #T_5ce75_row9_col7, #T_5ce75_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_5ce75_row0_col7 {
+  background-color: #034165;
+  color: #f1f1f1;
+}
+#T_5ce75_row1_col0 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_5ce75_row1_col1, #T_5ce75_row1_col6 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_5ce75_row1_col2, #T_5ce75_row3_col5 {
+  background-color: #ece7f2;
+  color: #000000;
+}
+#T_5ce75_row1_col4 {
+  background-color: #fbf3f9;
+  color: #000000;
+}
+#T_5ce75_row1_col5, #T_5ce75_row3_col4 {
+  background-color: #f6eff7;
+  color: #000000;
+}
+#T_5ce75_row2_col0 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_5ce75_row2_col1 {
+  background-color: #ede7f2;
+  color: #000000;
+}
+#T_5ce75_row2_col2 {
+  background-color: #dfddec;
+  color: #000000;
+}
+#T_5ce75_row2_col4 {
+  background-color: #f9f2f8;
+  color: #000000;
+}
+#T_5ce75_row2_col5 {
+  background-color: #f1ebf4;
+  color: #000000;
+}
+#T_5ce75_row2_col6 {
+  background-color: #ebe6f2;
+  color: #000000;
+}
+#T_5ce75_row2_col7 {
+  background-color: #0566a0;
+  color: #f1f1f1;
+}
+#T_5ce75_row3_col0 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_5ce75_row3_col1 {
+  background-color: #e4e1ef;
+  color: #000000;
+}
+#T_5ce75_row3_col2 {
+  background-color: #d2d2e7;
+  color: #000000;
+}
+#T_5ce75_row3_col6, #T_5ce75_row5_col4 {
+  background-color: #e2dfee;
+  color: #000000;
+}
+#T_5ce75_row3_col7 {
+  background-color: #4697c4;
+  color: #f1f1f1;
+}
+#T_5ce75_row4_col1 {
+  background-color: #d7d6e9;
+  color: #000000;
+}
+#T_5ce75_row4_col2 {
+  background-color: #bcc7e1;
+  color: #000000;
+}
+#T_5ce75_row4_col4 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_5ce75_row4_col5 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_5ce75_row4_col6 {
+  background-color: #d5d5e8;
+  color: #000000;
+}
+#T_5ce75_row4_col7 {
+  background-color: #358fc0;
+  color: #f1f1f1;
+}
+#T_5ce75_row5_col1 {
+  background-color: #c1cae2;
+  color: #000000;
+}
+#T_5ce75_row5_col2 {
+  background-color: #a2bcda;
+  color: #000000;
+}
+#T_5ce75_row5_col5 {
+  background-color: #c8cde4;
+  color: #000000;
+}
+#T_5ce75_row5_col6 {
+  background-color: #c0c9e2;
+  color: #000000;
+}
+#T_5ce75_row5_col7, #T_5ce75_row7_col5 {
+  background-color: #73a9cf;
+  color: #f1f1f1;
+}
+#T_5ce75_row6_col1 {
+  background-color: #99b8d8;
+  color: #000000;
+}
+#T_5ce75_row6_col2 {
+  background-color: #5c9fc9;
+  color: #f1f1f1;
+}
+#T_5ce75_row6_col4, #T_5ce75_row8_col7 {
+  background-color: #d3d4e7;
+  color: #000000;
+}
+#T_5ce75_row6_col5 {
+  background-color: #abbfdc;
+  color: #000000;
+}
+#T_5ce75_row6_col6 {
+  background-color: #9cb9d9;
+  color: #000000;
+}
+#T_5ce75_row6_col7 {
+  background-color: #96b6d7;
+  color: #000000;
+}
+#T_5ce75_row7_col1, #T_5ce75_row7_col6, #T_5ce75_row9_col4 {
+  background-color: #71a8ce;
+  color: #f1f1f1;
+}
+#T_5ce75_row7_col2 {
+  background-color: #2d8abd;
+  color: #f1f1f1;
+}
+#T_5ce75_row7_col3, #T_5ce75_row8_col3 {
+  background-color: #e0deed;
+  color: #000000;
+}
+#T_5ce75_row7_col4 {
+  background-color: #c4cbe3;
+  color: #000000;
+}
+#T_5ce75_row7_col7, #T_5ce75_row9_col3 {
+  background-color: #83afd3;
+  color: #f1f1f1;
+}
+#T_5ce75_row8_col1 {
+  background-color: #549cc7;
+  color: #f1f1f1;
+}
+#T_5ce75_row8_col2 {
+  background-color: #2685bb;
+  color: #f1f1f1;
+}
+#T_5ce75_row8_col4 {
+  background-color: #bfc9e1;
+  color: #000000;
+}
+#T_5ce75_row8_col5 {
+  background-color: #60a1ca;
+  color: #f1f1f1;
+}
+#T_5ce75_row8_col6 {
+  background-color: #3b92c1;
+  color: #f1f1f1;
+}
+#T_5ce75_row9_col1 {
+  background-color: #2c89bd;
+  color: #f1f1f1;
+}
+#T_5ce75_row9_col2 {
+  background-color: #67a4cc;
+  color: #f1f1f1;
+}
+#T_5ce75_row9_col5 {
+  background-color: #05659f;
+  color: #f1f1f1;
+}
+#T_5ce75_row9_col6 {
+  background-color: #308cbe;
+  color: #f1f1f1;
+}
+#T_5ce75_row10_col7 {
+  background-color: #94b6d7;
+  color: #000000;
+}
+</style>
+<table id="T_5ce75">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_5ce75_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_5ce75_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_5ce75_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_5ce75_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_5ce75_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_5ce75_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_5ce75_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_5ce75_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_5ce75_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_5ce75_row0_col0" class="data row0 col0" >11926515.000000</td>
+      <td id="T_5ce75_row0_col1" class="data row0 col1" >46.309177</td>
+      <td id="T_5ce75_row0_col2" class="data row0 col2" >57.729438</td>
+      <td id="T_5ce75_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_5ce75_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_5ce75_row0_col5" class="data row0 col5" >28.000000</td>
+      <td id="T_5ce75_row0_col6" class="data row0 col6" >51.000000</td>
+      <td id="T_5ce75_row0_col7" class="data row0 col7" >3136.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_5ce75_row1_col0" class="data row1 col0" >1405493.000000</td>
+      <td id="T_5ce75_row1_col1" class="data row1 col1" >87.646081</td>
+      <td id="T_5ce75_row1_col2" class="data row1 col2" >102.222239</td>
+      <td id="T_5ce75_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_5ce75_row1_col4" class="data row1 col4" >26.000000</td>
+      <td id="T_5ce75_row1_col5" class="data row1 col5" >52.000000</td>
+      <td id="T_5ce75_row1_col6" class="data row1 col6" >108.000000</td>
+      <td id="T_5ce75_row1_col7" class="data row1 col7" >3201.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_5ce75_row2_col0" class="data row2 col0" >390099.000000</td>
+      <td id="T_5ce75_row2_col1" class="data row2 col1" >108.666744</td>
+      <td id="T_5ce75_row2_col2" class="data row2 col2" >123.592990</td>
+      <td id="T_5ce75_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_5ce75_row2_col4" class="data row2 col4" >30.000000</td>
+      <td id="T_5ce75_row2_col5" class="data row2 col5" >66.000000</td>
+      <td id="T_5ce75_row2_col6" class="data row2 col6" >138.000000</td>
+      <td id="T_5ce75_row2_col7" class="data row2 col7" >2828.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_5ce75_row3_col0" class="data row3 col0" >115215.000000</td>
+      <td id="T_5ce75_row3_col1" class="data row3 col1" >127.930816</td>
+      <td id="T_5ce75_row3_col2" class="data row3 col2" >143.884032</td>
+      <td id="T_5ce75_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_5ce75_row3_col4" class="data row3 col4" >36.000000</td>
+      <td id="T_5ce75_row3_col5" class="data row3 col5" >80.000000</td>
+      <td id="T_5ce75_row3_col6" class="data row3 col6" >164.000000</td>
+      <td id="T_5ce75_row3_col7" class="data row3 col7" >2410.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_5ce75_row4_col0" class="data row4 col0" >32171.000000</td>
+      <td id="T_5ce75_row4_col1" class="data row4 col1" >157.237077</td>
+      <td id="T_5ce75_row4_col2" class="data row4 col2" >167.297130</td>
+      <td id="T_5ce75_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_5ce75_row4_col4" class="data row4 col4" >50.000000</td>
+      <td id="T_5ce75_row4_col5" class="data row4 col5" >106.000000</td>
+      <td id="T_5ce75_row4_col6" class="data row4 col6" >203.000000</td>
+      <td id="T_5ce75_row4_col7" class="data row4 col7" >2476.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_5ce75_row5_col0" class="data row5 col0" >9033.000000</td>
+      <td id="T_5ce75_row5_col1" class="data row5 col1" >193.735525</td>
+      <td id="T_5ce75_row5_col2" class="data row5 col2" >193.917446</td>
+      <td id="T_5ce75_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_5ce75_row5_col4" class="data row5 col4" >70.000000</td>
+      <td id="T_5ce75_row5_col5" class="data row5 col5" >139.000000</td>
+      <td id="T_5ce75_row5_col6" class="data row5 col6" >250.000000</td>
+      <td id="T_5ce75_row5_col7" class="data row5 col7" >2236.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_5ce75_row6_col0" class="data row6 col0" >2638.000000</td>
+      <td id="T_5ce75_row6_col1" class="data row6 col1" >250.462851</td>
+      <td id="T_5ce75_row6_col2" class="data row6 col2" >252.031998</td>
+      <td id="T_5ce75_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_5ce75_row6_col4" class="data row6 col4" >90.000000</td>
+      <td id="T_5ce75_row6_col5" class="data row6 col5" >174.000000</td>
+      <td id="T_5ce75_row6_col6" class="data row6 col6" >319.000000</td>
+      <td id="T_5ce75_row6_col7" class="data row6 col7" >2066.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_5ce75_row7_col0" class="data row7 col0" >901.000000</td>
+      <td id="T_5ce75_row7_col1" class="data row7 col1" >298.366260</td>
+      <td id="T_5ce75_row7_col2" class="data row7 col2" >287.339963</td>
+      <td id="T_5ce75_row7_col3" class="data row7 col3" >15.000000</td>
+      <td id="T_5ce75_row7_col4" class="data row7 col4" >106.000000</td>
+      <td id="T_5ce75_row7_col5" class="data row7 col5" >232.000000</td>
+      <td id="T_5ce75_row7_col6" class="data row7 col6" >390.000000</td>
+      <td id="T_5ce75_row7_col7" class="data row7 col7" >2157.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_5ce75_row8_col0" class="data row8 col0" >328.000000</td>
+      <td id="T_5ce75_row8_col1" class="data row8 col1" >327.771341</td>
+      <td id="T_5ce75_row8_col2" class="data row8 col2" >294.252964</td>
+      <td id="T_5ce75_row8_col3" class="data row8 col3" >15.000000</td>
+      <td id="T_5ce75_row8_col4" class="data row8 col4" >110.500000</td>
+      <td id="T_5ce75_row8_col5" class="data row8 col5" >246.500000</td>
+      <td id="T_5ce75_row8_col6" class="data row8 col6" >463.250000</td>
+      <td id="T_5ce75_row8_col7" class="data row8 col7" >1721.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_5ce75_row9_col0" class="data row9 col0" >126.000000</td>
+      <td id="T_5ce75_row9_col1" class="data row9 col1" >370.888889</td>
+      <td id="T_5ce75_row9_col2" class="data row9 col2" >244.057345</td>
+      <td id="T_5ce75_row9_col3" class="data row9 col3" >23.000000</td>
+      <td id="T_5ce75_row9_col4" class="data row9 col4" >173.500000</td>
+      <td id="T_5ce75_row9_col5" class="data row9 col5" >356.000000</td>
+      <td id="T_5ce75_row9_col6" class="data row9 col6" >479.000000</td>
+      <td id="T_5ce75_row9_col7" class="data row9 col7" >1259.000000</td>
+    </tr>
+    <tr>
+      <th id="T_5ce75_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_5ce75_row10_col0" class="data row10 col0" >69.000000</td>
+      <td id="T_5ce75_row10_col1" class="data row10 col1" >545.579710</td>
+      <td id="T_5ce75_row10_col2" class="data row10 col2" >412.016005</td>
+      <td id="T_5ce75_row10_col3" class="data row10 col3" >38.000000</td>
+      <td id="T_5ce75_row10_col4" class="data row10 col4" >327.000000</td>
+      <td id="T_5ce75_row10_col5" class="data row10 col5" >433.000000</td>
+      <td id="T_5ce75_row10_col6" class="data row10 col6" >720.000000</td>
+      <td id="T_5ce75_row10_col7" class="data row10 col7" >2078.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2020-06
+
+<style type="text/css">
+#T_372ac_row0_col0, #T_372ac_row0_col7, #T_372ac_row1_col7, #T_372ac_row10_col1, #T_372ac_row10_col2, #T_372ac_row10_col3, #T_372ac_row10_col4, #T_372ac_row10_col5, #T_372ac_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_372ac_row0_col1, #T_372ac_row0_col2, #T_372ac_row0_col3, #T_372ac_row0_col4, #T_372ac_row0_col5, #T_372ac_row0_col6, #T_372ac_row1_col3, #T_372ac_row2_col3, #T_372ac_row3_col3, #T_372ac_row4_col0, #T_372ac_row4_col3, #T_372ac_row5_col0, #T_372ac_row5_col3, #T_372ac_row6_col0, #T_372ac_row6_col3, #T_372ac_row7_col0, #T_372ac_row8_col0, #T_372ac_row9_col0, #T_372ac_row9_col7, #T_372ac_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_372ac_row1_col0 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_372ac_row1_col1 {
+  background-color: #f5eff6;
+  color: #000000;
+}
+#T_372ac_row1_col2 {
+  background-color: #f1ebf5;
+  color: #000000;
+}
+#T_372ac_row1_col4, #T_372ac_row1_col5 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_372ac_row1_col6, #T_372ac_row2_col4 {
+  background-color: #f5eef6;
+  color: #000000;
+}
+#T_372ac_row2_col0 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_372ac_row2_col1, #T_372ac_row3_col4 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_372ac_row2_col2, #T_372ac_row3_col1 {
+  background-color: #eae6f1;
+  color: #000000;
+}
+#T_372ac_row2_col5 {
+  background-color: #f4edf6;
+  color: #000000;
+}
+#T_372ac_row2_col6, #T_372ac_row3_col5, #T_372ac_row8_col3 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_372ac_row2_col7 {
+  background-color: #358fc0;
+  color: #f1f1f1;
+}
+#T_372ac_row3_col0 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_372ac_row3_col2 {
+  background-color: #dedcec;
+  color: #000000;
+}
+#T_372ac_row3_col6 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_372ac_row3_col7 {
+  background-color: #0567a1;
+  color: #f1f1f1;
+}
+#T_372ac_row4_col1 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_372ac_row4_col2 {
+  background-color: #c6cce3;
+  color: #000000;
+}
+#T_372ac_row4_col4 {
+  background-color: #e2dfee;
+  color: #000000;
+}
+#T_372ac_row4_col5 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_372ac_row4_col6 {
+  background-color: #dcdaeb;
+  color: #000000;
+}
+#T_372ac_row4_col7 {
+  background-color: #056dab;
+  color: #f1f1f1;
+}
+#T_372ac_row5_col1 {
+  background-color: #ced0e6;
+  color: #000000;
+}
+#T_372ac_row5_col2 {
+  background-color: #9fbad9;
+  color: #000000;
+}
+#T_372ac_row5_col4 {
+  background-color: #d2d3e7;
+  color: #000000;
+}
+#T_372ac_row5_col5 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_372ac_row5_col6 {
+  background-color: #d1d2e6;
+  color: #000000;
+}
+#T_372ac_row5_col7 {
+  background-color: #4e9ac6;
+  color: #f1f1f1;
+}
+#T_372ac_row6_col1 {
+  background-color: #acc0dd;
+  color: #000000;
+}
+#T_372ac_row6_col2 {
+  background-color: #73a9cf;
+  color: #f1f1f1;
+}
+#T_372ac_row6_col4 {
+  background-color: #b9c6e0;
+  color: #000000;
+}
+#T_372ac_row6_col5 {
+  background-color: #c4cbe3;
+  color: #000000;
+}
+#T_372ac_row6_col6 {
+  background-color: #a7bddb;
+  color: #000000;
+}
+#T_372ac_row6_col7, #T_372ac_row8_col2 {
+  background-color: #0a73b2;
+  color: #f1f1f1;
+}
+#T_372ac_row7_col1 {
+  background-color: #589ec8;
+  color: #f1f1f1;
+}
+#T_372ac_row7_col2 {
+  background-color: #187cb6;
+  color: #f1f1f1;
+}
+#T_372ac_row7_col3 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_372ac_row7_col4 {
+  background-color: #549cc7;
+  color: #f1f1f1;
+}
+#T_372ac_row7_col5 {
+  background-color: #89b1d4;
+  color: #000000;
+}
+#T_372ac_row7_col6 {
+  background-color: #4094c3;
+  color: #f1f1f1;
+}
+#T_372ac_row7_col7 {
+  background-color: #a9bfdc;
+  color: #000000;
+}
+#T_372ac_row8_col1 {
+  background-color: #3790c0;
+  color: #f1f1f1;
+}
+#T_372ac_row8_col4 {
+  background-color: #308cbe;
+  color: #f1f1f1;
+}
+#T_372ac_row8_col5 {
+  background-color: #62a2cb;
+  color: #f1f1f1;
+}
+#T_372ac_row8_col6 {
+  background-color: #2a88bc;
+  color: #f1f1f1;
+}
+#T_372ac_row8_col7 {
+  background-color: #034165;
+  color: #f1f1f1;
+}
+#T_372ac_row9_col1 {
+  background-color: #046096;
+  color: #f1f1f1;
+}
+#T_372ac_row9_col2 {
+  background-color: #0872b1;
+  color: #f1f1f1;
+}
+#T_372ac_row9_col3 {
+  background-color: #cccfe5;
+  color: #000000;
+}
+#T_372ac_row9_col4 {
+  background-color: #034b76;
+  color: #f1f1f1;
+}
+#T_372ac_row9_col5 {
+  background-color: #04629a;
+  color: #f1f1f1;
+}
+#T_372ac_row9_col6 {
+  background-color: #023a5b;
+  color: #f1f1f1;
+}
+#T_372ac_row10_col7 {
+  background-color: #045a8d;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_372ac">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_372ac_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_372ac_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_372ac_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_372ac_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_372ac_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_372ac_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_372ac_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_372ac_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_372ac_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_372ac_row0_col0" class="data row0 col0" >11119683.000000</td>
+      <td id="T_372ac_row0_col1" class="data row0 col1" >49.777510</td>
+      <td id="T_372ac_row0_col2" class="data row0 col2" >62.268531</td>
+      <td id="T_372ac_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_372ac_row0_col4" class="data row0 col4" >18.000000</td>
+      <td id="T_372ac_row0_col5" class="data row0 col5" >31.000000</td>
+      <td id="T_372ac_row0_col6" class="data row0 col6" >56.000000</td>
+      <td id="T_372ac_row0_col7" class="data row0 col7" >3353.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_372ac_row1_col0" class="data row1 col0" >1339834.000000</td>
+      <td id="T_372ac_row1_col1" class="data row1 col1" >90.424203</td>
+      <td id="T_372ac_row1_col2" class="data row1 col2" >102.268971</td>
+      <td id="T_372ac_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_372ac_row1_col4" class="data row1 col4" >29.000000</td>
+      <td id="T_372ac_row1_col5" class="data row1 col5" >56.000000</td>
+      <td id="T_372ac_row1_col6" class="data row1 col6" >112.000000</td>
+      <td id="T_372ac_row1_col7" class="data row1 col7" >3353.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_372ac_row2_col0" class="data row2 col0" >362262.000000</td>
+      <td id="T_372ac_row2_col1" class="data row2 col1" >113.054552</td>
+      <td id="T_372ac_row2_col2" class="data row2 col2" >122.660597</td>
+      <td id="T_372ac_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_372ac_row2_col4" class="data row2 col4" >35.000000</td>
+      <td id="T_372ac_row2_col5" class="data row2 col5" >74.000000</td>
+      <td id="T_372ac_row2_col6" class="data row2 col6" >145.000000</td>
+      <td id="T_372ac_row2_col7" class="data row2 col7" >2765.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_372ac_row3_col0" class="data row3 col0" >102574.000000</td>
+      <td id="T_372ac_row3_col1" class="data row3 col1" >136.168834</td>
+      <td id="T_372ac_row3_col2" class="data row3 col2" >146.896692</td>
+      <td id="T_372ac_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_372ac_row3_col4" class="data row3 col4" >44.000000</td>
+      <td id="T_372ac_row3_col5" class="data row3 col5" >92.000000</td>
+      <td id="T_372ac_row3_col6" class="data row3 col6" >175.000000</td>
+      <td id="T_372ac_row3_col7" class="data row3 col7" >3041.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_372ac_row4_col0" class="data row4 col0" >27499.000000</td>
+      <td id="T_372ac_row4_col1" class="data row4 col1" >171.094185</td>
+      <td id="T_372ac_row4_col2" class="data row4 col2" >185.320531</td>
+      <td id="T_372ac_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_372ac_row4_col4" class="data row4 col4" >60.000000</td>
+      <td id="T_372ac_row4_col5" class="data row4 col5" >119.000000</td>
+      <td id="T_372ac_row4_col6" class="data row4 col6" >217.000000</td>
+      <td id="T_372ac_row4_col7" class="data row4 col7" >2982.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_372ac_row5_col0" class="data row5 col0" >7442.000000</td>
+      <td id="T_372ac_row5_col1" class="data row5 col1" >213.075249</td>
+      <td id="T_372ac_row5_col2" class="data row5 col2" >236.478070</td>
+      <td id="T_372ac_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_372ac_row5_col4" class="data row5 col4" >78.000000</td>
+      <td id="T_372ac_row5_col5" class="data row5 col5" >146.000000</td>
+      <td id="T_372ac_row5_col6" class="data row5 col6" >257.000000</td>
+      <td id="T_372ac_row5_col7" class="data row5 col7" >2685.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_372ac_row6_col0" class="data row6 col0" >1978.000000</td>
+      <td id="T_372ac_row6_col1" class="data row6 col1" >277.006572</td>
+      <td id="T_372ac_row6_col2" class="data row6 col2" >284.559299</td>
+      <td id="T_372ac_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_372ac_row6_col4" class="data row6 col4" >97.250000</td>
+      <td id="T_372ac_row6_col5" class="data row6 col5" >192.000000</td>
+      <td id="T_372ac_row6_col6" class="data row6 col6" >360.750000</td>
+      <td id="T_372ac_row6_col7" class="data row6 col7" >2935.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_372ac_row7_col0" class="data row7 col0" >712.000000</td>
+      <td id="T_372ac_row7_col1" class="data row7 col1" >401.300562</td>
+      <td id="T_372ac_row7_col2" class="data row7 col2" >372.101119</td>
+      <td id="T_372ac_row7_col3" class="data row7 col3" >12.000000</td>
+      <td id="T_372ac_row7_col4" class="data row7 col4" >158.000000</td>
+      <td id="T_372ac_row7_col5" class="data row7 col5" >282.000000</td>
+      <td id="T_372ac_row7_col6" class="data row7 col6" >549.000000</td>
+      <td id="T_372ac_row7_col7" class="data row7 col7" >2351.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_372ac_row8_col0" class="data row8 col0" >274.000000</td>
+      <td id="T_372ac_row8_col1" class="data row8 col1" >443.886861</td>
+      <td id="T_372ac_row8_col2" class="data row8 col2" >387.205303</td>
+      <td id="T_372ac_row8_col3" class="data row8 col3" >19.000000</td>
+      <td id="T_372ac_row8_col4" class="data row8 col4" >176.250000</td>
+      <td id="T_372ac_row8_col5" class="data row8 col5" >333.000000</td>
+      <td id="T_372ac_row8_col6" class="data row8 col6" >589.500000</td>
+      <td id="T_372ac_row8_col7" class="data row8 col7" >3301.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_372ac_row9_col0" class="data row9 col0" >124.000000</td>
+      <td id="T_372ac_row9_col1" class="data row9 col1" >582.733871</td>
+      <td id="T_372ac_row9_col2" class="data row9 col2" >390.036961</td>
+      <td id="T_372ac_row9_col3" class="data row9 col3" >32.000000</td>
+      <td id="T_372ac_row9_col4" class="data row9 col4" >248.000000</td>
+      <td id="T_372ac_row9_col5" class="data row9 col5" >495.500000</td>
+      <td id="T_372ac_row9_col6" class="data row9 col6" >863.500000</td>
+      <td id="T_372ac_row9_col7" class="data row9 col7" >1770.000000</td>
+    </tr>
+    <tr>
+      <th id="T_372ac_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_372ac_row10_col0" class="data row10 col0" >92.000000</td>
+      <td id="T_372ac_row10_col1" class="data row10 col1" >683.456522</td>
+      <td id="T_372ac_row10_col2" class="data row10 col2" >504.484492</td>
+      <td id="T_372ac_row10_col3" class="data row10 col3" >94.000000</td>
+      <td id="T_372ac_row10_col4" class="data row10 col4" >266.250000</td>
+      <td id="T_372ac_row10_col5" class="data row10 col5" >594.000000</td>
+      <td id="T_372ac_row10_col6" class="data row10 col6" >871.250000</td>
+      <td id="T_372ac_row10_col7" class="data row10 col7" >3154.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2020-09
+
+<style type="text/css">
+#T_4c77b_row0_col0, #T_4c77b_row0_col7, #T_4c77b_row10_col1, #T_4c77b_row10_col2, #T_4c77b_row10_col3, #T_4c77b_row10_col4, #T_4c77b_row10_col5, #T_4c77b_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_4c77b_row0_col1, #T_4c77b_row0_col2, #T_4c77b_row0_col3, #T_4c77b_row0_col4, #T_4c77b_row0_col5, #T_4c77b_row0_col6, #T_4c77b_row1_col3, #T_4c77b_row2_col3, #T_4c77b_row3_col3, #T_4c77b_row4_col0, #T_4c77b_row4_col3, #T_4c77b_row5_col0, #T_4c77b_row5_col3, #T_4c77b_row6_col0, #T_4c77b_row6_col3, #T_4c77b_row7_col0, #T_4c77b_row7_col3, #T_4c77b_row8_col0, #T_4c77b_row9_col0, #T_4c77b_row9_col7, #T_4c77b_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_4c77b_row1_col0 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_4c77b_row1_col1, #T_4c77b_row1_col6 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_4c77b_row1_col2 {
+  background-color: #ede7f2;
+  color: #000000;
+}
+#T_4c77b_row1_col4 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_4c77b_row1_col5 {
+  background-color: #f5eff6;
+  color: #000000;
+}
+#T_4c77b_row1_col7 {
+  background-color: #03456c;
+  color: #f1f1f1;
+}
+#T_4c77b_row2_col0 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_4c77b_row2_col1 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_4c77b_row2_col2, #T_4c77b_row3_col1 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_4c77b_row2_col4 {
+  background-color: #f4eef6;
+  color: #000000;
+}
+#T_4c77b_row2_col5 {
+  background-color: #eee9f3;
+  color: #000000;
+}
+#T_4c77b_row2_col6 {
+  background-color: #eae6f1;
+  color: #000000;
+}
+#T_4c77b_row2_col7, #T_4c77b_row5_col4 {
+  background-color: #bbc7e0;
+  color: #000000;
+}
+#T_4c77b_row3_col0 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_4c77b_row3_col2 {
+  background-color: #ced0e6;
+  color: #000000;
+}
+#T_4c77b_row3_col4 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_4c77b_row3_col5 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_4c77b_row3_col6 {
+  background-color: #dfddec;
+  color: #000000;
+}
+#T_4c77b_row3_col7, #T_4c77b_row6_col7 {
+  background-color: #b0c2de;
+  color: #000000;
+}
+#T_4c77b_row4_col1 {
+  background-color: #cccfe5;
+  color: #000000;
+}
+#T_4c77b_row4_col2, #T_4c77b_row5_col6 {
+  background-color: #b5c4df;
+  color: #000000;
+}
+#T_4c77b_row4_col4 {
+  background-color: #e0deed;
+  color: #000000;
+}
+#T_4c77b_row4_col5 {
+  background-color: #d3d4e7;
+  color: #000000;
+}
+#T_4c77b_row4_col6 {
+  background-color: #d1d2e6;
+  color: #000000;
+}
+#T_4c77b_row4_col7, #T_4c77b_row5_col1 {
+  background-color: #abbfdc;
+  color: #000000;
+}
+#T_4c77b_row5_col2 {
+  background-color: #8eb3d5;
+  color: #000000;
+}
+#T_4c77b_row5_col5 {
+  background-color: #b4c4df;
+  color: #000000;
+}
+#T_4c77b_row5_col7 {
+  background-color: #c6cce3;
+  color: #000000;
+}
+#T_4c77b_row6_col1 {
+  background-color: #89b1d4;
+  color: #000000;
+}
+#T_4c77b_row6_col2 {
+  background-color: #60a1ca;
+  color: #f1f1f1;
+}
+#T_4c77b_row6_col4 {
+  background-color: #a4bcda;
+  color: #000000;
+}
+#T_4c77b_row6_col5 {
+  background-color: #9ab8d8;
+  color: #000000;
+}
+#T_4c77b_row6_col6 {
+  background-color: #94b6d7;
+  color: #000000;
+}
+#T_4c77b_row7_col1 {
+  background-color: #549cc7;
+  color: #f1f1f1;
+}
+#T_4c77b_row7_col2 {
+  background-color: #3790c0;
+  color: #f1f1f1;
+}
+#T_4c77b_row7_col4 {
+  background-color: #7eadd1;
+  color: #f1f1f1;
+}
+#T_4c77b_row7_col5 {
+  background-color: #65a3cb;
+  color: #f1f1f1;
+}
+#T_4c77b_row7_col6 {
+  background-color: #63a2cb;
+  color: #f1f1f1;
+}
+#T_4c77b_row7_col7, #T_4c77b_row8_col3 {
+  background-color: #e8e4f0;
+  color: #000000;
+}
+#T_4c77b_row8_col1 {
+  background-color: #2d8abd;
+  color: #f1f1f1;
+}
+#T_4c77b_row8_col2 {
+  background-color: #1b7eb7;
+  color: #f1f1f1;
+}
+#T_4c77b_row8_col4 {
+  background-color: #69a5cc;
+  color: #f1f1f1;
+}
+#T_4c77b_row8_col5 {
+  background-color: #187cb6;
+  color: #f1f1f1;
+}
+#T_4c77b_row8_col6 {
+  background-color: #589ec8;
+  color: #f1f1f1;
+}
+#T_4c77b_row8_col7 {
+  background-color: #e0dded;
+  color: #000000;
+}
+#T_4c77b_row9_col1 {
+  background-color: #0d75b3;
+  color: #f1f1f1;
+}
+#T_4c77b_row9_col2 {
+  background-color: #1278b4;
+  color: #f1f1f1;
+}
+#T_4c77b_row9_col3 {
+  background-color: #509ac6;
+  color: #f1f1f1;
+}
+#T_4c77b_row9_col4 {
+  background-color: #2a88bc;
+  color: #f1f1f1;
+}
+#T_4c77b_row9_col5 {
+  background-color: #056aa6;
+  color: #f1f1f1;
+}
+#T_4c77b_row9_col6 {
+  background-color: #2484ba;
+  color: #f1f1f1;
+}
+#T_4c77b_row10_col7 {
+  background-color: #2f8bbe;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_4c77b">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_4c77b_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_4c77b_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_4c77b_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_4c77b_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_4c77b_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_4c77b_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_4c77b_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_4c77b_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_4c77b_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_4c77b_row0_col0" class="data row0 col0" >12808976.000000</td>
+      <td id="T_4c77b_row0_col1" class="data row0 col1" >48.173044</td>
+      <td id="T_4c77b_row0_col2" class="data row0 col2" >61.527075</td>
+      <td id="T_4c77b_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_4c77b_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_4c77b_row0_col5" class="data row0 col5" >29.000000</td>
+      <td id="T_4c77b_row0_col6" class="data row0 col6" >53.000000</td>
+      <td id="T_4c77b_row0_col7" class="data row0 col7" >3517.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_4c77b_row1_col0" class="data row1 col0" >1513067.000000</td>
+      <td id="T_4c77b_row1_col1" class="data row1 col1" >95.312183</td>
+      <td id="T_4c77b_row1_col2" class="data row1 col2" >111.634187</td>
+      <td id="T_4c77b_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_4c77b_row1_col4" class="data row1 col4" >28.000000</td>
+      <td id="T_4c77b_row1_col5" class="data row1 col5" >56.000000</td>
+      <td id="T_4c77b_row1_col6" class="data row1 col6" >118.000000</td>
+      <td id="T_4c77b_row1_col7" class="data row1 col7" >3427.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_4c77b_row2_col0" class="data row2 col0" >420871.000000</td>
+      <td id="T_4c77b_row2_col1" class="data row2 col1" >122.784680</td>
+      <td id="T_4c77b_row2_col2" class="data row2 col2" >138.511609</td>
+      <td id="T_4c77b_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_4c77b_row2_col4" class="data row2 col4" >34.000000</td>
+      <td id="T_4c77b_row2_col5" class="data row2 col5" >75.000000</td>
+      <td id="T_4c77b_row2_col6" class="data row2 col6" >158.000000</td>
+      <td id="T_4c77b_row2_col7" class="data row2 col7" >2208.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_4c77b_row3_col0" class="data row3 col0" >126627.000000</td>
+      <td id="T_4c77b_row3_col1" class="data row3 col1" >150.189004</td>
+      <td id="T_4c77b_row3_col2" class="data row3 col2" >164.287487</td>
+      <td id="T_4c77b_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_4c77b_row3_col4" class="data row3 col4" >42.000000</td>
+      <td id="T_4c77b_row3_col5" class="data row3 col5" >95.000000</td>
+      <td id="T_4c77b_row3_col6" class="data row3 col6" >197.000000</td>
+      <td id="T_4c77b_row3_col7" class="data row3 col7" >2268.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_4c77b_row4_col0" class="data row4 col0" >37337.000000</td>
+      <td id="T_4c77b_row4_col1" class="data row4 col1" >187.999464</td>
+      <td id="T_4c77b_row4_col2" class="data row4 col2" >193.855976</td>
+      <td id="T_4c77b_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_4c77b_row4_col4" class="data row4 col4" >58.000000</td>
+      <td id="T_4c77b_row4_col5" class="data row4 col5" >128.000000</td>
+      <td id="T_4c77b_row4_col6" class="data row4 col6" >247.000000</td>
+      <td id="T_4c77b_row4_col7" class="data row4 col7" >2301.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_4c77b_row5_col0" class="data row5 col0" >11742.000000</td>
+      <td id="T_4c77b_row5_col1" class="data row5 col1" >241.127406</td>
+      <td id="T_4c77b_row5_col2" class="data row5 col2" >237.226026</td>
+      <td id="T_4c77b_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_4c77b_row5_col4" class="data row5 col4" >90.000000</td>
+      <td id="T_4c77b_row5_col5" class="data row5 col5" >168.000000</td>
+      <td id="T_4c77b_row5_col6" class="data row5 col6" >313.000000</td>
+      <td id="T_4c77b_row5_col7" class="data row5 col7" >2143.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_4c77b_row6_col0" class="data row6 col0" >4223.000000</td>
+      <td id="T_4c77b_row6_col1" class="data row6 col1" >287.375326</td>
+      <td id="T_4c77b_row6_col2" class="data row6 col2" >278.287355</td>
+      <td id="T_4c77b_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_4c77b_row6_col4" class="data row6 col4" >105.000000</td>
+      <td id="T_4c77b_row6_col5" class="data row6 col5" >197.000000</td>
+      <td id="T_4c77b_row6_col6" class="data row6 col6" >381.000000</td>
+      <td id="T_4c77b_row6_col7" class="data row6 col7" >2271.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_4c77b_row7_col0" class="data row7 col0" >1715.000000</td>
+      <td id="T_4c77b_row7_col1" class="data row7 col1" >347.798251</td>
+      <td id="T_4c77b_row7_col2" class="data row7 col2" >311.460000</td>
+      <td id="T_4c77b_row7_col3" class="data row7 col3" >10.000000</td>
+      <td id="T_4c77b_row7_col4" class="data row7 col4" >127.000000</td>
+      <td id="T_4c77b_row7_col5" class="data row7 col5" >250.000000</td>
+      <td id="T_4c77b_row7_col6" class="data row7 col6" >470.500000</td>
+      <td id="T_4c77b_row7_col7" class="data row7 col7" >1880.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_4c77b_row8_col0" class="data row8 col0" >755.000000</td>
+      <td id="T_4c77b_row8_col1" class="data row8 col1" >393.034437</td>
+      <td id="T_4c77b_row8_col2" class="data row8 col2" >340.622875</td>
+      <td id="T_4c77b_row8_col3" class="data row8 col3" >13.000000</td>
+      <td id="T_4c77b_row8_col4" class="data row8 col4" >138.000000</td>
+      <td id="T_4c77b_row8_col5" class="data row8 col5" >321.000000</td>
+      <td id="T_4c77b_row8_col6" class="data row8 col6" >489.500000</td>
+      <td id="T_4c77b_row8_col7" class="data row8 col7" >1953.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_4c77b_row9_col0" class="data row9 col0" >355.000000</td>
+      <td id="T_4c77b_row9_col1" class="data row9 col1" >435.723944</td>
+      <td id="T_4c77b_row9_col2" class="data row9 col2" >349.919979</td>
+      <td id="T_4c77b_row9_col3" class="data row9 col3" >22.000000</td>
+      <td id="T_4c77b_row9_col4" class="data row9 col4" >168.000000</td>
+      <td id="T_4c77b_row9_col5" class="data row9 col5" >355.000000</td>
+      <td id="T_4c77b_row9_col6" class="data row9 col6" >577.000000</td>
+      <td id="T_4c77b_row9_col7" class="data row9 col7" >1608.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4c77b_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_4c77b_row10_col0" class="data row10 col0" >252.000000</td>
+      <td id="T_4c77b_row10_col1" class="data row10 col1" >580.686508</td>
+      <td id="T_4c77b_row10_col2" class="data row10 col2" >463.497144</td>
+      <td id="T_4c77b_row10_col3" class="data row10 col3" >31.000000</td>
+      <td id="T_4c77b_row10_col4" class="data row10 col4" >248.250000</td>
+      <td id="T_4c77b_row10_col5" class="data row10 col5" >445.500000</td>
+      <td id="T_4c77b_row10_col6" class="data row10 col6" >836.750000</td>
+      <td id="T_4c77b_row10_col7" class="data row10 col7" >2837.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2020-08
+
+<style type="text/css">
+#T_c82e3_row0_col0, #T_c82e3_row0_col7, #T_c82e3_row7_col2, #T_c82e3_row9_col3, #T_c82e3_row9_col6, #T_c82e3_row10_col1, #T_c82e3_row10_col4, #T_c82e3_row10_col5 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_c82e3_row0_col1, #T_c82e3_row0_col2, #T_c82e3_row0_col3, #T_c82e3_row0_col4, #T_c82e3_row0_col5, #T_c82e3_row0_col6, #T_c82e3_row1_col3, #T_c82e3_row2_col3, #T_c82e3_row3_col3, #T_c82e3_row4_col0, #T_c82e3_row4_col3, #T_c82e3_row5_col0, #T_c82e3_row5_col3, #T_c82e3_row6_col0, #T_c82e3_row6_col3, #T_c82e3_row7_col0, #T_c82e3_row7_col3, #T_c82e3_row8_col0, #T_c82e3_row9_col0, #T_c82e3_row9_col7, #T_c82e3_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_c82e3_row1_col0 {
+  background-color: #eee9f3;
+  color: #000000;
+}
+#T_c82e3_row1_col1, #T_c82e3_row1_col6, #T_c82e3_row2_col5 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_c82e3_row1_col2, #T_c82e3_row5_col4 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_c82e3_row1_col4 {
+  background-color: #fdf5fa;
+  color: #000000;
+}
+#T_c82e3_row1_col5, #T_c82e3_row2_col0 {
+  background-color: #fbf3f9;
+  color: #000000;
+}
+#T_c82e3_row1_col7 {
+  background-color: #2383ba;
+  color: #f1f1f1;
+}
+#T_c82e3_row2_col1 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_c82e3_row2_col2, #T_c82e3_row6_col4 {
+  background-color: #e3e0ee;
+  color: #000000;
+}
+#T_c82e3_row2_col4 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_c82e3_row2_col6 {
+  background-color: #f1ebf5;
+  color: #000000;
+}
+#T_c82e3_row2_col7, #T_c82e3_row8_col1 {
+  background-color: #2685bb;
+  color: #f1f1f1;
+}
+#T_c82e3_row3_col0 {
+  background-color: #fef6fb;
+  color: #000000;
+}
+#T_c82e3_row3_col1 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_c82e3_row3_col2, #T_c82e3_row7_col4 {
+  background-color: #d5d5e8;
+  color: #000000;
+}
+#T_c82e3_row3_col4 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_c82e3_row3_col5 {
+  background-color: #f4eef6;
+  color: #000000;
+}
+#T_c82e3_row3_col6 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_c82e3_row3_col7 {
+  background-color: #569dc8;
+  color: #f1f1f1;
+}
+#T_c82e3_row4_col1, #T_c82e3_row4_col6, #T_c82e3_row5_col5 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_c82e3_row4_col2, #T_c82e3_row8_col4 {
+  background-color: #b7c5df;
+  color: #000000;
+}
+#T_c82e3_row4_col4, #T_c82e3_row10_col7 {
+  background-color: #f6eff7;
+  color: #000000;
+}
+#T_c82e3_row4_col5 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_c82e3_row4_col7 {
+  background-color: #157ab5;
+  color: #f1f1f1;
+}
+#T_c82e3_row5_col1 {
+  background-color: #d3d4e7;
+  color: #000000;
+}
+#T_c82e3_row5_col2 {
+  background-color: #7dacd1;
+  color: #f1f1f1;
+}
+#T_c82e3_row5_col6 {
+  background-color: #d8d7e9;
+  color: #000000;
+}
+#T_c82e3_row5_col7 {
+  background-color: #4c99c5;
+  color: #f1f1f1;
+}
+#T_c82e3_row6_col1, #T_c82e3_row6_col6 {
+  background-color: #abbfdc;
+  color: #000000;
+}
+#T_c82e3_row6_col2 {
+  background-color: #197db7;
+  color: #f1f1f1;
+}
+#T_c82e3_row6_col5 {
+  background-color: #d7d6e9;
+  color: #000000;
+}
+#T_c82e3_row6_col7, #T_c82e3_row7_col1 {
+  background-color: #549cc7;
+  color: #f1f1f1;
+}
+#T_c82e3_row7_col5 {
+  background-color: #a9bfdc;
+  color: #000000;
+}
+#T_c82e3_row7_col6 {
+  background-color: #358fc0;
+  color: #f1f1f1;
+}
+#T_c82e3_row7_col7 {
+  background-color: #167bb6;
+  color: #f1f1f1;
+}
+#T_c82e3_row8_col2 {
+  background-color: #045483;
+  color: #f1f1f1;
+}
+#T_c82e3_row8_col3 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_c82e3_row8_col5 {
+  background-color: #4e9ac6;
+  color: #f1f1f1;
+}
+#T_c82e3_row8_col6 {
+  background-color: #056dac;
+  color: #f1f1f1;
+}
+#T_c82e3_row8_col7 {
+  background-color: #9ebad9;
+  color: #000000;
+}
+#T_c82e3_row9_col1 {
+  background-color: #045687;
+  color: #f1f1f1;
+}
+#T_c82e3_row9_col2 {
+  background-color: #03517e;
+  color: #f1f1f1;
+}
+#T_c82e3_row9_col4 {
+  background-color: #2f8bbe;
+  color: #f1f1f1;
+}
+#T_c82e3_row9_col5 {
+  background-color: #056fae;
+  color: #f1f1f1;
+}
+#T_c82e3_row10_col2 {
+  background-color: #0568a3;
+  color: #f1f1f1;
+}
+#T_c82e3_row10_col3 {
+  background-color: #045b8e;
+  color: #f1f1f1;
+}
+#T_c82e3_row10_col6 {
+  background-color: #034f7d;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_c82e3">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_c82e3_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_c82e3_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_c82e3_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_c82e3_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_c82e3_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_c82e3_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_c82e3_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_c82e3_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_c82e3_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_c82e3_row0_col0" class="data row0 col0" >12788778.000000</td>
+      <td id="T_c82e3_row0_col1" class="data row0 col1" >44.548316</td>
+      <td id="T_c82e3_row0_col2" class="data row0 col2" >56.044322</td>
+      <td id="T_c82e3_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_c82e3_row0_col4" class="data row0 col4" >16.000000</td>
+      <td id="T_c82e3_row0_col5" class="data row0 col5" >27.000000</td>
+      <td id="T_c82e3_row0_col6" class="data row0 col6" >49.000000</td>
+      <td id="T_c82e3_row0_col7" class="data row0 col7" >3353.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_c82e3_row1_col0" class="data row1 col0" >1401336.000000</td>
+      <td id="T_c82e3_row1_col1" class="data row1 col1" >85.871962</td>
+      <td id="T_c82e3_row1_col2" class="data row1 col2" >100.540849</td>
+      <td id="T_c82e3_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_c82e3_row1_col4" class="data row1 col4" >26.000000</td>
+      <td id="T_c82e3_row1_col5" class="data row1 col5" >51.000000</td>
+      <td id="T_c82e3_row1_col6" class="data row1 col6" >106.000000</td>
+      <td id="T_c82e3_row1_col7" class="data row1 col7" >2888.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_c82e3_row2_col0" class="data row2 col0" >357282.000000</td>
+      <td id="T_c82e3_row2_col1" class="data row2 col1" >111.999393</td>
+      <td id="T_c82e3_row2_col2" class="data row2 col2" >127.775459</td>
+      <td id="T_c82e3_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_c82e3_row2_col4" class="data row2 col4" >32.000000</td>
+      <td id="T_c82e3_row2_col5" class="data row2 col5" >70.000000</td>
+      <td id="T_c82e3_row2_col6" class="data row2 col6" >143.000000</td>
+      <td id="T_c82e3_row2_col7" class="data row2 col7" >2878.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_c82e3_row3_col0" class="data row3 col0" >98701.000000</td>
+      <td id="T_c82e3_row3_col1" class="data row3 col1" >135.601828</td>
+      <td id="T_c82e3_row3_col2" class="data row3 col2" >156.212991</td>
+      <td id="T_c82e3_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_c82e3_row3_col4" class="data row3 col4" >37.000000</td>
+      <td id="T_c82e3_row3_col5" class="data row3 col5" >87.000000</td>
+      <td id="T_c82e3_row3_col6" class="data row3 col6" >173.000000</td>
+      <td id="T_c82e3_row3_col7" class="data row3 col7" >2728.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_c82e3_row4_col0" class="data row4 col0" >26526.000000</td>
+      <td id="T_c82e3_row4_col1" class="data row4 col1" >171.564804</td>
+      <td id="T_c82e3_row4_col2" class="data row4 col2" >198.306704</td>
+      <td id="T_c82e3_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_c82e3_row4_col4" class="data row4 col4" >51.000000</td>
+      <td id="T_c82e3_row4_col5" class="data row4 col5" >113.000000</td>
+      <td id="T_c82e3_row4_col6" class="data row4 col6" >212.000000</td>
+      <td id="T_c82e3_row4_col7" class="data row4 col7" >2941.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_c82e3_row5_col0" class="data row5 col0" >6907.000000</td>
+      <td id="T_c82e3_row5_col1" class="data row5 col1" >232.266396</td>
+      <td id="T_c82e3_row5_col2" class="data row5 col2" >264.984276</td>
+      <td id="T_c82e3_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_c82e3_row5_col4" class="data row5 col4" >74.000000</td>
+      <td id="T_c82e3_row5_col5" class="data row5 col5" >154.000000</td>
+      <td id="T_c82e3_row5_col6" class="data row5 col6" >272.000000</td>
+      <td id="T_c82e3_row5_col7" class="data row5 col7" >2757.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_c82e3_row6_col0" class="data row6 col0" >1958.000000</td>
+      <td id="T_c82e3_row6_col1" class="data row6 col1" >332.978550</td>
+      <td id="T_c82e3_row6_col2" class="data row6 col2" >361.370711</td>
+      <td id="T_c82e3_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_c82e3_row6_col4" class="data row6 col4" >114.000000</td>
+      <td id="T_c82e3_row6_col5" class="data row6 col5" >206.000000</td>
+      <td id="T_c82e3_row6_col6" class="data row6 col6" >425.500000</td>
+      <td id="T_c82e3_row6_col7" class="data row6 col7" >2736.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_c82e3_row7_col0" class="data row7 col0" >611.000000</td>
+      <td id="T_c82e3_row7_col1" class="data row7 col1" >493.446809</td>
+      <td id="T_c82e3_row7_col2" class="data row7 col2" >492.966382</td>
+      <td id="T_c82e3_row7_col3" class="data row7 col3" >10.000000</td>
+      <td id="T_c82e3_row7_col4" class="data row7 col4" >150.500000</td>
+      <td id="T_c82e3_row7_col5" class="data row7 col5" >322.000000</td>
+      <td id="T_c82e3_row7_col6" class="data row7 col6" >698.000000</td>
+      <td id="T_c82e3_row7_col7" class="data row7 col7" >2932.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_c82e3_row8_col0" class="data row8 col0" >229.000000</td>
+      <td id="T_c82e3_row8_col1" class="data row8 col1" >575.279476</td>
+      <td id="T_c82e3_row8_col2" class="data row8 col2" >447.536983</td>
+      <td id="T_c82e3_row8_col3" class="data row8 col3" >15.000000</td>
+      <td id="T_c82e3_row8_col4" class="data row8 col4" >207.000000</td>
+      <td id="T_c82e3_row8_col5" class="data row8 col5" >494.000000</td>
+      <td id="T_c82e3_row8_col6" class="data row8 col6" >840.000000</td>
+      <td id="T_c82e3_row8_col7" class="data row8 col7" >2498.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_c82e3_row9_col0" class="data row9 col0" >119.000000</td>
+      <td id="T_c82e3_row9_col1" class="data row9 col1" >751.184874</td>
+      <td id="T_c82e3_row9_col2" class="data row9 col2" >452.918838</td>
+      <td id="T_c82e3_row9_col3" class="data row9 col3" >110.000000</td>
+      <td id="T_c82e3_row9_col4" class="data row9 col4" >393.500000</td>
+      <td id="T_c82e3_row9_col5" class="data row9 col5" >640.000000</td>
+      <td id="T_c82e3_row9_col6" class="data row9 col6" >1086.000000</td>
+      <td id="T_c82e3_row9_col7" class="data row9 col7" >1934.000000</td>
+    </tr>
+    <tr>
+      <th id="T_c82e3_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_c82e3_row10_col0" class="data row10 col0" >78.000000</td>
+      <td id="T_c82e3_row10_col1" class="data row10 col1" >840.217949</td>
+      <td id="T_c82e3_row10_col2" class="data row10 col2" >403.662764</td>
+      <td id="T_c82e3_row10_col3" class="data row10 col3" >97.000000</td>
+      <td id="T_c82e3_row10_col4" class="data row10 col4" >603.750000</td>
+      <td id="T_c82e3_row10_col5" class="data row10 col5" >837.000000</td>
+      <td id="T_c82e3_row10_col6" class="data row10 col6" >996.250000</td>
+      <td id="T_c82e3_row10_col7" class="data row10 col7" >2020.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2021-02
+
+<style type="text/css">
+#T_ff0a7_row0_col0, #T_ff0a7_row2_col7, #T_ff0a7_row10_col1, #T_ff0a7_row10_col2, #T_ff0a7_row10_col3, #T_ff0a7_row10_col4, #T_ff0a7_row10_col5, #T_ff0a7_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_ff0a7_row0_col1, #T_ff0a7_row0_col2, #T_ff0a7_row0_col3, #T_ff0a7_row0_col4, #T_ff0a7_row0_col5, #T_ff0a7_row0_col6, #T_ff0a7_row1_col3, #T_ff0a7_row2_col3, #T_ff0a7_row3_col3, #T_ff0a7_row4_col0, #T_ff0a7_row4_col3, #T_ff0a7_row5_col0, #T_ff0a7_row5_col3, #T_ff0a7_row6_col0, #T_ff0a7_row6_col3, #T_ff0a7_row7_col0, #T_ff0a7_row7_col3, #T_ff0a7_row8_col0, #T_ff0a7_row9_col0, #T_ff0a7_row9_col7, #T_ff0a7_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_ff0a7_row0_col7 {
+  background-color: #034369;
+  color: #f1f1f1;
+}
+#T_ff0a7_row1_col0 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_ff0a7_row1_col1 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_ff0a7_row1_col2, #T_ff0a7_row4_col6 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_ff0a7_row1_col4, #T_ff0a7_row1_col5, #T_ff0a7_row8_col3 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_ff0a7_row1_col6, #T_ff0a7_row3_col4, #T_ff0a7_row3_col5 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_ff0a7_row1_col7 {
+  background-color: #056ba7;
+  color: #f1f1f1;
+}
+#T_ff0a7_row2_col0, #T_ff0a7_row2_col5 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_ff0a7_row2_col1, #T_ff0a7_row4_col4, #T_ff0a7_row4_col5 {
+  background-color: #f4eef6;
+  color: #000000;
+}
+#T_ff0a7_row2_col2 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_ff0a7_row2_col4 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_ff0a7_row2_col6 {
+  background-color: #f5eff6;
+  color: #000000;
+}
+#T_ff0a7_row3_col0 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_ff0a7_row3_col1, #T_ff0a7_row8_col7 {
+  background-color: #f1ebf5;
+  color: #000000;
+}
+#T_ff0a7_row3_col2 {
+  background-color: #dbdaeb;
+  color: #000000;
+}
+#T_ff0a7_row3_col6 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_ff0a7_row3_col7 {
+  background-color: #045d92;
+  color: #f1f1f1;
+}
+#T_ff0a7_row4_col1, #T_ff0a7_row5_col4 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_ff0a7_row4_col2 {
+  background-color: #d1d2e6;
+  color: #000000;
+}
+#T_ff0a7_row4_col7 {
+  background-color: #8fb4d6;
+  color: #000000;
+}
+#T_ff0a7_row5_col1 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_ff0a7_row5_col2 {
+  background-color: #bcc7e1;
+  color: #000000;
+}
+#T_ff0a7_row5_col5 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_ff0a7_row5_col6 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_ff0a7_row5_col7, #T_ff0a7_row8_col2 {
+  background-color: #75a9cf;
+  color: #f1f1f1;
+}
+#T_ff0a7_row6_col1 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_ff0a7_row6_col2 {
+  background-color: #9cb9d9;
+  color: #000000;
+}
+#T_ff0a7_row6_col4, #T_ff0a7_row7_col5 {
+  background-color: #e0deed;
+  color: #000000;
+}
+#T_ff0a7_row6_col5 {
+  background-color: #eae6f1;
+  color: #000000;
+}
+#T_ff0a7_row6_col6 {
+  background-color: #e1dfed;
+  color: #000000;
+}
+#T_ff0a7_row6_col7 {
+  background-color: #cccfe5;
+  color: #000000;
+}
+#T_ff0a7_row7_col1 {
+  background-color: #cdd0e5;
+  color: #000000;
+}
+#T_ff0a7_row7_col2 {
+  background-color: #6fa7ce;
+  color: #f1f1f1;
+}
+#T_ff0a7_row7_col4 {
+  background-color: #dcdaeb;
+  color: #000000;
+}
+#T_ff0a7_row7_col6 {
+  background-color: #d7d6e9;
+  color: #000000;
+}
+#T_ff0a7_row7_col7 {
+  background-color: #a9bfdc;
+  color: #000000;
+}
+#T_ff0a7_row8_col1 {
+  background-color: #c1cae2;
+  color: #000000;
+}
+#T_ff0a7_row8_col4 {
+  background-color: #c2cbe2;
+  color: #000000;
+}
+#T_ff0a7_row8_col5 {
+  background-color: #d8d7e9;
+  color: #000000;
+}
+#T_ff0a7_row8_col6 {
+  background-color: #d3d4e7;
+  color: #000000;
+}
+#T_ff0a7_row9_col1 {
+  background-color: #8eb3d5;
+  color: #000000;
+}
+#T_ff0a7_row9_col2 {
+  background-color: #2a88bc;
+  color: #f1f1f1;
+}
+#T_ff0a7_row9_col3 {
+  background-color: #549cc7;
+  color: #f1f1f1;
+}
+#T_ff0a7_row9_col4 {
+  background-color: #76aad0;
+  color: #f1f1f1;
+}
+#T_ff0a7_row9_col5 {
+  background-color: #c9cee4;
+  color: #000000;
+}
+#T_ff0a7_row9_col6 {
+  background-color: #abbfdc;
+  color: #000000;
+}
+#T_ff0a7_row10_col7 {
+  background-color: #ebe6f2;
+  color: #000000;
+}
+</style>
+<table id="T_ff0a7">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_ff0a7_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_ff0a7_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_ff0a7_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_ff0a7_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_ff0a7_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_ff0a7_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_ff0a7_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_ff0a7_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_ff0a7_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_ff0a7_row0_col0" class="data row0 col0" >11276909.000000</td>
+      <td id="T_ff0a7_row0_col1" class="data row0 col1" >46.677593</td>
+      <td id="T_ff0a7_row0_col2" class="data row0 col2" >56.038639</td>
+      <td id="T_ff0a7_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_ff0a7_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_ff0a7_row0_col5" class="data row0 col5" >28.000000</td>
+      <td id="T_ff0a7_row0_col6" class="data row0 col6" >52.000000</td>
+      <td id="T_ff0a7_row0_col7" class="data row0 col7" >3204.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_ff0a7_row1_col0" class="data row1 col0" >1279791.000000</td>
+      <td id="T_ff0a7_row1_col1" class="data row1 col1" >89.399525</td>
+      <td id="T_ff0a7_row1_col2" class="data row1 col2" >100.643959</td>
+      <td id="T_ff0a7_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_ff0a7_row1_col4" class="data row1 col4" >27.000000</td>
+      <td id="T_ff0a7_row1_col5" class="data row1 col5" >53.000000</td>
+      <td id="T_ff0a7_row1_col6" class="data row1 col6" >112.000000</td>
+      <td id="T_ff0a7_row1_col7" class="data row1 col7" >2862.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_ff0a7_row2_col0" class="data row2 col0" >402792.000000</td>
+      <td id="T_ff0a7_row2_col1" class="data row2 col1" >104.986298</td>
+      <td id="T_ff0a7_row2_col2" class="data row2 col2" >119.589308</td>
+      <td id="T_ff0a7_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_ff0a7_row2_col4" class="data row2 col4" >29.000000</td>
+      <td id="T_ff0a7_row2_col5" class="data row2 col5" >63.000000</td>
+      <td id="T_ff0a7_row2_col6" class="data row2 col6" >132.000000</td>
+      <td id="T_ff0a7_row2_col7" class="data row2 col7" >3283.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_ff0a7_row3_col0" class="data row3 col0" >125786.000000</td>
+      <td id="T_ff0a7_row3_col1" class="data row3 col1" >121.620300</td>
+      <td id="T_ff0a7_row3_col2" class="data row3 col2" >140.336290</td>
+      <td id="T_ff0a7_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_ff0a7_row3_col4" class="data row3 col4" >34.000000</td>
+      <td id="T_ff0a7_row3_col5" class="data row3 col5" >74.000000</td>
+      <td id="T_ff0a7_row3_col6" class="data row3 col6" >153.000000</td>
+      <td id="T_ff0a7_row3_col7" class="data row3 col7" >3007.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_ff0a7_row4_col0" class="data row4 col0" >38792.000000</td>
+      <td id="T_ff0a7_row4_col1" class="data row4 col1" >144.572025</td>
+      <td id="T_ff0a7_row4_col2" class="data row4 col2" >161.170386</td>
+      <td id="T_ff0a7_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_ff0a7_row4_col4" class="data row4 col4" >44.000000</td>
+      <td id="T_ff0a7_row4_col5" class="data row4 col5" >95.000000</td>
+      <td id="T_ff0a7_row4_col6" class="data row4 col6" >181.000000</td>
+      <td id="T_ff0a7_row4_col7" class="data row4 col7" >2187.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_ff0a7_row5_col0" class="data row5 col0" >11542.000000</td>
+      <td id="T_ff0a7_row5_col1" class="data row5 col1" >178.323254</td>
+      <td id="T_ff0a7_row5_col2" class="data row5 col2" >187.353942</td>
+      <td id="T_ff0a7_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_ff0a7_row5_col4" class="data row5 col4" >62.000000</td>
+      <td id="T_ff0a7_row5_col5" class="data row5 col5" >125.000000</td>
+      <td id="T_ff0a7_row5_col6" class="data row5 col6" >220.000000</td>
+      <td id="T_ff0a7_row5_col7" class="data row5 col7" >2316.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_ff0a7_row6_col0" class="data row6 col0" >3450.000000</td>
+      <td id="T_ff0a7_row6_col1" class="data row6 col1" >217.620290</td>
+      <td id="T_ff0a7_row6_col2" class="data row6 col2" >225.783153</td>
+      <td id="T_ff0a7_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_ff0a7_row6_col4" class="data row6 col4" >84.250000</td>
+      <td id="T_ff0a7_row6_col5" class="data row6 col5" >155.000000</td>
+      <td id="T_ff0a7_row6_col6" class="data row6 col6" >263.000000</td>
+      <td id="T_ff0a7_row6_col7" class="data row6 col7" >1868.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_ff0a7_row7_col0" class="data row7 col0" >1141.000000</td>
+      <td id="T_ff0a7_row7_col1" class="data row7 col1" >262.102542</td>
+      <td id="T_ff0a7_row7_col2" class="data row7 col2" >271.049554</td>
+      <td id="T_ff0a7_row7_col3" class="data row7 col3" >10.000000</td>
+      <td id="T_ff0a7_row7_col4" class="data row7 col4" >92.000000</td>
+      <td id="T_ff0a7_row7_col5" class="data row7 col5" >196.000000</td>
+      <td id="T_ff0a7_row7_col6" class="data row7 col6" >319.000000</td>
+      <td id="T_ff0a7_row7_col7" class="data row7 col7" >2066.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_ff0a7_row8_col0" class="data row8 col0" >413.000000</td>
+      <td id="T_ff0a7_row8_col1" class="data row8 col1" >292.472155</td>
+      <td id="T_ff0a7_row8_col2" class="data row8 col2" >266.030881</td>
+      <td id="T_ff0a7_row8_col3" class="data row8 col3" >11.000000</td>
+      <td id="T_ff0a7_row8_col4" class="data row8 col4" >128.000000</td>
+      <td id="T_ff0a7_row8_col5" class="data row8 col5" >234.000000</td>
+      <td id="T_ff0a7_row8_col6" class="data row8 col6" >340.000000</td>
+      <td id="T_ff0a7_row8_col7" class="data row8 col7" >1536.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_ff0a7_row9_col0" class="data row9 col0" >93.000000</td>
+      <td id="T_ff0a7_row9_col1" class="data row9 col1" >406.838710</td>
+      <td id="T_ff0a7_row9_col2" class="data row9 col2" >331.906132</td>
+      <td id="T_ff0a7_row9_col3" class="data row9 col3" >32.000000</td>
+      <td id="T_ff0a7_row9_col4" class="data row9 col4" >204.000000</td>
+      <td id="T_ff0a7_row9_col5" class="data row9 col5" >286.000000</td>
+      <td id="T_ff0a7_row9_col6" class="data row9 col6" >491.000000</td>
+      <td id="T_ff0a7_row9_col7" class="data row9 col7" >1361.000000</td>
+    </tr>
+    <tr>
+      <th id="T_ff0a7_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_ff0a7_row10_col0" class="data row10 col0" >29.000000</td>
+      <td id="T_ff0a7_row10_col1" class="data row10 col1" >875.172414</td>
+      <td id="T_ff0a7_row10_col2" class="data row10 col2" >478.160618</td>
+      <td id="T_ff0a7_row10_col3" class="data row10 col3" >49.000000</td>
+      <td id="T_ff0a7_row10_col4" class="data row10 col4" >396.000000</td>
+      <td id="T_ff0a7_row10_col5" class="data row10 col5" >978.000000</td>
+      <td id="T_ff0a7_row10_col6" class="data row10 col6" >1270.000000</td>
+      <td id="T_ff0a7_row10_col7" class="data row10 col7" >1616.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2021-01
+
+<style type="text/css">
+#T_4270d_row0_col0, #T_4270d_row1_col7, #T_4270d_row10_col1, #T_4270d_row10_col2, #T_4270d_row10_col3, #T_4270d_row10_col4, #T_4270d_row10_col5, #T_4270d_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_4270d_row0_col1, #T_4270d_row0_col2, #T_4270d_row0_col3, #T_4270d_row0_col4, #T_4270d_row0_col5, #T_4270d_row0_col6, #T_4270d_row1_col3, #T_4270d_row2_col3, #T_4270d_row3_col3, #T_4270d_row4_col0, #T_4270d_row4_col3, #T_4270d_row5_col0, #T_4270d_row5_col3, #T_4270d_row6_col0, #T_4270d_row6_col3, #T_4270d_row7_col0, #T_4270d_row7_col3, #T_4270d_row8_col0, #T_4270d_row8_col7, #T_4270d_row9_col0, #T_4270d_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_4270d_row0_col7 {
+  background-color: #9cb9d9;
+  color: #000000;
+}
+#T_4270d_row1_col0 {
+  background-color: #f1ebf4;
+  color: #000000;
+}
+#T_4270d_row1_col1, #T_4270d_row1_col4 {
+  background-color: #f6eff7;
+  color: #000000;
+}
+#T_4270d_row1_col2, #T_4270d_row2_col4, #T_4270d_row2_col6 {
+  background-color: #f4eef6;
+  color: #000000;
+}
+#T_4270d_row1_col5 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_4270d_row1_col6, #T_4270d_row2_col5 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_4270d_row2_col0 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_4270d_row2_col1 {
+  background-color: #f3edf5;
+  color: #000000;
+}
+#T_4270d_row2_col2, #T_4270d_row3_col1, #T_4270d_row3_col4, #T_4270d_row4_col5, #T_4270d_row9_col7 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_4270d_row2_col7 {
+  background-color: #96b6d7;
+  color: #000000;
+}
+#T_4270d_row3_col0 {
+  background-color: #fef6fb;
+  color: #000000;
+}
+#T_4270d_row3_col2 {
+  background-color: #ece7f2;
+  color: #000000;
+}
+#T_4270d_row3_col5 {
+  background-color: #f5eef6;
+  color: #000000;
+}
+#T_4270d_row3_col6 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_4270d_row3_col7 {
+  background-color: #acc0dd;
+  color: #000000;
+}
+#T_4270d_row4_col1 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_4270d_row4_col2, #T_4270d_row4_col4 {
+  background-color: #e3e0ee;
+  color: #000000;
+}
+#T_4270d_row4_col6 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_4270d_row4_col7 {
+  background-color: #a5bddb;
+  color: #000000;
+}
+#T_4270d_row5_col1 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_4270d_row5_col2 {
+  background-color: #d6d6e9;
+  color: #000000;
+}
+#T_4270d_row5_col4, #T_4270d_row7_col1 {
+  background-color: #c9cee4;
+  color: #000000;
+}
+#T_4270d_row5_col5, #T_4270d_row5_col6 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_4270d_row5_col7, #T_4270d_row8_col3, #T_4270d_row8_col6 {
+  background-color: #d9d8ea;
+  color: #000000;
+}
+#T_4270d_row6_col1, #T_4270d_row7_col6 {
+  background-color: #d5d5e8;
+  color: #000000;
+}
+#T_4270d_row6_col2 {
+  background-color: #d1d2e6;
+  color: #000000;
+}
+#T_4270d_row6_col4, #T_4270d_row8_col5 {
+  background-color: #c8cde4;
+  color: #000000;
+}
+#T_4270d_row6_col5, #T_4270d_row6_col6 {
+  background-color: #dfddec;
+  color: #000000;
+}
+#T_4270d_row6_col7 {
+  background-color: #c6cce3;
+  color: #000000;
+}
+#T_4270d_row7_col2, #T_4270d_row8_col1 {
+  background-color: #c5cce3;
+  color: #000000;
+}
+#T_4270d_row7_col4, #T_4270d_row9_col6 {
+  background-color: #d2d3e7;
+  color: #000000;
+}
+#T_4270d_row7_col5 {
+  background-color: #d2d2e7;
+  color: #000000;
+}
+#T_4270d_row7_col7 {
+  background-color: #fdf5fa;
+  color: #000000;
+}
+#T_4270d_row8_col2 {
+  background-color: #bfc9e1;
+  color: #000000;
+}
+#T_4270d_row8_col4 {
+  background-color: #c4cbe3;
+  color: #000000;
+}
+#T_4270d_row9_col1 {
+  background-color: #a1bbda;
+  color: #000000;
+}
+#T_4270d_row9_col2 {
+  background-color: #83afd3;
+  color: #f1f1f1;
+}
+#T_4270d_row9_col3 {
+  background-color: #0d75b3;
+  color: #f1f1f1;
+}
+#T_4270d_row9_col4 {
+  background-color: #1c7fb8;
+  color: #f1f1f1;
+}
+#T_4270d_row9_col5 {
+  background-color: #bcc7e1;
+  color: #000000;
+}
+#T_4270d_row10_col7 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+</style>
+<table id="T_4270d">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_4270d_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_4270d_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_4270d_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_4270d_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_4270d_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_4270d_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_4270d_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_4270d_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_4270d_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_4270d_row0_col0" class="data row0 col0" >12780027.000000</td>
+      <td id="T_4270d_row0_col1" class="data row0 col1" >46.011346</td>
+      <td id="T_4270d_row0_col2" class="data row0 col2" >55.357791</td>
+      <td id="T_4270d_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_4270d_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_4270d_row0_col5" class="data row0 col5" >28.000000</td>
+      <td id="T_4270d_row0_col6" class="data row0 col6" >51.000000</td>
+      <td id="T_4270d_row0_col7" class="data row0 col7" >2053.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_4270d_row1_col0" class="data row1 col0" >1246287.000000</td>
+      <td id="T_4270d_row1_col1" class="data row1 col1" >87.602235</td>
+      <td id="T_4270d_row1_col2" class="data row1 col2" >98.560215</td>
+      <td id="T_4270d_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_4270d_row1_col4" class="data row1 col4" >27.000000</td>
+      <td id="T_4270d_row1_col5" class="data row1 col5" >52.000000</td>
+      <td id="T_4270d_row1_col6" class="data row1 col6" >110.000000</td>
+      <td id="T_4270d_row1_col7" class="data row1 col7" >3119.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_4270d_row2_col0" class="data row2 col0" >347617.000000</td>
+      <td id="T_4270d_row2_col1" class="data row2 col1" >100.608840</td>
+      <td id="T_4270d_row2_col2" class="data row2 col2" >114.833823</td>
+      <td id="T_4270d_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_4270d_row2_col4" class="data row2 col4" >29.000000</td>
+      <td id="T_4270d_row2_col5" class="data row2 col5" >61.000000</td>
+      <td id="T_4270d_row2_col6" class="data row2 col6" >126.000000</td>
+      <td id="T_4270d_row2_col7" class="data row2 col7" >2081.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_4270d_row3_col0" class="data row3 col0" >96950.000000</td>
+      <td id="T_4270d_row3_col1" class="data row3 col1" >114.374121</td>
+      <td id="T_4270d_row3_col2" class="data row3 col2" >130.224865</td>
+      <td id="T_4270d_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_4270d_row3_col4" class="data row3 col4" >34.000000</td>
+      <td id="T_4270d_row3_col5" class="data row3 col5" >71.000000</td>
+      <td id="T_4270d_row3_col6" class="data row3 col6" >144.000000</td>
+      <td id="T_4270d_row3_col7" class="data row3 col7" >1978.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_4270d_row4_col0" class="data row4 col0" >25751.000000</td>
+      <td id="T_4270d_row4_col1" class="data row4 col1" >139.423246</td>
+      <td id="T_4270d_row4_col2" class="data row4 col2" >154.727887</td>
+      <td id="T_4270d_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_4270d_row4_col4" class="data row4 col4" >44.000000</td>
+      <td id="T_4270d_row4_col5" class="data row4 col5" >95.000000</td>
+      <td id="T_4270d_row4_col6" class="data row4 col6" >175.000000</td>
+      <td id="T_4270d_row4_col7" class="data row4 col7" >2013.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_4270d_row5_col0" class="data row5 col0" >6393.000000</td>
+      <td id="T_4270d_row5_col1" class="data row5 col1" >175.208509</td>
+      <td id="T_4270d_row5_col2" class="data row5 col2" >188.640467</td>
+      <td id="T_4270d_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_4270d_row5_col4" class="data row5 col4" >61.000000</td>
+      <td id="T_4270d_row5_col5" class="data row5 col5" >124.000000</td>
+      <td id="T_4270d_row5_col6" class="data row5 col6" >211.000000</td>
+      <td id="T_4270d_row5_col7" class="data row5 col7" >1714.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_4270d_row6_col0" class="data row6 col0" >1903.000000</td>
+      <td id="T_4270d_row6_col1" class="data row6 col1" >197.622701</td>
+      <td id="T_4270d_row6_col2" class="data row6 col2" >202.076142</td>
+      <td id="T_4270d_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_4270d_row6_col4" class="data row6 col4" >62.000000</td>
+      <td id="T_4270d_row6_col5" class="data row6 col5" >149.000000</td>
+      <td id="T_4270d_row6_col6" class="data row6 col6" >248.500000</td>
+      <td id="T_4270d_row6_col7" class="data row6 col7" >1833.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_4270d_row7_col0" class="data row7 col0" >565.000000</td>
+      <td id="T_4270d_row7_col1" class="data row7 col1" >226.584071</td>
+      <td id="T_4270d_row7_col2" class="data row7 col2" >223.065018</td>
+      <td id="T_4270d_row7_col3" class="data row7 col3" >10.000000</td>
+      <td id="T_4270d_row7_col4" class="data row7 col4" >56.000000</td>
+      <td id="T_4270d_row7_col5" class="data row7 col5" >186.000000</td>
+      <td id="T_4270d_row7_col6" class="data row7 col6" >294.000000</td>
+      <td id="T_4270d_row7_col7" class="data row7 col7" >1371.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_4270d_row8_col0" class="data row8 col0" >127.000000</td>
+      <td id="T_4270d_row8_col1" class="data row8 col1" >236.086614</td>
+      <td id="T_4270d_row8_col2" class="data row8 col2" >235.182537</td>
+      <td id="T_4270d_row8_col3" class="data row8 col3" >17.000000</td>
+      <td id="T_4270d_row8_col4" class="data row8 col4" >63.500000</td>
+      <td id="T_4270d_row8_col5" class="data row8 col5" >206.000000</td>
+      <td id="T_4270d_row8_col6" class="data row8 col6" >272.500000</td>
+      <td id="T_4270d_row8_col7" class="data row8 col7" >1339.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_4270d_row9_col0" class="data row9 col0" >31.000000</td>
+      <td id="T_4270d_row9_col1" class="data row9 col1" >305.451613</td>
+      <td id="T_4270d_row9_col2" class="data row9 col2" >329.203366</td>
+      <td id="T_4270d_row9_col3" class="data row9 col3" >34.000000</td>
+      <td id="T_4270d_row9_col4" class="data row9 col4" >129.000000</td>
+      <td id="T_4270d_row9_col5" class="data row9 col5" >229.000000</td>
+      <td id="T_4270d_row9_col6" class="data row9 col6" >308.500000</td>
+      <td id="T_4270d_row9_col7" class="data row9 col7" >1523.000000</td>
+    </tr>
+    <tr>
+      <th id="T_4270d_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_4270d_row10_col0" class="data row10 col0" >6.000000</td>
+      <td id="T_4270d_row10_col1" class="data row10 col1" >714.833333</td>
+      <td id="T_4270d_row10_col2" class="data row10 col2" >648.576724</td>
+      <td id="T_4270d_row10_col3" class="data row10 col3" >43.000000</td>
+      <td id="T_4270d_row10_col4" class="data row10 col4" >179.500000</td>
+      <td id="T_4270d_row10_col5" class="data row10 col5" >675.500000</td>
+      <td id="T_4270d_row10_col6" class="data row10 col6" >1116.000000</td>
+      <td id="T_4270d_row10_col7" class="data row10 col7" >1618.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2020-07
+
+<style type="text/css">
+#T_dd286_row0_col0, #T_dd286_row0_col7, #T_dd286_row8_col2, #T_dd286_row10_col1, #T_dd286_row10_col3, #T_dd286_row10_col4, #T_dd286_row10_col5, #T_dd286_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_dd286_row0_col1, #T_dd286_row0_col2, #T_dd286_row0_col3, #T_dd286_row0_col4, #T_dd286_row0_col5, #T_dd286_row0_col6, #T_dd286_row1_col3, #T_dd286_row2_col3, #T_dd286_row3_col3, #T_dd286_row4_col0, #T_dd286_row4_col3, #T_dd286_row5_col0, #T_dd286_row5_col3, #T_dd286_row6_col0, #T_dd286_row7_col0, #T_dd286_row8_col0, #T_dd286_row9_col0, #T_dd286_row10_col0, #T_dd286_row10_col7 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_dd286_row1_col0, #T_dd286_row6_col7 {
+  background-color: #eee9f3;
+  color: #000000;
+}
+#T_dd286_row1_col1, #T_dd286_row1_col6 {
+  background-color: #f5eff6;
+  color: #000000;
+}
+#T_dd286_row1_col2 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_dd286_row1_col4 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_dd286_row1_col5 {
+  background-color: #f9f2f8;
+  color: #000000;
+}
+#T_dd286_row1_col7 {
+  background-color: #1379b5;
+  color: #f1f1f1;
+}
+#T_dd286_row2_col0 {
+  background-color: #fbf3f9;
+  color: #000000;
+}
+#T_dd286_row2_col1, #T_dd286_row2_col6, #T_dd286_row3_col5 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_dd286_row2_col2 {
+  background-color: #dedcec;
+  color: #000000;
+}
+#T_dd286_row2_col4 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_dd286_row2_col5 {
+  background-color: #f4eef6;
+  color: #000000;
+}
+#T_dd286_row2_col7 {
+  background-color: #197db7;
+  color: #f1f1f1;
+}
+#T_dd286_row3_col0, #T_dd286_row6_col3, #T_dd286_row8_col3 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_dd286_row3_col1, #T_dd286_row3_col6 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_dd286_row3_col2 {
+  background-color: #cccfe5;
+  color: #000000;
+}
+#T_dd286_row3_col4 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_dd286_row3_col7 {
+  background-color: #a2bcda;
+  color: #000000;
+}
+#T_dd286_row4_col1 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_dd286_row4_col2 {
+  background-color: #acc0dd;
+  color: #000000;
+}
+#T_dd286_row4_col4, #T_dd286_row9_col7 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_dd286_row4_col5, #T_dd286_row5_col4 {
+  background-color: #e6e2ef;
+  color: #000000;
+}
+#T_dd286_row4_col6 {
+  background-color: #dfddec;
+  color: #000000;
+}
+#T_dd286_row4_col7, #T_dd286_row5_col7 {
+  background-color: #94b6d7;
+  color: #000000;
+}
+#T_dd286_row5_col1 {
+  background-color: #c5cce3;
+  color: #000000;
+}
+#T_dd286_row5_col2 {
+  background-color: #73a9cf;
+  color: #f1f1f1;
+}
+#T_dd286_row5_col5 {
+  background-color: #d8d7e9;
+  color: #000000;
+}
+#T_dd286_row5_col6, #T_dd286_row6_col4 {
+  background-color: #cacee5;
+  color: #000000;
+}
+#T_dd286_row6_col1 {
+  background-color: #86b0d3;
+  color: #000000;
+}
+#T_dd286_row6_col2 {
+  background-color: #0771b1;
+  color: #f1f1f1;
+}
+#T_dd286_row6_col5 {
+  background-color: #b3c3de;
+  color: #000000;
+}
+#T_dd286_row6_col6 {
+  background-color: #83afd3;
+  color: #f1f1f1;
+}
+#T_dd286_row7_col1, #T_dd286_row8_col4 {
+  background-color: #2c89bd;
+  color: #f1f1f1;
+}
+#T_dd286_row7_col2 {
+  background-color: #045c90;
+  color: #f1f1f1;
+}
+#T_dd286_row7_col3 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_dd286_row7_col4 {
+  background-color: #9cb9d9;
+  color: #000000;
+}
+#T_dd286_row7_col5 {
+  background-color: #358fc0;
+  color: #f1f1f1;
+}
+#T_dd286_row7_col6 {
+  background-color: #308cbe;
+  color: #f1f1f1;
+}
+#T_dd286_row7_col7 {
+  background-color: #ebe6f2;
+  color: #000000;
+}
+#T_dd286_row8_col1 {
+  background-color: #04588a;
+  color: #f1f1f1;
+}
+#T_dd286_row8_col5 {
+  background-color: #03476f;
+  color: #f1f1f1;
+}
+#T_dd286_row8_col6 {
+  background-color: #045b8e;
+  color: #f1f1f1;
+}
+#T_dd286_row8_col7 {
+  background-color: #4897c4;
+  color: #f1f1f1;
+}
+#T_dd286_row9_col1, #T_dd286_row9_col6 {
+  background-color: #045b8f;
+  color: #f1f1f1;
+}
+#T_dd286_row9_col2 {
+  background-color: #056ba9;
+  color: #f1f1f1;
+}
+#T_dd286_row9_col3 {
+  background-color: #f6eff7;
+  color: #000000;
+}
+#T_dd286_row9_col4 {
+  background-color: #034d79;
+  color: #f1f1f1;
+}
+#T_dd286_row9_col5 {
+  background-color: #045280;
+  color: #f1f1f1;
+}
+#T_dd286_row10_col2 {
+  background-color: #0567a2;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_dd286">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_dd286_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_dd286_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_dd286_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_dd286_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_dd286_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_dd286_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_dd286_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_dd286_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_dd286_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_dd286_row0_col0" class="data row0 col0" >12930709.000000</td>
+      <td id="T_dd286_row0_col1" class="data row0 col1" >45.744211</td>
+      <td id="T_dd286_row0_col2" class="data row0 col2" >58.286525</td>
+      <td id="T_dd286_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_dd286_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_dd286_row0_col5" class="data row0 col5" >28.000000</td>
+      <td id="T_dd286_row0_col6" class="data row0 col6" >50.000000</td>
+      <td id="T_dd286_row0_col7" class="data row0 col7" >3323.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_dd286_row1_col0" class="data row1 col0" >1434882.000000</td>
+      <td id="T_dd286_row1_col1" class="data row1 col1" >88.078542</td>
+      <td id="T_dd286_row1_col2" class="data row1 col2" >103.324389</td>
+      <td id="T_dd286_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_dd286_row1_col4" class="data row1 col4" >27.000000</td>
+      <td id="T_dd286_row1_col5" class="data row1 col5" >52.000000</td>
+      <td id="T_dd286_row1_col6" class="data row1 col6" >109.000000</td>
+      <td id="T_dd286_row1_col7" class="data row1 col7" >2899.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_dd286_row2_col0" class="data row2 col0" >369616.000000</td>
+      <td id="T_dd286_row2_col1" class="data row2 col1" >114.326680</td>
+      <td id="T_dd286_row2_col2" class="data row2 col2" >129.140867</td>
+      <td id="T_dd286_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_dd286_row2_col4" class="data row2 col4" >32.000000</td>
+      <td id="T_dd286_row2_col5" class="data row2 col5" >71.000000</td>
+      <td id="T_dd286_row2_col6" class="data row2 col6" >146.000000</td>
+      <td id="T_dd286_row2_col7" class="data row2 col7" >2873.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_dd286_row3_col0" class="data row3 col0" >102375.000000</td>
+      <td id="T_dd286_row3_col1" class="data row3 col1" >140.308562</td>
+      <td id="T_dd286_row3_col2" class="data row3 col2" >158.324446</td>
+      <td id="T_dd286_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_dd286_row3_col4" class="data row3 col4" >40.000000</td>
+      <td id="T_dd286_row3_col5" class="data row3 col5" >89.000000</td>
+      <td id="T_dd286_row3_col6" class="data row3 col6" >180.000000</td>
+      <td id="T_dd286_row3_col7" class="data row3 col7" >2411.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_dd286_row4_col0" class="data row4 col0" >26889.000000</td>
+      <td id="T_dd286_row4_col1" class="data row4 col1" >175.858120</td>
+      <td id="T_dd286_row4_col2" class="data row4 col2" >193.599019</td>
+      <td id="T_dd286_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_dd286_row4_col4" class="data row4 col4" >53.000000</td>
+      <td id="T_dd286_row4_col5" class="data row4 col5" >119.000000</td>
+      <td id="T_dd286_row4_col6" class="data row4 col6" >223.000000</td>
+      <td id="T_dd286_row4_col7" class="data row4 col7" >2463.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_dd286_row5_col0" class="data row5 col0" >7078.000000</td>
+      <td id="T_dd286_row5_col1" class="data row5 col1" >235.043233</td>
+      <td id="T_dd286_row5_col2" class="data row5 col2" >247.555013</td>
+      <td id="T_dd286_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_dd286_row5_col4" class="data row5 col4" >79.000000</td>
+      <td id="T_dd286_row5_col5" class="data row5 col5" >156.000000</td>
+      <td id="T_dd286_row5_col6" class="data row5 col6" >301.750000</td>
+      <td id="T_dd286_row5_col7" class="data row5 col7" >2467.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_dd286_row6_col0" class="data row6 col0" >2034.000000</td>
+      <td id="T_dd286_row6_col1" class="data row6 col1" >352.153392</td>
+      <td id="T_dd286_row6_col2" class="data row6 col2" >340.074151</td>
+      <td id="T_dd286_row6_col3" class="data row6 col3" >11.000000</td>
+      <td id="T_dd286_row6_col4" class="data row6 col4" >126.000000</td>
+      <td id="T_dd286_row6_col5" class="data row6 col5" >227.500000</td>
+      <td id="T_dd286_row6_col6" class="data row6 col6" >484.500000</td>
+      <td id="T_dd286_row6_col7" class="data row6 col7" >2007.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_dd286_row7_col0" class="data row7 col0" >651.000000</td>
+      <td id="T_dd286_row7_col1" class="data row7 col1" >483.606759</td>
+      <td id="T_dd286_row7_col2" class="data row7 col2" >383.486338</td>
+      <td id="T_dd286_row7_col3" class="data row7 col3" >14.000000</td>
+      <td id="T_dd286_row7_col4" class="data row7 col4" >180.500000</td>
+      <td id="T_dd286_row7_col5" class="data row7 col5" >399.000000</td>
+      <td id="T_dd286_row7_col6" class="data row7 col6" >651.000000</td>
+      <td id="T_dd286_row7_col7" class="data row7 col7" >2038.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_dd286_row8_col0" class="data row8 col0" >253.000000</td>
+      <td id="T_dd286_row8_col1" class="data row8 col1" >637.833992</td>
+      <td id="T_dd286_row8_col2" class="data row8 col2" >436.119273</td>
+      <td id="T_dd286_row8_col3" class="data row8 col3" >11.000000</td>
+      <td id="T_dd286_row8_col4" class="data row8 col4" >281.000000</td>
+      <td id="T_dd286_row8_col5" class="data row8 col5" >587.000000</td>
+      <td id="T_dd286_row8_col6" class="data row8 col6" >867.000000</td>
+      <td id="T_dd286_row8_col7" class="data row8 col7" >2714.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_dd286_row9_col0" class="data row9 col0" >136.000000</td>
+      <td id="T_dd286_row9_col1" class="data row9 col1" >628.904412</td>
+      <td id="T_dd286_row9_col2" class="data row9 col2" >351.240803</td>
+      <td id="T_dd286_row9_col3" class="data row9 col3" >17.000000</td>
+      <td id="T_dd286_row9_col4" class="data row9 col4" >390.750000</td>
+      <td id="T_dd286_row9_col5" class="data row9 col5" >564.000000</td>
+      <td id="T_dd286_row9_col6" class="data row9 col6" >865.250000</td>
+      <td id="T_dd286_row9_col7" class="data row9 col7" >1976.000000</td>
+    </tr>
+    <tr>
+      <th id="T_dd286_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_dd286_row10_col0" class="data row10 col0" >98.000000</td>
+      <td id="T_dd286_row10_col1" class="data row10 col1" >718.438776</td>
+      <td id="T_dd286_row10_col2" class="data row10 col2" >359.867503</td>
+      <td id="T_dd286_row10_col3" class="data row10 col3" >128.000000</td>
+      <td id="T_dd286_row10_col4" class="data row10 col4" >423.750000</td>
+      <td id="T_dd286_row10_col5" class="data row10 col5" >621.000000</td>
+      <td id="T_dd286_row10_col6" class="data row10 col6" >991.750000</td>
+      <td id="T_dd286_row10_col7" class="data row10 col7" >1845.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2020-12
+
+<style type="text/css">
+#T_6c53b_row0_col0, #T_6c53b_row9_col2, #T_6c53b_row9_col7, #T_6c53b_row10_col1, #T_6c53b_row10_col3, #T_6c53b_row10_col4, #T_6c53b_row10_col5, #T_6c53b_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_6c53b_row0_col1, #T_6c53b_row0_col2, #T_6c53b_row0_col3, #T_6c53b_row0_col4, #T_6c53b_row0_col5, #T_6c53b_row0_col6, #T_6c53b_row1_col3, #T_6c53b_row2_col3, #T_6c53b_row3_col3, #T_6c53b_row4_col0, #T_6c53b_row4_col3, #T_6c53b_row5_col0, #T_6c53b_row5_col3, #T_6c53b_row6_col0, #T_6c53b_row6_col3, #T_6c53b_row7_col0, #T_6c53b_row8_col0, #T_6c53b_row9_col0, #T_6c53b_row10_col0, #T_6c53b_row10_col7 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_6c53b_row0_col7 {
+  background-color: #9ebad9;
+  color: #000000;
+}
+#T_6c53b_row1_col0, #T_6c53b_row5_col6 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_6c53b_row1_col1, #T_6c53b_row2_col0, #T_6c53b_row8_col4 {
+  background-color: #fbf3f9;
+  color: #000000;
+}
+#T_6c53b_row1_col2 {
+  background-color: #f5eef6;
+  color: #000000;
+}
+#T_6c53b_row1_col4 {
+  background-color: #fef6fb;
+  color: #000000;
+}
+#T_6c53b_row1_col5, #T_6c53b_row3_col4 {
+  background-color: #fdf5fa;
+  color: #000000;
+}
+#T_6c53b_row1_col6, #T_6c53b_row3_col5 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_6c53b_row1_col7 {
+  background-color: #7eadd1;
+  color: #f1f1f1;
+}
+#T_6c53b_row2_col1, #T_6c53b_row5_col4 {
+  background-color: #f9f2f8;
+  color: #000000;
+}
+#T_6c53b_row2_col2, #T_6c53b_row7_col5 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_6c53b_row2_col4, #T_6c53b_row3_col0 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_6c53b_row2_col5, #T_6c53b_row4_col4 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_6c53b_row2_col6, #T_6c53b_row4_col5, #T_6c53b_row6_col4, #T_6c53b_row7_col3 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_6c53b_row2_col7 {
+  background-color: #8eb3d5;
+  color: #000000;
+}
+#T_6c53b_row3_col1, #T_6c53b_row3_col6, #T_6c53b_row8_col7 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_6c53b_row3_col2 {
+  background-color: #eae6f1;
+  color: #000000;
+}
+#T_6c53b_row3_col7 {
+  background-color: #023a5b;
+  color: #f1f1f1;
+}
+#T_6c53b_row4_col1, #T_6c53b_row4_col6, #T_6c53b_row5_col5 {
+  background-color: #f4edf6;
+  color: #000000;
+}
+#T_6c53b_row4_col2 {
+  background-color: #dfddec;
+  color: #000000;
+}
+#T_6c53b_row4_col7 {
+  background-color: #0a73b2;
+  color: #f1f1f1;
+}
+#T_6c53b_row5_col1 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_6c53b_row5_col2 {
+  background-color: #bdc8e1;
+  color: #000000;
+}
+#T_6c53b_row5_col7 {
+  background-color: #056ba9;
+  color: #f1f1f1;
+}
+#T_6c53b_row6_col1 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_6c53b_row6_col2 {
+  background-color: #86b0d3;
+  color: #000000;
+}
+#T_6c53b_row6_col5 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_6c53b_row6_col6 {
+  background-color: #ece7f2;
+  color: #000000;
+}
+#T_6c53b_row6_col7 {
+  background-color: #045585;
+  color: #f1f1f1;
+}
+#T_6c53b_row7_col1 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_6c53b_row7_col2 {
+  background-color: #569dc8;
+  color: #f1f1f1;
+}
+#T_6c53b_row7_col4 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_6c53b_row7_col6 {
+  background-color: #e6e2ef;
+  color: #000000;
+}
+#T_6c53b_row7_col7 {
+  background-color: #4496c3;
+  color: #f1f1f1;
+}
+#T_6c53b_row8_col1 {
+  background-color: #bcc7e1;
+  color: #000000;
+}
+#T_6c53b_row8_col2 {
+  background-color: #0570b0;
+  color: #f1f1f1;
+}
+#T_6c53b_row8_col3, #T_6c53b_row9_col3 {
+  background-color: #e1dfed;
+  color: #000000;
+}
+#T_6c53b_row8_col5 {
+  background-color: #e8e4f0;
+  color: #000000;
+}
+#T_6c53b_row8_col6 {
+  background-color: #99b8d8;
+  color: #000000;
+}
+#T_6c53b_row9_col1 {
+  background-color: #5a9ec9;
+  color: #f1f1f1;
+}
+#T_6c53b_row9_col4 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_6c53b_row9_col5 {
+  background-color: #9fbad9;
+  color: #000000;
+}
+#T_6c53b_row9_col6 {
+  background-color: #056fae;
+  color: #f1f1f1;
+}
+#T_6c53b_row10_col2 {
+  background-color: #157ab5;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_6c53b">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_6c53b_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_6c53b_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_6c53b_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_6c53b_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_6c53b_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_6c53b_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_6c53b_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_6c53b_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_6c53b_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_6c53b_row0_col0" class="data row0 col0" >12560636.000000</td>
+      <td id="T_6c53b_row0_col1" class="data row0 col1" >44.945478</td>
+      <td id="T_6c53b_row0_col2" class="data row0 col2" >53.769753</td>
+      <td id="T_6c53b_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_6c53b_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_6c53b_row0_col5" class="data row0 col5" >27.000000</td>
+      <td id="T_6c53b_row0_col6" class="data row0 col6" >50.000000</td>
+      <td id="T_6c53b_row0_col7" class="data row0 col7" >2350.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_6c53b_row1_col0" class="data row1 col0" >1346776.000000</td>
+      <td id="T_6c53b_row1_col1" class="data row1 col1" >84.512197</td>
+      <td id="T_6c53b_row1_col2" class="data row1 col2" >96.272241</td>
+      <td id="T_6c53b_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_6c53b_row1_col4" class="data row1 col4" >26.000000</td>
+      <td id="T_6c53b_row1_col5" class="data row1 col5" >51.000000</td>
+      <td id="T_6c53b_row1_col6" class="data row1 col6" >106.000000</td>
+      <td id="T_6c53b_row1_col7" class="data row1 col7" >2427.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_6c53b_row2_col0" class="data row2 col0" >370245.000000</td>
+      <td id="T_6c53b_row2_col1" class="data row2 col1" >100.352283</td>
+      <td id="T_6c53b_row2_col2" class="data row2 col2" >114.788027</td>
+      <td id="T_6c53b_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_6c53b_row2_col4" class="data row2 col4" >29.000000</td>
+      <td id="T_6c53b_row2_col5" class="data row2 col5" >62.000000</td>
+      <td id="T_6c53b_row2_col6" class="data row2 col6" >127.000000</td>
+      <td id="T_6c53b_row2_col7" class="data row2 col7" >2390.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_6c53b_row3_col0" class="data row3 col0" >105278.000000</td>
+      <td id="T_6c53b_row3_col1" class="data row3 col1" >116.555073</td>
+      <td id="T_6c53b_row3_col2" class="data row3 col2" >136.590655</td>
+      <td id="T_6c53b_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_6c53b_row3_col4" class="data row3 col4" >34.000000</td>
+      <td id="T_6c53b_row3_col5" class="data row3 col5" >73.000000</td>
+      <td id="T_6c53b_row3_col6" class="data row3 col6" >147.000000</td>
+      <td id="T_6c53b_row3_col7" class="data row3 col7" >2946.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_6c53b_row4_col0" class="data row4 col0" >28337.000000</td>
+      <td id="T_6c53b_row4_col1" class="data row4 col1" >143.407312</td>
+      <td id="T_6c53b_row4_col2" class="data row4 col2" >169.461848</td>
+      <td id="T_6c53b_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_6c53b_row4_col4" class="data row4 col4" >47.000000</td>
+      <td id="T_6c53b_row4_col5" class="data row4 col5" >96.000000</td>
+      <td id="T_6c53b_row4_col6" class="data row4 col6" >176.000000</td>
+      <td id="T_6c53b_row4_col7" class="data row4 col7" >2691.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_6c53b_row5_col0" class="data row5 col0" >7555.000000</td>
+      <td id="T_6c53b_row5_col1" class="data row5 col1" >195.321509</td>
+      <td id="T_6c53b_row5_col2" class="data row5 col2" >243.588795</td>
+      <td id="T_6c53b_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_6c53b_row5_col4" class="data row5 col4" >68.000000</td>
+      <td id="T_6c53b_row5_col5" class="data row5 col5" >130.000000</td>
+      <td id="T_6c53b_row5_col6" class="data row5 col6" >227.000000</td>
+      <td id="T_6c53b_row5_col7" class="data row5 col7" >2730.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_6c53b_row6_col0" class="data row6 col0" >2197.000000</td>
+      <td id="T_6c53b_row6_col1" class="data row6 col1" >249.205280</td>
+      <td id="T_6c53b_row6_col2" class="data row6 col2" >337.311000</td>
+      <td id="T_6c53b_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_6c53b_row6_col4" class="data row6 col4" >70.000000</td>
+      <td id="T_6c53b_row6_col5" class="data row6 col5" >150.000000</td>
+      <td id="T_6c53b_row6_col6" class="data row6 col6" >260.000000</td>
+      <td id="T_6c53b_row6_col7" class="data row6 col7" >2849.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_6c53b_row7_col0" class="data row7 col0" >685.000000</td>
+      <td id="T_6c53b_row7_col1" class="data row7 col1" >297.475912</td>
+      <td id="T_6c53b_row7_col2" class="data row7 col2" >402.826906</td>
+      <td id="T_6c53b_row7_col3" class="data row7 col3" >11.000000</td>
+      <td id="T_6c53b_row7_col4" class="data row7 col4" >60.000000</td>
+      <td id="T_6c53b_row7_col5" class="data row7 col5" >168.000000</td>
+      <td id="T_6c53b_row7_col6" class="data row7 col6" >309.000000</td>
+      <td id="T_6c53b_row7_col7" class="data row7 col7" >2549.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_6c53b_row8_col0" class="data row8 col0" >190.000000</td>
+      <td id="T_6c53b_row8_col1" class="data row8 col1" >451.863158</td>
+      <td id="T_6c53b_row8_col2" class="data row8 col2" >518.789211</td>
+      <td id="T_6c53b_row8_col3" class="data row8 col3" >14.000000</td>
+      <td id="T_6c53b_row8_col4" class="data row8 col4" >51.500000</td>
+      <td id="T_6c53b_row8_col5" class="data row8 col5" >223.500000</td>
+      <td id="T_6c53b_row8_col6" class="data row8 col6" >733.750000</td>
+      <td id="T_6c53b_row8_col7" class="data row8 col7" >2003.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_6c53b_row9_col0" class="data row9 col0" >56.000000</td>
+      <td id="T_6c53b_row9_col1" class="data row9 col1" >764.625000</td>
+      <td id="T_6c53b_row9_col2" class="data row9 col2" >675.967013</td>
+      <td id="T_6c53b_row9_col3" class="data row9 col3" >14.000000</td>
+      <td id="T_6c53b_row9_col4" class="data row9 col4" >183.250000</td>
+      <td id="T_6c53b_row9_col5" class="data row9 col5" >568.000000</td>
+      <td id="T_6c53b_row9_col6" class="data row9 col6" >1312.250000</td>
+      <td id="T_6c53b_row9_col7" class="data row9 col7" >2957.000000</td>
+    </tr>
+    <tr>
+      <th id="T_6c53b_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_6c53b_row10_col0" class="data row10 col0" >40.000000</td>
+      <td id="T_6c53b_row10_col1" class="data row10 col1" >1347.900000</td>
+      <td id="T_6c53b_row10_col2" class="data row10 col2" >494.724984</td>
+      <td id="T_6c53b_row10_col3" class="data row10 col3" >33.000000</td>
+      <td id="T_6c53b_row10_col4" class="data row10 col4" >1207.000000</td>
+      <td id="T_6c53b_row10_col5" class="data row10 col5" >1409.500000</td>
+      <td id="T_6c53b_row10_col6" class="data row10 col6" >1717.500000</td>
+      <td id="T_6c53b_row10_col7" class="data row10 col7" >1950.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2021-04
+
+<style type="text/css">
+#T_644ae_row0_col0, #T_644ae_row1_col7, #T_644ae_row10_col1, #T_644ae_row10_col2, #T_644ae_row10_col3, #T_644ae_row10_col4, #T_644ae_row10_col5, #T_644ae_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_644ae_row0_col1, #T_644ae_row0_col2, #T_644ae_row0_col3, #T_644ae_row0_col4, #T_644ae_row0_col5, #T_644ae_row0_col6, #T_644ae_row1_col3, #T_644ae_row2_col3, #T_644ae_row3_col3, #T_644ae_row4_col0, #T_644ae_row4_col3, #T_644ae_row5_col0, #T_644ae_row5_col3, #T_644ae_row6_col0, #T_644ae_row6_col3, #T_644ae_row7_col0, #T_644ae_row8_col0, #T_644ae_row9_col0, #T_644ae_row10_col0, #T_644ae_row10_col7 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_644ae_row0_col7 {
+  background-color: #0a73b2;
+  color: #f1f1f1;
+}
+#T_644ae_row1_col0, #T_644ae_row1_col5, #T_644ae_row1_col6 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_644ae_row1_col1, #T_644ae_row4_col4 {
+  background-color: #f1ebf5;
+  color: #000000;
+}
+#T_644ae_row1_col2 {
+  background-color: #e4e1ef;
+  color: #000000;
+}
+#T_644ae_row1_col4 {
+  background-color: #f9f2f8;
+  color: #000000;
+}
+#T_644ae_row2_col0 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_644ae_row2_col1, #T_644ae_row8_col4 {
+  background-color: #ede8f3;
+  color: #000000;
+}
+#T_644ae_row2_col2, #T_644ae_row6_col7, #T_644ae_row7_col7 {
+  background-color: #d9d8ea;
+  color: #000000;
+}
+#T_644ae_row2_col4 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_644ae_row2_col5, #T_644ae_row5_col4 {
+  background-color: #efe9f3;
+  color: #000000;
+}
+#T_644ae_row2_col6 {
+  background-color: #eee9f3;
+  color: #000000;
+}
+#T_644ae_row2_col7 {
+  background-color: #4897c4;
+  color: #f1f1f1;
+}
+#T_644ae_row3_col0 {
+  background-color: #fef6fb;
+  color: #000000;
+}
+#T_644ae_row3_col1 {
+  background-color: #e8e4f0;
+  color: #000000;
+}
+#T_644ae_row3_col2 {
+  background-color: #ced0e6;
+  color: #000000;
+}
+#T_644ae_row3_col4 {
+  background-color: #f5eff6;
+  color: #000000;
+}
+#T_644ae_row3_col5, #T_644ae_row3_col6 {
+  background-color: #eae6f1;
+  color: #000000;
+}
+#T_644ae_row3_col7 {
+  background-color: #046198;
+  color: #f1f1f1;
+}
+#T_644ae_row4_col1 {
+  background-color: #e0dded;
+  color: #000000;
+}
+#T_644ae_row4_col2 {
+  background-color: #c0c9e2;
+  color: #000000;
+}
+#T_644ae_row4_col5, #T_644ae_row9_col7 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_644ae_row4_col6 {
+  background-color: #e2dfee;
+  color: #000000;
+}
+#T_644ae_row4_col7 {
+  background-color: #5a9ec9;
+  color: #f1f1f1;
+}
+#T_644ae_row5_col1 {
+  background-color: #d6d6e9;
+  color: #000000;
+}
+#T_644ae_row5_col2 {
+  background-color: #a1bbda;
+  color: #000000;
+}
+#T_644ae_row5_col5 {
+  background-color: #d1d2e6;
+  color: #000000;
+}
+#T_644ae_row5_col6 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_644ae_row5_col7 {
+  background-color: #bdc8e1;
+  color: #000000;
+}
+#T_644ae_row6_col1 {
+  background-color: #cacee5;
+  color: #000000;
+}
+#T_644ae_row6_col2 {
+  background-color: #a7bddb;
+  color: #000000;
+}
+#T_644ae_row6_col4 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_644ae_row6_col5 {
+  background-color: #b1c2de;
+  color: #000000;
+}
+#T_644ae_row6_col6 {
+  background-color: #cccfe5;
+  color: #000000;
+}
+#T_644ae_row7_col1 {
+  background-color: #bfc9e1;
+  color: #000000;
+}
+#T_644ae_row7_col2 {
+  background-color: #67a4cc;
+  color: #f1f1f1;
+}
+#T_644ae_row7_col3 {
+  background-color: #fef6fa;
+  color: #000000;
+}
+#T_644ae_row7_col4 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_644ae_row7_col5, #T_644ae_row8_col7 {
+  background-color: #b3c3de;
+  color: #000000;
+}
+#T_644ae_row7_col6 {
+  background-color: #bbc7e0;
+  color: #000000;
+}
+#T_644ae_row8_col1 {
+  background-color: #b7c5df;
+  color: #000000;
+}
+#T_644ae_row8_col2 {
+  background-color: #197db7;
+  color: #f1f1f1;
+}
+#T_644ae_row8_col3 {
+  background-color: #ece7f2;
+  color: #000000;
+}
+#T_644ae_row8_col5 {
+  background-color: #bcc7e1;
+  color: #000000;
+}
+#T_644ae_row8_col6 {
+  background-color: #b8c6e0;
+  color: #000000;
+}
+#T_644ae_row9_col1 {
+  background-color: #4094c3;
+  color: #f1f1f1;
+}
+#T_644ae_row9_col2 {
+  background-color: #0c74b2;
+  color: #f1f1f1;
+}
+#T_644ae_row9_col3 {
+  background-color: #c8cde4;
+  color: #000000;
+}
+#T_644ae_row9_col4 {
+  background-color: #056fae;
+  color: #f1f1f1;
+}
+#T_644ae_row9_col5 {
+  background-color: #1278b4;
+  color: #f1f1f1;
+}
+#T_644ae_row9_col6 {
+  background-color: #9ab8d8;
+  color: #000000;
+}
+</style>
+<table id="T_644ae">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_644ae_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_644ae_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_644ae_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_644ae_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_644ae_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_644ae_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_644ae_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_644ae_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_644ae_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_644ae_row0_col0" class="data row0 col0" >12740458.000000</td>
+      <td id="T_644ae_row0_col1" class="data row0 col1" >48.296184</td>
+      <td id="T_644ae_row0_col2" class="data row0 col2" >57.310627</td>
+      <td id="T_644ae_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_644ae_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_644ae_row0_col5" class="data row0 col5" >29.000000</td>
+      <td id="T_644ae_row0_col6" class="data row0 col6" >55.000000</td>
+      <td id="T_644ae_row0_col7" class="data row0 col7" >2144.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_644ae_row1_col0" class="data row1 col0" >1116856.000000</td>
+      <td id="T_644ae_row1_col1" class="data row1 col1" >88.307115</td>
+      <td id="T_644ae_row1_col2" class="data row1 col2" >96.343677</td>
+      <td id="T_644ae_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_644ae_row1_col4" class="data row1 col4" >27.000000</td>
+      <td id="T_644ae_row1_col5" class="data row1 col5" >54.000000</td>
+      <td id="T_644ae_row1_col6" class="data row1 col6" >112.000000</td>
+      <td id="T_644ae_row1_col7" class="data row1 col7" >2588.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_644ae_row2_col0" class="data row2 col0" >306653.000000</td>
+      <td id="T_644ae_row2_col1" class="data row2 col1" >98.794954</td>
+      <td id="T_644ae_row2_col2" class="data row2 col2" >108.407080</td>
+      <td id="T_644ae_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_644ae_row2_col4" class="data row2 col4" >29.000000</td>
+      <td id="T_644ae_row2_col5" class="data row2 col5" >61.000000</td>
+      <td id="T_644ae_row2_col6" class="data row2 col6" >128.000000</td>
+      <td id="T_644ae_row2_col7" class="data row2 col7" >1897.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_644ae_row3_col0" class="data row3 col0" >84231.000000</td>
+      <td id="T_644ae_row3_col1" class="data row3 col1" >110.030013</td>
+      <td id="T_644ae_row3_col2" class="data row3 col2" >119.558593</td>
+      <td id="T_644ae_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_644ae_row3_col4" class="data row3 col4" >33.000000</td>
+      <td id="T_644ae_row3_col5" class="data row3 col5" >70.000000</td>
+      <td id="T_644ae_row3_col6" class="data row3 col6" >144.000000</td>
+      <td id="T_644ae_row3_col7" class="data row3 col7" >2309.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_644ae_row4_col0" class="data row4 col0" >20843.000000</td>
+      <td id="T_644ae_row4_col1" class="data row4 col1" >125.281485</td>
+      <td id="T_644ae_row4_col2" class="data row4 col2" >129.401810</td>
+      <td id="T_644ae_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_644ae_row4_col4" class="data row4 col4" >40.000000</td>
+      <td id="T_644ae_row4_col5" class="data row4 col5" >88.000000</td>
+      <td id="T_644ae_row4_col6" class="data row4 col6" >165.000000</td>
+      <td id="T_644ae_row4_col7" class="data row4 col7" >1842.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_644ae_row5_col0" class="data row5 col0" >5241.000000</td>
+      <td id="T_644ae_row5_col1" class="data row5 col1" >144.602748</td>
+      <td id="T_644ae_row5_col2" class="data row5 col2" >151.464493</td>
+      <td id="T_644ae_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_644ae_row5_col4" class="data row5 col4" >44.000000</td>
+      <td id="T_644ae_row5_col5" class="data row5 col5" >104.000000</td>
+      <td id="T_644ae_row5_col6" class="data row5 col6" >188.000000</td>
+      <td id="T_644ae_row5_col7" class="data row5 col7" >1428.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_644ae_row6_col0" class="data row6 col0" >1405.000000</td>
+      <td id="T_644ae_row6_col1" class="data row6 col1" >163.007117</td>
+      <td id="T_644ae_row6_col2" class="data row6 col2" >148.018002</td>
+      <td id="T_644ae_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_644ae_row6_col4" class="data row6 col4" >52.000000</td>
+      <td id="T_644ae_row6_col5" class="data row6 col5" >132.000000</td>
+      <td id="T_644ae_row6_col6" class="data row6 col6" >227.000000</td>
+      <td id="T_644ae_row6_col7" class="data row6 col7" >1272.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_644ae_row7_col0" class="data row7 col0" >454.000000</td>
+      <td id="T_644ae_row7_col1" class="data row7 col1" >178.189427</td>
+      <td id="T_644ae_row7_col2" class="data row7 col2" >185.118778</td>
+      <td id="T_644ae_row7_col3" class="data row7 col3" >11.000000</td>
+      <td id="T_644ae_row7_col4" class="data row7 col4" >46.000000</td>
+      <td id="T_644ae_row7_col5" class="data row7 col5" >131.500000</td>
+      <td id="T_644ae_row7_col6" class="data row7 col6" >259.750000</td>
+      <td id="T_644ae_row7_col7" class="data row7 col7" >1266.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_644ae_row8_col0" class="data row8 col0" >125.000000</td>
+      <td id="T_644ae_row8_col1" class="data row8 col1" >188.608000</td>
+      <td id="T_644ae_row8_col2" class="data row8 col2" >226.567048</td>
+      <td id="T_644ae_row8_col3" class="data row8 col3" >25.000000</td>
+      <td id="T_644ae_row8_col4" class="data row8 col4" >47.000000</td>
+      <td id="T_644ae_row8_col5" class="data row8 col5" >123.000000</td>
+      <td id="T_644ae_row8_col6" class="data row8 col6" >266.000000</td>
+      <td id="T_644ae_row8_col7" class="data row8 col7" >1478.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_644ae_row9_col0" class="data row9 col0" >26.000000</td>
+      <td id="T_644ae_row9_col1" class="data row9 col1" >306.230769</td>
+      <td id="T_644ae_row9_col2" class="data row9 col2" >234.443905</td>
+      <td id="T_644ae_row9_col3" class="data row9 col3" >42.000000</td>
+      <td id="T_644ae_row9_col4" class="data row9 col4" >209.000000</td>
+      <td id="T_644ae_row9_col5" class="data row9 col5" >246.500000</td>
+      <td id="T_644ae_row9_col6" class="data row9 col6" >320.000000</td>
+      <td id="T_644ae_row9_col7" class="data row9 col7" >1237.000000</td>
+    </tr>
+    <tr>
+      <th id="T_644ae_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_644ae_row10_col0" class="data row10 col0" >7.000000</td>
+      <td id="T_644ae_row10_col1" class="data row10 col1" >476.285714</td>
+      <td id="T_644ae_row10_col2" class="data row10 col2" >299.796439</td>
+      <td id="T_644ae_row10_col3" class="data row10 col3" >127.000000</td>
+      <td id="T_644ae_row10_col4" class="data row10 col4" >271.000000</td>
+      <td id="T_644ae_row10_col5" class="data row10 col5" >332.000000</td>
+      <td id="T_644ae_row10_col6" class="data row10 col6" >709.500000</td>
+      <td id="T_644ae_row10_col7" class="data row10 col7" >914.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2021-05
+
+<style type="text/css">
+#T_98ed8_row0_col0, #T_98ed8_row1_col7, #T_98ed8_row10_col1, #T_98ed8_row10_col2, #T_98ed8_row10_col3, #T_98ed8_row10_col4, #T_98ed8_row10_col5, #T_98ed8_row10_col6 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_98ed8_row0_col1, #T_98ed8_row0_col2, #T_98ed8_row0_col3, #T_98ed8_row0_col4, #T_98ed8_row0_col5, #T_98ed8_row0_col6, #T_98ed8_row1_col3, #T_98ed8_row2_col3, #T_98ed8_row3_col3, #T_98ed8_row4_col0, #T_98ed8_row4_col3, #T_98ed8_row5_col0, #T_98ed8_row5_col3, #T_98ed8_row6_col0, #T_98ed8_row6_col3, #T_98ed8_row7_col0, #T_98ed8_row7_col3, #T_98ed8_row8_col0, #T_98ed8_row9_col0, #T_98ed8_row9_col7, #T_98ed8_row10_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_98ed8_row0_col7 {
+  background-color: #023d60;
+  color: #f1f1f1;
+}
+#T_98ed8_row1_col0, #T_98ed8_row1_col5 {
+  background-color: #f1ebf5;
+  color: #000000;
+}
+#T_98ed8_row1_col1 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_98ed8_row1_col2 {
+  background-color: #c5cce3;
+  color: #000000;
+}
+#T_98ed8_row1_col4 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_98ed8_row1_col6 {
+  background-color: #e1dfed;
+  color: #000000;
+}
+#T_98ed8_row2_col0, #T_98ed8_row8_col3 {
+  background-color: #fbf4f9;
+  color: #000000;
+}
+#T_98ed8_row2_col1 {
+  background-color: #e0dded;
+  color: #000000;
+}
+#T_98ed8_row2_col2 {
+  background-color: #a2bcda;
+  color: #000000;
+}
+#T_98ed8_row2_col4 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_98ed8_row2_col5 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_98ed8_row2_col6, #T_98ed8_row3_col1 {
+  background-color: #d5d5e8;
+  color: #000000;
+}
+#T_98ed8_row2_col7 {
+  background-color: #045e93;
+  color: #f1f1f1;
+}
+#T_98ed8_row3_col0 {
+  background-color: #fef6fb;
+  color: #000000;
+}
+#T_98ed8_row3_col2 {
+  background-color: #7bacd1;
+  color: #f1f1f1;
+}
+#T_98ed8_row3_col4 {
+  background-color: #f4edf6;
+  color: #000000;
+}
+#T_98ed8_row3_col5 {
+  background-color: #e6e2ef;
+  color: #000000;
+}
+#T_98ed8_row3_col6 {
+  background-color: #c6cce3;
+  color: #000000;
+}
+#T_98ed8_row3_col7, #T_98ed8_row6_col7 {
+  background-color: #04649e;
+  color: #f1f1f1;
+}
+#T_98ed8_row4_col1 {
+  background-color: #c2cbe2;
+  color: #000000;
+}
+#T_98ed8_row4_col2 {
+  background-color: #4496c3;
+  color: #f1f1f1;
+}
+#T_98ed8_row4_col4 {
+  background-color: #eee9f3;
+  color: #000000;
+}
+#T_98ed8_row4_col5 {
+  background-color: #d6d6e9;
+  color: #000000;
+}
+#T_98ed8_row4_col6 {
+  background-color: #b4c4df;
+  color: #000000;
+}
+#T_98ed8_row4_col7 {
+  background-color: #056caa;
+  color: #f1f1f1;
+}
+#T_98ed8_row5_col1 {
+  background-color: #a7bddb;
+  color: #000000;
+}
+#T_98ed8_row5_col2 {
+  background-color: #056dab;
+  color: #f1f1f1;
+}
+#T_98ed8_row5_col4 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_98ed8_row5_col5 {
+  background-color: #c4cbe3;
+  color: #000000;
+}
+#T_98ed8_row5_col6 {
+  background-color: #83afd3;
+  color: #f1f1f1;
+}
+#T_98ed8_row5_col7 {
+  background-color: #056ead;
+  color: #f1f1f1;
+}
+#T_98ed8_row6_col1 {
+  background-color: #6fa7ce;
+  color: #f1f1f1;
+}
+#T_98ed8_row6_col2 {
+  background-color: #03466e;
+  color: #f1f1f1;
+}
+#T_98ed8_row6_col4 {
+  background-color: #d4d4e8;
+  color: #000000;
+}
+#T_98ed8_row6_col5 {
+  background-color: #86b0d3;
+  color: #000000;
+}
+#T_98ed8_row6_col6 {
+  background-color: #3b92c1;
+  color: #f1f1f1;
+}
+#T_98ed8_row7_col1 {
+  background-color: #62a2cb;
+  color: #f1f1f1;
+}
+#T_98ed8_row7_col2 {
+  background-color: #045b8f;
+  color: #f1f1f1;
+}
+#T_98ed8_row7_col4 {
+  background-color: #e0deed;
+  color: #000000;
+}
+#T_98ed8_row7_col5 {
+  background-color: #69a5cc;
+  color: #f1f1f1;
+}
+#T_98ed8_row7_col6 {
+  background-color: #1e80b8;
+  color: #f1f1f1;
+}
+#T_98ed8_row7_col7 {
+  background-color: #79abd0;
+  color: #f1f1f1;
+}
+#T_98ed8_row8_col1 {
+  background-color: #2786bb;
+  color: #f1f1f1;
+}
+#T_98ed8_row8_col2 {
+  background-color: #023b5d;
+  color: #f1f1f1;
+}
+#T_98ed8_row8_col4 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_98ed8_row8_col5 {
+  background-color: #2987bc;
+  color: #f1f1f1;
+}
+#T_98ed8_row8_col6 {
+  background-color: #046096;
+  color: #f1f1f1;
+}
+#T_98ed8_row8_col7 {
+  background-color: #c9cee4;
+  color: #000000;
+}
+#T_98ed8_row9_col1 {
+  background-color: #2d8abd;
+  color: #f1f1f1;
+}
+#T_98ed8_row9_col2 {
+  background-color: #045280;
+  color: #f1f1f1;
+}
+#T_98ed8_row9_col3 {
+  background-color: #c8cde4;
+  color: #000000;
+}
+#T_98ed8_row9_col4 {
+  background-color: #b8c6e0;
+  color: #000000;
+}
+#T_98ed8_row9_col5 {
+  background-color: #3790c0;
+  color: #f1f1f1;
+}
+#T_98ed8_row9_col6 {
+  background-color: #056faf;
+  color: #f1f1f1;
+}
+#T_98ed8_row10_col7 {
+  background-color: #dbdaeb;
+  color: #000000;
+}
+</style>
+<table id="T_98ed8">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_98ed8_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_98ed8_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_98ed8_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_98ed8_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_98ed8_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_98ed8_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_98ed8_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_98ed8_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_98ed8_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_98ed8_row0_col0" class="data row0 col0" >13072937.000000</td>
+      <td id="T_98ed8_row0_col1" class="data row0 col1" >49.332940</td>
+      <td id="T_98ed8_row0_col2" class="data row0 col2" >60.949878</td>
+      <td id="T_98ed8_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_98ed8_row0_col4" class="data row0 col4" >17.000000</td>
+      <td id="T_98ed8_row0_col5" class="data row0 col5" >29.000000</td>
+      <td id="T_98ed8_row0_col6" class="data row0 col6" >56.000000</td>
+      <td id="T_98ed8_row0_col7" class="data row0 col7" >2254.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_98ed8_row1_col0" class="data row1 col0" >1180342.000000</td>
+      <td id="T_98ed8_row1_col1" class="data row1 col1" >92.911584</td>
+      <td id="T_98ed8_row1_col2" class="data row1 col2" >107.401664</td>
+      <td id="T_98ed8_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_98ed8_row1_col4" class="data row1 col4" >27.000000</td>
+      <td id="T_98ed8_row1_col5" class="data row1 col5" >55.000000</td>
+      <td id="T_98ed8_row1_col6" class="data row1 col6" >116.000000</td>
+      <td id="T_98ed8_row1_col7" class="data row1 col7" >2285.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_98ed8_row2_col0" class="data row2 col0" >328220.000000</td>
+      <td id="T_98ed8_row2_col1" class="data row2 col1" >106.429928</td>
+      <td id="T_98ed8_row2_col2" class="data row2 col2" >124.716115</td>
+      <td id="T_98ed8_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_98ed8_row2_col4" class="data row2 col4" >29.000000</td>
+      <td id="T_98ed8_row2_col5" class="data row2 col5" >62.000000</td>
+      <td id="T_98ed8_row2_col6" class="data row2 col6" >135.000000</td>
+      <td id="T_98ed8_row2_col7" class="data row2 col7" >2086.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_98ed8_row3_col0" class="data row3 col0" >93404.000000</td>
+      <td id="T_98ed8_row3_col1" class="data row3 col1" >120.058167</td>
+      <td id="T_98ed8_row3_col2" class="data row3 col2" >140.466189</td>
+      <td id="T_98ed8_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_98ed8_row3_col4" class="data row3 col4" >33.000000</td>
+      <td id="T_98ed8_row3_col5" class="data row3 col5" >73.000000</td>
+      <td id="T_98ed8_row3_col6" class="data row3 col6" >152.000000</td>
+      <td id="T_98ed8_row3_col7" class="data row3 col7" >2033.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_98ed8_row4_col0" class="data row4 col0" >24923.000000</td>
+      <td id="T_98ed8_row4_col1" class="data row4 col1" >139.321470</td>
+      <td id="T_98ed8_row4_col2" class="data row4 col2" >159.471790</td>
+      <td id="T_98ed8_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_98ed8_row4_col4" class="data row4 col4" >41.000000</td>
+      <td id="T_98ed8_row4_col5" class="data row4 col5" >92.000000</td>
+      <td id="T_98ed8_row4_col6" class="data row4 col6" >171.000000</td>
+      <td id="T_98ed8_row4_col7" class="data row4 col7" >1973.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_98ed8_row5_col0" class="data row5 col0" >7262.000000</td>
+      <td id="T_98ed8_row5_col1" class="data row5 col1" >166.011842</td>
+      <td id="T_98ed8_row5_col2" class="data row5 col2" >187.913492</td>
+      <td id="T_98ed8_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_98ed8_row5_col4" class="data row5 col4" >48.000000</td>
+      <td id="T_98ed8_row5_col5" class="data row5 col5" >110.000000</td>
+      <td id="T_98ed8_row5_col6" class="data row5 col6" >215.000000</td>
+      <td id="T_98ed8_row5_col7" class="data row5 col7" >1953.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_98ed8_row6_col0" class="data row6 col0" >2166.000000</td>
+      <td id="T_98ed8_row6_col1" class="data row6 col1" >208.561404</td>
+      <td id="T_98ed8_row6_col2" class="data row6 col2" >217.104548</td>
+      <td id="T_98ed8_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_98ed8_row6_col4" class="data row6 col4" >66.000000</td>
+      <td id="T_98ed8_row6_col5" class="data row6 col5" >158.000000</td>
+      <td id="T_98ed8_row6_col6" class="data row6 col6" >268.000000</td>
+      <td id="T_98ed8_row6_col7" class="data row6 col7" >2031.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_98ed8_row7_col0" class="data row7 col0" >836.000000</td>
+      <td id="T_98ed8_row7_col1" class="data row7 col1" >216.656699</td>
+      <td id="T_98ed8_row7_col2" class="data row7 col2" >203.614237</td>
+      <td id="T_98ed8_row7_col3" class="data row7 col3" >10.000000</td>
+      <td id="T_98ed8_row7_col4" class="data row7 col4" >55.000000</td>
+      <td id="T_98ed8_row7_col5" class="data row7 col5" >176.000000</td>
+      <td id="T_98ed8_row7_col6" class="data row7 col6" >292.000000</td>
+      <td id="T_98ed8_row7_col7" class="data row7 col7" >1578.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_98ed8_row8_col0" class="data row8 col0" >286.000000</td>
+      <td id="T_98ed8_row8_col1" class="data row8 col1" >255.597902</td>
+      <td id="T_98ed8_row8_col2" class="data row8 col2" >223.677499</td>
+      <td id="T_98ed8_row8_col3" class="data row8 col3" >11.000000</td>
+      <td id="T_98ed8_row8_col4" class="data row8 col4" >58.250000</td>
+      <td id="T_98ed8_row8_col5" class="data row8 col5" >214.500000</td>
+      <td id="T_98ed8_row8_col6" class="data row8 col6" >346.500000</td>
+      <td id="T_98ed8_row8_col7" class="data row8 col7" >1287.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_98ed8_row9_col0" class="data row9 col0" >86.000000</td>
+      <td id="T_98ed8_row9_col1" class="data row9 col1" >250.279070</td>
+      <td id="T_98ed8_row9_col2" class="data row9 col2" >210.372759</td>
+      <td id="T_98ed8_row9_col3" class="data row9 col3" >21.000000</td>
+      <td id="T_98ed8_row9_col4" class="data row9 col4" >85.500000</td>
+      <td id="T_98ed8_row9_col5" class="data row9 col5" >205.500000</td>
+      <td id="T_98ed8_row9_col6" class="data row9 col6" >314.500000</td>
+      <td id="T_98ed8_row9_col7" class="data row9 col7" >913.000000</td>
+    </tr>
+    <tr>
+      <th id="T_98ed8_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_98ed8_row10_col0" class="data row10 col0" >88.000000</td>
+      <td id="T_98ed8_row10_col1" class="data row10 col1" >360.545455</td>
+      <td id="T_98ed8_row10_col2" class="data row10 col2" >226.070730</td>
+      <td id="T_98ed8_row10_col3" class="data row10 col3" >50.000000</td>
+      <td id="T_98ed8_row10_col4" class="data row10 col4" >229.500000</td>
+      <td id="T_98ed8_row10_col5" class="data row10 col5" >311.500000</td>
+      <td id="T_98ed8_row10_col6" class="data row10 col6" >400.500000</td>
+      <td id="T_98ed8_row10_col7" class="data row10 col7" >1191.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 2021-03
+
+<style type="text/css">
+#T_95a81_row0_col0, #T_95a81_row0_col7, #T_95a81_row7_col6, #T_95a81_row8_col6, #T_95a81_row9_col1, #T_95a81_row9_col2, #T_95a81_row9_col4, #T_95a81_row9_col5, #T_95a81_row10_col3 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_95a81_row0_col1, #T_95a81_row0_col2, #T_95a81_row0_col3, #T_95a81_row0_col4, #T_95a81_row0_col5, #T_95a81_row0_col6, #T_95a81_row1_col3, #T_95a81_row2_col3, #T_95a81_row3_col3, #T_95a81_row4_col0, #T_95a81_row4_col3, #T_95a81_row5_col0, #T_95a81_row5_col3, #T_95a81_row6_col0, #T_95a81_row6_col3, #T_95a81_row7_col0, #T_95a81_row7_col3, #T_95a81_row8_col0, #T_95a81_row9_col0, #T_95a81_row10_col0, #T_95a81_row10_col7 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_95a81_row1_col0, #T_95a81_row3_col4, #T_95a81_row10_col2 {
+  background-color: #f2ecf5;
+  color: #000000;
+}
+#T_95a81_row1_col1 {
+  background-color: #e4e1ef;
+  color: #000000;
+}
+#T_95a81_row1_col2 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_95a81_row1_col4 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_95a81_row1_col5 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_95a81_row1_col6, #T_95a81_row2_col2, #T_95a81_row4_col5 {
+  background-color: #cccfe5;
+  color: #000000;
+}
+#T_95a81_row1_col7 {
+  background-color: #549cc7;
+  color: #f1f1f1;
+}
+#T_95a81_row2_col0 {
+  background-color: #fcf4fa;
+  color: #000000;
+}
+#T_95a81_row2_col1 {
+  background-color: #dbdaeb;
+  color: #000000;
+}
+#T_95a81_row2_col4 {
+  background-color: #f5eef6;
+  color: #000000;
+}
+#T_95a81_row2_col5 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_95a81_row2_col6 {
+  background-color: #b5c4df;
+  color: #000000;
+}
+#T_95a81_row2_col7, #T_95a81_row6_col5 {
+  background-color: #5ea0ca;
+  color: #f1f1f1;
+}
+#T_95a81_row3_col0 {
+  background-color: #fef6fb;
+  color: #000000;
+}
+#T_95a81_row3_col1, #T_95a81_row7_col7 {
+  background-color: #d3d4e7;
+  color: #000000;
+}
+#T_95a81_row3_col2 {
+  background-color: #bbc7e0;
+  color: #000000;
+}
+#T_95a81_row3_col5 {
+  background-color: #e0dded;
+  color: #000000;
+}
+#T_95a81_row3_col6, #T_95a81_row5_col2 {
+  background-color: #a2bcda;
+  color: #000000;
+}
+#T_95a81_row3_col7 {
+  background-color: #62a2cb;
+  color: #f1f1f1;
+}
+#T_95a81_row4_col1 {
+  background-color: #c4cbe3;
+  color: #000000;
+}
+#T_95a81_row4_col2, #T_95a81_row5_col1, #T_95a81_row8_col3 {
+  background-color: #b0c2de;
+  color: #000000;
+}
+#T_95a81_row4_col4 {
+  background-color: #ece7f2;
+  color: #000000;
+}
+#T_95a81_row4_col6 {
+  background-color: #83afd3;
+  color: #f1f1f1;
+}
+#T_95a81_row4_col7 {
+  background-color: #81aed2;
+  color: #f1f1f1;
+}
+#T_95a81_row5_col4 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_95a81_row5_col5 {
+  background-color: #adc1dd;
+  color: #000000;
+}
+#T_95a81_row5_col6 {
+  background-color: #589ec8;
+  color: #f1f1f1;
+}
+#T_95a81_row5_col7 {
+  background-color: #71a8ce;
+  color: #f1f1f1;
+}
+#T_95a81_row6_col1 {
+  background-color: #7bacd1;
+  color: #f1f1f1;
+}
+#T_95a81_row6_col2 {
+  background-color: #86b0d3;
+  color: #000000;
+}
+#T_95a81_row6_col4 {
+  background-color: #cacee5;
+  color: #000000;
+}
+#T_95a81_row6_col6 {
+  background-color: #05659f;
+  color: #f1f1f1;
+}
+#T_95a81_row6_col7 {
+  background-color: #75a9cf;
+  color: #f1f1f1;
+}
+#T_95a81_row7_col1 {
+  background-color: #4496c3;
+  color: #f1f1f1;
+}
+#T_95a81_row7_col2 {
+  background-color: #7dacd1;
+  color: #f1f1f1;
+}
+#T_95a81_row7_col4 {
+  background-color: #abbfdc;
+  color: #000000;
+}
+#T_95a81_row7_col5 {
+  background-color: #0f76b3;
+  color: #f1f1f1;
+}
+#T_95a81_row8_col1 {
+  background-color: #1e80b8;
+  color: #f1f1f1;
+}
+#T_95a81_row8_col2 {
+  background-color: #b8c6e0;
+  color: #000000;
+}
+#T_95a81_row8_col4 {
+  background-color: #04629a;
+  color: #f1f1f1;
+}
+#T_95a81_row8_col5 {
+  background-color: #04598c;
+  color: #f1f1f1;
+}
+#T_95a81_row8_col7 {
+  background-color: #d5d5e8;
+  color: #000000;
+}
+#T_95a81_row9_col3 {
+  background-color: #79abd0;
+  color: #f1f1f1;
+}
+#T_95a81_row9_col6 {
+  background-color: #023a5b;
+  color: #f1f1f1;
+}
+#T_95a81_row9_col7 {
+  background-color: #d4d4e8;
+  color: #000000;
+}
+#T_95a81_row10_col1 {
+  background-color: #4897c4;
+  color: #f1f1f1;
+}
+#T_95a81_row10_col4 {
+  background-color: #056caa;
+  color: #f1f1f1;
+}
+#T_95a81_row10_col5 {
+  background-color: #0566a0;
+  color: #f1f1f1;
+}
+#T_95a81_row10_col6 {
+  background-color: #04649e;
+  color: #f1f1f1;
+}
+</style>
+<table id="T_95a81">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_95a81_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_95a81_level0_col1" class="col_heading level0 col1" >mean</th>
+      <th id="T_95a81_level0_col2" class="col_heading level0 col2" >std</th>
+      <th id="T_95a81_level0_col3" class="col_heading level0 col3" >min</th>
+      <th id="T_95a81_level0_col4" class="col_heading level0 col4" >25%</th>
+      <th id="T_95a81_level0_col5" class="col_heading level0 col5" >50%</th>
+      <th id="T_95a81_level0_col6" class="col_heading level0 col6" >75%</th>
+      <th id="T_95a81_level0_col7" class="col_heading level0 col7" >max</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >clipped_count</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+      <th class="blank col7" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_95a81_level0_row0" class="row_heading level0 row0" >0.000000</th>
+      <td id="T_95a81_row0_col0" class="data row0 col0" >12716551.000000</td>
+      <td id="T_95a81_row0_col1" class="data row0 col1" >50.852295</td>
+      <td id="T_95a81_row0_col2" class="data row0 col2" >60.485949</td>
+      <td id="T_95a81_row0_col3" class="data row0 col3" >10.000000</td>
+      <td id="T_95a81_row0_col4" class="data row0 col4" >18.000000</td>
+      <td id="T_95a81_row0_col5" class="data row0 col5" >31.000000</td>
+      <td id="T_95a81_row0_col6" class="data row0 col6" >58.000000</td>
+      <td id="T_95a81_row0_col7" class="data row0 col7" >3353.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row1" class="row_heading level0 row1" >1.000000</th>
+      <td id="T_95a81_row1_col0" class="data row1 col0" >1093816.000000</td>
+      <td id="T_95a81_row1_col1" class="data row1 col1" >92.469134</td>
+      <td id="T_95a81_row1_col2" class="data row1 col2" >98.636349</td>
+      <td id="T_95a81_row1_col3" class="data row1 col3" >10.000000</td>
+      <td id="T_95a81_row1_col4" class="data row1 col4" >29.000000</td>
+      <td id="T_95a81_row1_col5" class="data row1 col5" >57.000000</td>
+      <td id="T_95a81_row1_col6" class="data row1 col6" >118.000000</td>
+      <td id="T_95a81_row1_col7" class="data row1 col7" >2031.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row2" class="row_heading level0 row2" >2.000000</th>
+      <td id="T_95a81_row2_col0" class="data row2 col0" >287747.000000</td>
+      <td id="T_95a81_row2_col1" class="data row2 col1" >102.565806</td>
+      <td id="T_95a81_row2_col2" class="data row2 col2" >109.421450</td>
+      <td id="T_95a81_row2_col3" class="data row2 col3" >10.000000</td>
+      <td id="T_95a81_row2_col4" class="data row2 col4" >31.000000</td>
+      <td id="T_95a81_row2_col5" class="data row2 col5" >65.000000</td>
+      <td id="T_95a81_row2_col6" class="data row2 col6" >133.000000</td>
+      <td id="T_95a81_row2_col7" class="data row2 col7" >1972.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row3" class="row_heading level0 row3" >3.000000</th>
+      <td id="T_95a81_row3_col0" class="data row3 col0" >78972.000000</td>
+      <td id="T_95a81_row3_col1" class="data row3 col1" >111.545016</td>
+      <td id="T_95a81_row3_col2" class="data row3 col2" >119.058198</td>
+      <td id="T_95a81_row3_col3" class="data row3 col3" >10.000000</td>
+      <td id="T_95a81_row3_col4" class="data row3 col4" >34.000000</td>
+      <td id="T_95a81_row3_col5" class="data row3 col5" >72.000000</td>
+      <td id="T_95a81_row3_col6" class="data row3 col6" >145.000000</td>
+      <td id="T_95a81_row3_col7" class="data row3 col7" >1946.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row4" class="row_heading level0 row4" >4.000000</th>
+      <td id="T_95a81_row4_col0" class="data row4 col0" >19759.000000</td>
+      <td id="T_95a81_row4_col1" class="data row4 col1" >125.116757</td>
+      <td id="T_95a81_row4_col2" class="data row4 col2" >124.922857</td>
+      <td id="T_95a81_row4_col3" class="data row4 col3" >10.000000</td>
+      <td id="T_95a81_row4_col4" class="data row4 col4" >42.000000</td>
+      <td id="T_95a81_row4_col5" class="data row4 col5" >90.000000</td>
+      <td id="T_95a81_row4_col6" class="data row4 col6" >163.000000</td>
+      <td id="T_95a81_row4_col7" class="data row4 col7" >1738.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row5" class="row_heading level0 row5" >5.000000</th>
+      <td id="T_95a81_row5_col0" class="data row5 col0" >4948.000000</td>
+      <td id="T_95a81_row5_col1" class="data row5 col1" >139.404608</td>
+      <td id="T_95a81_row5_col2" class="data row5 col2" >132.380660</td>
+      <td id="T_95a81_row5_col3" class="data row5 col3" >10.000000</td>
+      <td id="T_95a81_row5_col4" class="data row5 col4" >48.000000</td>
+      <td id="T_95a81_row5_col5" class="data row5 col5" >110.000000</td>
+      <td id="T_95a81_row5_col6" class="data row5 col6" >184.000000</td>
+      <td id="T_95a81_row5_col7" class="data row5 col7" >1852.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row6" class="row_heading level0 row6" >6.000000</th>
+      <td id="T_95a81_row6_col0" class="data row6 col0" >1241.000000</td>
+      <td id="T_95a81_row6_col1" class="data row6 col1" >175.251410</td>
+      <td id="T_95a81_row6_col2" class="data row6 col2" >145.194551</td>
+      <td id="T_95a81_row6_col3" class="data row6 col3" >10.000000</td>
+      <td id="T_95a81_row6_col4" class="data row6 col4" >69.000000</td>
+      <td id="T_95a81_row6_col5" class="data row6 col5" >153.000000</td>
+      <td id="T_95a81_row6_col6" class="data row6 col6" >241.000000</td>
+      <td id="T_95a81_row6_col7" class="data row6 col7" >1826.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row7" class="row_heading level0 row7" >7.000000</th>
+      <td id="T_95a81_row7_col0" class="data row7 col0" >388.000000</td>
+      <td id="T_95a81_row7_col1" class="data row7 col1" >203.979381</td>
+      <td id="T_95a81_row7_col2" class="data row7 col2" >149.664723</td>
+      <td id="T_95a81_row7_col3" class="data row7 col3" >10.000000</td>
+      <td id="T_95a81_row7_col4" class="data row7 col4" >87.250000</td>
+      <td id="T_95a81_row7_col5" class="data row7 col5" >193.000000</td>
+      <td id="T_95a81_row7_col6" class="data row7 col6" >284.000000</td>
+      <td id="T_95a81_row7_col7" class="data row7 col7" >1038.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row8" class="row_heading level0 row8" >8.000000</th>
+      <td id="T_95a81_row8_col0" class="data row8 col0" >120.000000</td>
+      <td id="T_95a81_row8_col1" class="data row8 col1" >227.716667</td>
+      <td id="T_95a81_row8_col2" class="data row8 col2" >120.581587</td>
+      <td id="T_95a81_row8_col3" class="data row8 col3" >39.000000</td>
+      <td id="T_95a81_row8_col4" class="data row8 col4" >176.250000</td>
+      <td id="T_95a81_row8_col5" class="data row8 col5" >227.000000</td>
+      <td id="T_95a81_row8_col6" class="data row8 col6" >283.250000</td>
+      <td id="T_95a81_row8_col7" class="data row8 col7" >1006.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row9" class="row_heading level0 row9" >9.000000</th>
+      <td id="T_95a81_row9_col0" class="data row9 col0" >26.000000</td>
+      <td id="T_95a81_row9_col1" class="data row9 col1" >308.384615</td>
+      <td id="T_95a81_row9_col2" class="data row9 col2" >246.437510</td>
+      <td id="T_95a81_row9_col3" class="data row9 col3" >51.000000</td>
+      <td id="T_95a81_row9_col4" class="data row9 col4" >209.500000</td>
+      <td id="T_95a81_row9_col5" class="data row9 col5" >254.500000</td>
+      <td id="T_95a81_row9_col6" class="data row9 col6" >281.750000</td>
+      <td id="T_95a81_row9_col7" class="data row9 col7" >1021.000000</td>
+    </tr>
+    <tr>
+      <th id="T_95a81_level0_row10" class="row_heading level0 row10" >10.000000</th>
+      <td id="T_95a81_row10_col0" class="data row10 col0" >8.000000</td>
+      <td id="T_95a81_row10_col1" class="data row10 col1" >202.750000</td>
+      <td id="T_95a81_row10_col2" class="data row10 col2" >76.972630</td>
+      <td id="T_95a81_row10_col3" class="data row10 col3" >94.000000</td>
+      <td id="T_95a81_row10_col4" class="data row10 col4" >166.000000</td>
+      <td id="T_95a81_row10_col5" class="data row10 col5" >211.000000</td>
+      <td id="T_95a81_row10_col6" class="data row10 col6" >242.250000</td>
+      <td id="T_95a81_row10_col7" class="data row10 col7" >317.000000</td>
+    </tr>
+  </tbody>
+</table>
